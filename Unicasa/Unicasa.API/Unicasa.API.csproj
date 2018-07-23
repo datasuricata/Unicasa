@@ -213,6 +213,7 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Persistence\Map\MapImport.cs" />
+    <Compile Include="Persistence\Repositories\RepositoryImportacao.cs" />
     <Compile Include="Persistence\UnicasaContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />
@@ -235,10 +236,15 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="DI\" />
-    <Folder Include="Persistence\Repositories\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Unicasa.Domain\Unicasa.Domain.csproj">
+      <Project>{F511D43E-3BE3-4AD0-B124-B8C86127EF04}</Project>
+      <Name>Unicasa.Domain</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

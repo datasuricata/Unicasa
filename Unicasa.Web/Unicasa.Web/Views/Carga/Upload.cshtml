@@ -1,0 +1,43 @@
+﻿
+@{
+    ViewBag.Title = "Carregar Excel";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="page-content-inner">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="portlet light ">
+                <div class="portlet-title">
+                    <div class="caption font-dark">
+                        <i class="icon-settings font-dark"></i>
+                        <span class="caption-subject bold uppercase">@ViewBag.Title</span>
+                    </div>
+                    <div class="tools"> </div>
+                </div>
+                <div class="portlet-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <p>
+                                <h4>Clique para carregar o arquivo base</h4>
+                            </p>
+                            @using (Html.BeginForm("Upload", "Carga", FormMethod.Post, new { enctype = "multpart/form-data" }))
+                            {
+                                @Html.ValidationSummary()
+
+                                <div class="col-md-12">
+                                    <input type="file" name="name" value="" />
+                                </div>
+                                <br />
+                                <br />
+                                <div class="col-md-3">
+                                    <input type="submit" class="form-control btn btn-info" value="Importar" />
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -33,6 +33,7 @@ namespace Unicasa.Domain.Entities
         public string Esteira { get; set; }
         public string Expedicao { get; set; }
         public string CpfCnpj { get; set; }
-
+        public bool Entregue { get; set; }
+        public bool Agendado { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System.Data.Entity;
+using Unicasa.Domain.Entities;
 
 namespace Unicasa.API.Persistence
 {
@@ -9,7 +10,9 @@ namespace Unicasa.API.Persistence
 
         }
 
-        //public DbSet<EntidadeX> Upload { get; set; }
+        public DbSet<Importacao> Importacoes { get; set; }
+
+
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

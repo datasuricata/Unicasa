@@ -3,9 +3,9 @@ using Unicasa.Domain.Entities;
 
 namespace Unicasa.API.Persistence.Map
 {
-    public class MapImport : EntityTypeConfiguration<Importacao>
+    public class MapImportacao : EntityTypeConfiguration<Importacao>
     {
-        public MapImport()
+        public MapImportacao()
         {
             ToTable("Importacoes");
 

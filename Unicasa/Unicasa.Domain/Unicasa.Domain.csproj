@@ -41,19 +41,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Arguments\AutenticarRequest.cs" />
+    <Compile Include="Arguments\AutenticarResponse.cs" />
+    <Compile Include="Arguments\UsuarioRequest.cs" />
     <Compile Include="Entities\Base\BaseEntity.cs" />
     <Compile Include="Entities\Importacao.cs" />
-    <Compile Include="Interfaces\Repositories\Base\IRepisitory.cs" />
+    <Compile Include="Entities\Usuario.cs" />
+    <Compile Include="Helper\Enums.cs" />
+    <Compile Include="Helper\UnicasaExtensions.cs" />
+    <Compile Include="Interfaces\Repositories\Base\IRepository.cs" />
     <Compile Include="Interfaces\Repositories\IImportacaoRepository.cs" />
     <Compile Include="Interfaces\Repositories\IUsuarioRepository.cs" />
+    <Compile Include="Interfaces\Services\Base\IBaseService.cs" />
     <Compile Include="Interfaces\Services\IImportacaoService.cs" />
     <Compile Include="Interfaces\Services\IUsuarioService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\ImportacaoService.cs" />
     <Compile Include="Services\UsuarioService.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Helper\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

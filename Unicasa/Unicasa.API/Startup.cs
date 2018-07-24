@@ -1,10 +1,12 @@
 ﻿using Microsoft.Owin;
+using Microsoft.Owin.Security.OAuth;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Owin;
 using System;
 using System.Web.Http;
 using Unicasa.API.DI;
+using Unicasa.API.Security;
 using Unity;
 
 namespace Unicasa.API
@@ -16,7 +18,7 @@ namespace Unicasa.API
             HttpConfiguration config = new HttpConfiguration();
 
             // Swagger
-            //SwaggerConfig.Register(config);
+            SwaggerConfig.Register(config);
 
             // Configure Dependency Injection
             var container = new UnityContainer();
@@ -26,7 +28,7 @@ namespace Unicasa.API
             ConfigureWebApi(config);
             //ConfigureOAuth(app, container);
 
-            //app.UseCors(Microsoft.Owin.Cors.CorsOptions.AllowAll);
+            app.UseCors(Microsoft.Owin.Cors.CorsOptions.AllowAll);
 
             app.UseWebApi(config);
 
@@ -37,9 +39,6 @@ namespace Unicasa.API
             // Remove o XML
             var formatters = config.Formatters;
             formatters.Remove(formatters.XmlFormatter);
-
-            //Compacta retorno de cada requisição realizada para api
-            //config.MessageHandlers.Insert(0, new ServerCompressionHandler(new GZipCompressor(), new DeflateCompressor()));
 
             // Modifica a identação
             var jsonSettings = formatters.JsonFormatter.SerializerSettings;
@@ -66,18 +65,18 @@ namespace Unicasa.API
             );
         }
 
-        //public void ConfigureOAuth(IAppBuilder app, UnityContainer container)
-        //{
-        //    OAuthAuthorizationServerOptions OAuthServerOptions = new OAuthAuthorizationServerOptions()
-        //    {
-        //        AllowInsecureHttp = true,
-        //        TokenEndpointPath = new PathString("/token"),
-        //        AccessTokenExpireTimeSpan = TimeSpan.FromHours(2),
-        //        Provider = new AuthorizationProvider(container)
-        //    };
+        public void ConfigureOAuth(IAppBuilder app, UnityContainer container)
+        {
+            OAuthAuthorizationServerOptions OAuthServerOptions = new OAuthAuthorizationServerOptions()
+            {
+                AllowInsecureHttp = true,
+                TokenEndpointPath = new PathString("/token"),
+                AccessTokenExpireTimeSpan = TimeSpan.FromHours(1),
+                Provider = new AuthorizationProvider(container)
+            };
 
-        //    app.UseOAuthAuthorizationServer(OAuthServerOptions);
-        //    app.UseOAuthBearerAuthentication(new OAuthBearerAuthenticationOptions());
-        //}
+            app.UseOAuthAuthorizationServer(OAuthServerOptions);
+            app.UseOAuthBearerAuthentication(new OAuthBearerAuthenticationOptions());
+        }
     }
 }

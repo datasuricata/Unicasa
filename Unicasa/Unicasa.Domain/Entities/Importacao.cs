@@ -4,9 +4,38 @@ namespace Unicasa.Domain.Entities
 {
     public class Importacao : BaseEntity
     {
-        protected Importacao(string id) : base(id)
+        public Importacao()
         {
 
+        }
+
+        public Importacao(string lote, string codTransportadora, string pedido, string descricao, string numVolume, string totalVolume, string ordCompra, string carga, string refItem, string barra, string situcao, string cliente, string endereco, string cidade, string uF, string quantidade, string documento, string peso, string cubagem, string subFamilia, string fechamento, string esteira, string expedicao, string cpfCnpj)
+        {
+            Id = GerarId();
+            Lote = lote;
+            CodTransportadora = codTransportadora;
+            Pedido = pedido;
+            Descricao = descricao;
+            NumVolume = numVolume;
+            TotalVolume = totalVolume;
+            OrdCompra = ordCompra;
+            Carga = carga;
+            RefItem = refItem;
+            Barra = barra;
+            Situcao = situcao;
+            Cliente = cliente;
+            Endereco = endereco;
+            Cidade = cidade;
+            UF = uF;
+            Quantidade = quantidade;
+            Documento = documento;
+            Peso = peso;
+            Cubagem = cubagem;
+            SubFamilia = subFamilia;
+            Fechamento = fechamento;
+            Esteira = esteira;
+            Expedicao = expedicao;
+            CpfCnpj = cpfCnpj;
         }
 
         public string Lote { get; set; }

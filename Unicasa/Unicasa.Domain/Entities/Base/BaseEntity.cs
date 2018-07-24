@@ -4,12 +4,17 @@ namespace Unicasa.Domain.Entities.Base
 {
     public abstract class BaseEntity
     {
-        protected BaseEntity(string id)
+        protected BaseEntity()
         {
-            Id = Guid.NewGuid().ToString().ToUpper();
+        
         }
 
-        public string Id { get; private set; }
+        public string GerarId()
+        {
+            return Guid.NewGuid().ToString().ToUpper();
+        }
+
+        public string Id { get; set; }
     }
 
 }

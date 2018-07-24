@@ -6,6 +6,6 @@ namespace Unicasa.Domain.Interfaces.Repositories
 {
     public interface IImportacaoRepository : IRepository<Importacao,Guid>
     {
-        Importacao Register(Importacao entity);
+        
     }
 }

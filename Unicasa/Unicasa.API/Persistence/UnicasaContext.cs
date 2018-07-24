@@ -11,7 +11,7 @@ namespace Unicasa.API.Persistence
         }
 
         public DbSet<Importacao> Importacoes { get; set; }
-
+        public DbSet<Usuario> Usuarios { get; set; }
 
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

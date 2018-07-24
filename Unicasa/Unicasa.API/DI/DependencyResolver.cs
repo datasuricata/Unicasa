@@ -25,11 +25,13 @@ namespace Unicasa.API.DI
             //container.RegisterType(typeof(IServiceBase<,>), typeof(ServiceBase<,>));
 
             container.RegisterType<IImportacaoService, ImportacaoService>(new HierarchicalLifetimeManager());
+            container.RegisterType<IUsuarioService, UsuarioService>(new HierarchicalLifetimeManager());
 
             //Repository
             container.RegisterType(typeof(IRepository<,>), typeof(Repository<,>));
 
             container.RegisterType<IImportacaoRepository, RepositoryImportacao>(new HierarchicalLifetimeManager());
+            container.RegisterType<IUsuarioRepository, RepositoryUsuario>(new HierarchicalLifetimeManager());
         }
     }
 }

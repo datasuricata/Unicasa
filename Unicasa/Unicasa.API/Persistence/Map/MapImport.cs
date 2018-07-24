@@ -1,18 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity.ModelConfiguration;
-using System.Linq;
-using System.Web;
+﻿using System.Data.Entity.ModelConfiguration;
+using Unicasa.Domain.Entities;
 
 namespace Unicasa.API.Persistence.Map
 {
-    public class MapImport : EntityTypeConfiguration<Import>
+    public class MapImport : EntityTypeConfiguration<Importacao>
     {
         public MapImport()
         {
             ToTable("Importacoes");
 
-            Property(p => p.CampoX).IsRequired();
+            Property(p => p.Id).IsRequired();
         }
     }
 }

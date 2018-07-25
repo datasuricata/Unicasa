@@ -6,7 +6,7 @@ namespace Unicasa.Domain.Entities
     {
         public Importacao()
         {
-
+            Id = GerarId();
         }
 
         public Importacao(string lote, string codTransportadora, string pedido, string descricao, string numVolume, string totalVolume, string ordCompra, string carga, string refItem, string barra, string situcao, string cliente, string endereco, string cidade, string uF, string quantidade, string peso, string cubagem, string subFamilia, string fechamento, string esteira, string expedicao, string cpfCnpj)

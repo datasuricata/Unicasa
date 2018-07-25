@@ -9,7 +9,7 @@ namespace Unicasa.Domain.Entities
 
         }
 
-        public Importacao(string lote, string codTransportadora, string pedido, string descricao, string numVolume, string totalVolume, string ordCompra, string carga, string refItem, string barra, string situcao, string cliente, string endereco, string cidade, string uF, string quantidade, string documento, string peso, string cubagem, string subFamilia, string fechamento, string esteira, string expedicao, string cpfCnpj)
+        public Importacao(string lote, string codTransportadora, string pedido, string descricao, string numVolume, string totalVolume, string ordCompra, string carga, string refItem, string barra, string situcao, string cliente, string endereco, string cidade, string uF, string quantidade, string peso, string cubagem, string subFamilia, string fechamento, string esteira, string expedicao, string cpfCnpj)
         {
             Id = GerarId();
             Lote = lote;
@@ -28,7 +28,6 @@ namespace Unicasa.Domain.Entities
             Cidade = cidade;
             UF = uF;
             Quantidade = quantidade;
-            Documento = documento;
             Peso = peso;
             Cubagem = cubagem;
             SubFamilia = subFamilia;

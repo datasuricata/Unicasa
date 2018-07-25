@@ -159,6 +159,11 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201807250225195_FirstMigration.cs" />
+    <Compile Include="Migrations\201807250225195_FirstMigration.Designer.cs">
+      <DependentUpon>201807250225195_FirstMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Persistence\Map\MapImportacao.cs" />
     <Compile Include="Persistence\Map\MapUsuario.cs" />
     <Compile Include="Persistence\Repositories\Base\Repository.cs" />
@@ -189,6 +194,11 @@
       <Project>{BD76BE8F-6962-4330-80A8-902A86883F1D}</Project>
       <Name>Unicasa.Domain</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201807250225195_FirstMigration.resx">
+      <DependentUpon>201807250225195_FirstMigration.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

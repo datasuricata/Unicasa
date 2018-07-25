@@ -1,4 +1,5 @@
-﻿
+﻿@model Unicasa.Web.Models.CargaModel
+
 @{
     ViewBag.Title = "Carregar Excel";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -21,17 +22,17 @@
                             <p>
                                 <h4>Clique para carregar o arquivo base</h4>
                             </p>
-                            @using (Html.BeginForm("Upload", "Carga", FormMethod.Post, new { enctype = "multpart/form-data" }))
+                            @using (Html.BeginForm("Upload", "Carga", FormMethod.Post, new { enctype = "multipart/form-data" }))
                             {
                                 @Html.ValidationSummary()
 
                                 <div class="col-md-12">
-                                    <input type="file" name="name" value="" />
+                                    <input type="file" name="attachmentcsv" id="attachmentcsv" hidden>
                                 </div>
                                 <br />
                                 <br />
                                 <div class="col-md-3">
-                                    <input type="submit" class="form-control btn btn-info" value="Importar" />
+                                    <input type="submit" class="form-control btn btn-info" value="Carregar Arquivo" />
                                 </div>
                             }
                         </div>

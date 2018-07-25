@@ -18,15 +18,14 @@ namespace Unicasa.API
             HttpConfiguration config = new HttpConfiguration();
 
             // Swagger
-            SwaggerConfig.Register(config);
+            // SwaggerConfig.Register(config);
 
-            // Configure Dependency Injection
             var container = new UnityContainer();
             DependencyResolver.Resolve(container);
             config.DependencyResolver = new UnityResolver(container);
 
             ConfigureWebApi(config);
-            //ConfigureOAuth(app, container);
+            ConfigureOAuth(app, container);
 
             app.UseCors(Microsoft.Owin.Cors.CorsOptions.AllowAll);
 
@@ -63,6 +62,8 @@ namespace Unicasa.API
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
+
+            SwaggerConfig.Register(config);
         }
 
         public void ConfigureOAuth(IAppBuilder app, UnityContainer container)
@@ -71,7 +72,7 @@ namespace Unicasa.API
             {
                 AllowInsecureHttp = true,
                 TokenEndpointPath = new PathString("/token"),
-                AccessTokenExpireTimeSpan = TimeSpan.FromHours(1),
+                AccessTokenExpireTimeSpan = TimeSpan.FromHours(2),
                 Provider = new AuthorizationProvider(container)
             };
 

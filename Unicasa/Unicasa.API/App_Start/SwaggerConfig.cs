@@ -1,12 +1,10 @@
-using System.Web.Http;
-using WebActivatorEx;
-using Unicasa.API;
 using Swashbuckle.Application;
 using Swashbuckle.Swagger;
-using System.Web.Http.Description;
 using System.Collections.Generic;
+using System.Web.Http;
+using System.Web.Http.Description;
 
-[assembly: PreApplicationStartMethod(typeof(SwaggerConfig), "Register")]
+//[assembly: PreApplicationStartMethod(typeof(SwaggerConfig), "Register")]
 
 namespace Unicasa.API
 {
@@ -51,3 +49,4 @@ namespace Unicasa.API
         }
     }
 }
+

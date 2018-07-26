@@ -1,7 +1,6 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
@@ -13,24 +12,53 @@ using Unicasa.Domain.Entities;
 
 namespace Unicasa.API.Controllers
 {
-    [RoutePrefix("api/usuario")]
-    public class UsuarioController : ControllerBase
+    [RoutePrefix("api/gerenciador")]
+    public class GerenciadorController : ControllerBase
     {
-        private readonly RepositoryUsuario repository;
+        private readonly RepositoryTickets repository;
         private readonly UnicasaContext context;
 
-
-        public UsuarioController()
+        public GerenciadorController()
         {
             context = new UnicasaContext();
-            repository = new RepositoryUsuario(context);
+            repository = new RepositoryTickets(context);
             uow = new UnitOfWork(context);
             Notification = new List<string>();
         }
 
-        [Route("adicionar")]
+        [Route("adicionar/unitario")]
         [HttpPost]
-        public async Task<HttpResponseMessage> Adicionar(Usuario request)
+        public async Task<HttpResponseMessage> Adicionar(Ticket request)
+        {
+            try
+            {
+                if (request == null)
+                {
+                    Notification.Add("Verifique as informações e tente novamente (Model)");
+                    return null;
+                }
+
+                var response = repository.Adicionar(request);
+
+                if (response == null)
+                {
+                    Notification.Add("O Ticket não foi criado tente novamente (Entity)");
+                    return null;
+                }
+
+                Notification.Add("Ticket Criado");
+
+                return await ResponseAsync(response);
+            }
+            catch (Exception ex)
+            {
+                return await ResponseExceptionAsync(ex);
+            }
+        }
+
+        [Route("editar")]
+        [HttpPut]
+        public async Task<HttpResponseMessage> Editar(Ticket request)
         {
             try
             {
@@ -40,15 +68,15 @@ namespace Unicasa.API.Controllers
                     return null;
                 }
 
-                var response = repository.Adicionar(request);
+                var response = repository.Editar(request);
 
                 if (response == null)
                 {
-                    Notification.Add("O usuário não foi salve no banco, tente novamante");
+                    Notification.Add("O Ticket não foi salvo no banco, tente novamente");
                     return null;
                 }
 
-                Notification.Add("Usuario Criado");
+                Notification.Add("Ticket Alterado");
 
                 return await ResponseAsync(response);
             }
@@ -64,59 +92,8 @@ namespace Unicasa.API.Controllers
         {
             try
             {
-                var response = repository.Listar().ToList();
+                var response = repository.Listar();
                 return await ResponseAsync(response);
-            }
-            catch (Exception ex)
-            {
-                return await ResponseExceptionAsync(ex);
-            }
-        }
-
-        [Route("editar")]
-        [HttpPut]
-        public async Task<HttpResponseMessage> Editar(Usuario request)
-        {
-            try
-            {
-                if (request == null)
-                {
-                    Notification.Add("Verifique as informações e tente novamente");
-                    return null;
-                }
-
-                var response = repository.Editar(request);
-
-                if (response == null)
-                {
-                    Notification.Add("O usuário não foi salve no banco, tente novamante");
-                    return null;
-                }
-
-                Notification.Add("Usuario Criado");
-
-                return await ResponseAsync(response);
-            }
-            catch (Exception ex)
-            {
-                return await ResponseExceptionAsync(ex);
-            }
-        }
-
-        [Route("excluir")]
-        [HttpDelete]
-        public async Task<HttpResponseMessage> Exluir(Usuario request)
-        {
-            try
-            {
-                if (request == null)
-                {
-                    Notification.Add("Verifique as informações e tente novamente");
-                    return null;
-                }
-
-                repository.Remover(request);
-                return Request.CreateResponse(HttpStatusCode.OK);
             }
             catch (Exception ex)
             {
@@ -125,3 +102,4 @@ namespace Unicasa.API.Controllers
         }
     }
 }
+

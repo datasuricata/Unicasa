@@ -1,34 +1,32 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using Unicasa.API.Transactions;
-using Unicasa.Domain.Interfaces.Services.Base;
 
 namespace Unicasa.API.Controllers.Base
 {
     public class ControllerBase : ApiController
     {
-        private readonly IUnitOfWork _unitOfWork;
-        private IBaseService _serviceBase;
+        protected List<string> Notification;
+        public UnitOfWork uow;
 
-        public ControllerBase(IUnitOfWork unitOfWork)
+        public ControllerBase()
         {
-            _unitOfWork = unitOfWork;
+
         }
 
-        public async Task<HttpResponseMessage> ResponseAsync(object result, IBaseService serviceBase)
+        public async Task<HttpResponseMessage> ResponseAsync(object result)
         {
-            _serviceBase = serviceBase;
 
-            if (!serviceBase.Notifications().Any())
+            if (!Notification.Any())
             {
                 try
                 {
-                    _unitOfWork.Commit();
-
+                    uow.Commit();
                     return Request.CreateResponse(HttpStatusCode.OK, result);
                 }
                 catch (Exception ex)
@@ -38,23 +36,13 @@ namespace Unicasa.API.Controllers.Base
             }
             else
             {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, new { errors = serviceBase.Notifications()});
+                return Request.CreateResponse(HttpStatusCode.BadRequest, new { errors = Notification });
             }
         }
 
         public async Task<HttpResponseMessage> ResponseExceptionAsync(Exception ex)
         {
             return Request.CreateResponse(HttpStatusCode.InternalServerError, new { errors = ex.Message, exception = ex.ToString() });
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (_serviceBase != null)
-            {
-                _serviceBase.Dispose();
-            }
-
-            base.Dispose(disposing);
         }
     }
 }

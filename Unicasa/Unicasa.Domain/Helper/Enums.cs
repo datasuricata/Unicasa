@@ -6,4 +6,10 @@
         Gerente = 2,
         Administrador = 99
     }
+
+    public enum TicketState
+    {
+        Agendado = 1,
+        Entregue = 2
+    }
 }

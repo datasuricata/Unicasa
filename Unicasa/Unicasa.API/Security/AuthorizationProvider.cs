@@ -1,4 +1,5 @@
 ﻿using Microsoft.Owin.Security.OAuth;
+using Microsoft.Practices.Unity;
 using Newtonsoft.Json;
 using System;
 using System.Security.Claims;
@@ -6,8 +7,6 @@ using System.Security.Principal;
 using System.Threading;
 using System.Threading.Tasks;
 using Unicasa.Domain.Arguments;
-using Unicasa.Domain.Interfaces.Services;
-using Unity;
 
 namespace Unicasa.API.Security
 {
@@ -29,7 +28,7 @@ namespace Unicasa.API.Security
         {
             try
             {
-                IUsuarioService serviceUsuario = _container.Resolve<IUsuarioService>();
+                //IUsuarioService serviceUsuario = _container.Resolve<IUsuarioService>();
 
 
                 var request = new AutenticarRequest();
@@ -37,7 +36,7 @@ namespace Unicasa.API.Security
                 request.Email = context.UserName;
                 request.Senha = context.Password;
 
-                var response = serviceUsuario.AutenticarUsuario(request);
+                //var response = serviceUsuario.AutenticarUsuario(request);
 
                 //if (serviceUsuario.IsInvalid())
                 //{
@@ -48,16 +47,16 @@ namespace Unicasa.API.Security
                 //    }
                 //}
 
-                if (response == null)
-                {
-                    context.SetError("invalid_grant", "Usuario não encontrado!");
-                    return;
-                }
+                //if (response == null)
+                //{
+                //    context.SetError("invalid_grant", "Usuario não encontrado!");
+                //    return;
+                //}
 
                 var identity = new ClaimsIdentity(context.Options.AuthenticationType);
 
                 //Definindo as Claims
-                identity.AddClaim(new Claim("Usuario", JsonConvert.SerializeObject(response)));
+               // identity.AddClaim(new Claim("Usuario", JsonConvert.SerializeObject(response)));
 
                 var principal = new GenericPrincipal(identity, new string[] { });
 

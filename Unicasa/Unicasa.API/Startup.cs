@@ -1,13 +1,14 @@
 ﻿using Microsoft.Owin;
 using Microsoft.Owin.Security.OAuth;
+using Microsoft.Practices.Unity;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Owin;
+using Swashbuckle.Application;
 using System;
 using System.Web.Http;
 using Unicasa.API.DI;
 using Unicasa.API.Security;
-using Unity;
 
 namespace Unicasa.API
 {
@@ -64,6 +65,14 @@ namespace Unicasa.API
             );
 
             SwaggerConfig.Register(config);
+
+            // Set Swagger as default start page
+            config.Routes.MapHttpRoute(
+                name: "swagger_root",
+                routeTemplate: "",
+                defaults: null,
+                constraints: null,
+                handler: new RedirectHandler((message => message.RequestUri.ToString()), "swagger"));
         }
 
         public void ConfigureOAuth(IAppBuilder app, UnityContainer container)

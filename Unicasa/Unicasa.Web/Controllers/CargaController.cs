@@ -78,6 +78,7 @@ namespace Unicasa.Web.Controllers
                         Cidade = row.Split('|')[13],
                         UF = row.Split('|')[14],
                         Quantidade = row.Split('|')[15],
+                        Documento = "",
                         Peso = row.Split('|')[17],
                         Cubagem = row.Split('|')[18],
                         SubFamilia = row.Split('|')[19],

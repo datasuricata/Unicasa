@@ -7,6 +7,7 @@ using System.Security.Principal;
 using System.Threading;
 using System.Threading.Tasks;
 using Unicasa.Domain.Arguments;
+using Unity;
 
 namespace Unicasa.API.Security
 {

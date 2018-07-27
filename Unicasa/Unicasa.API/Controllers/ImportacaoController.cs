@@ -28,25 +28,23 @@ namespace Unicasa.API.Controllers
 
         [Route("importar")]
         [HttpPost]
-        public async Task<HttpResponseMessage> Importar(IEnumerable<Importacao> imports)
+        public async Task<HttpResponseMessage> Importar(IEnumerable<Importacao> request)
         {
             try
             {
-                if (imports == null)
+                if (request == null)
                 {
                     Notification.Add("O arquivo não foi carregado, por favor tente novamente (Model)");
                     return null;
                 }
 
-                var response = repository.AdicionarLista(imports);
+                var response = repository.AdicionarLista(request);
 
                 if (response == null)
                 {
                     Notification.Add("Erro ao salvar dados no banco, tente novamente");
                     return null;
                 }
-
-                Notification.Add("Upload Efetuado");
 
                 return await ResponseAsync(response);
             }
@@ -58,19 +56,19 @@ namespace Unicasa.API.Controllers
 
         }
 
-        [Route("importar/unitario")]
+        [Route("importar/registro")]
         [HttpPost]
-        public async Task<HttpResponseMessage> ImportarUitario(Importacao import)
+        public async Task<HttpResponseMessage> ImportarRegistro(Importacao request)
         {
             try
             {
-                if (import == null)
+                if (request == null)
                 {
-                    Notification.Add("A importação esta vazia, por favor tente novamente (Model)");
+                    Notification.Add("A importação esta vazia, por favor tente novamente");
                     return null;
                 }
 
-                var response = repository.Adicionar(import);
+                var response = repository.Adicionar(request);
 
                 if (response == null)
                 {
@@ -78,7 +76,27 @@ namespace Unicasa.API.Controllers
                     return null;
                 }
 
-                Notification.Add("Upload Efetuado");
+                return await ResponseAsync(response);
+            }
+            catch (Exception ex)
+            {
+                return await ResponseExceptionAsync(ex);
+            }
+        }
+
+        [Route("listar")]
+        [HttpGet]
+        public async Task<HttpResponseMessage> Listar()
+        {
+            try
+            {
+                var response = repository.Listar().ToList();
+
+                if (response == null)
+                {
+                    Notification.Add("Erro ao listar dados no banco, tente novamente");
+                    return null;
+                }
 
                 return await ResponseAsync(response);
             }

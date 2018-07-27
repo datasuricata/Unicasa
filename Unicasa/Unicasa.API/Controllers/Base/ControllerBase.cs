@@ -9,7 +9,7 @@ using Unicasa.API.Transactions;
 
 namespace Unicasa.API.Controllers.Base
 {
-    public class ControllerBase : ApiController
+    public class ControllerBase : ApiController, IDisposable
     {
         protected List<string> Notification;
         public UnitOfWork uow;

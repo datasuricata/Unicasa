@@ -24,6 +24,10 @@ namespace Unicasa.Domain.Entities
 
         public static Usuario Registrar(UsuarioRequest request)
         {
+
+            if (string.IsNullOrEmpty(request.Email) || string.IsNullOrEmpty(request.Senha) || string.IsNullOrEmpty(request.NomeCompleto))
+                return null;
+
             var usuario = new Usuario()
             {
                 Email = request.Email,
@@ -33,6 +37,23 @@ namespace Unicasa.Domain.Entities
             };
 
             usuario.GerarId();
+
+            return usuario;
+        }
+
+        public static Usuario Editar(UsuarioRequest request, Usuario usuario)
+        {
+            if (string.IsNullOrEmpty(request.Id))
+                return null;
+
+            if (!string.IsNullOrEmpty(request.Email))
+                usuario.Email = request.Email;
+
+            if (!string.IsNullOrEmpty(request.Senha))
+                usuario.Senha = UnicasaExtensions.ConvertToMD5(request.Senha);
+
+            if (!string.IsNullOrEmpty(request.NomeCompleto))
+                usuario.NomeCompleto = request.NomeCompleto;
 
             return usuario;
         }

@@ -1,4 +1,7 @@
-﻿using System.Text;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 
 namespace Unicasa.Domain.Helper
 {
@@ -16,5 +19,78 @@ namespace Unicasa.Domain.Helper
 
             return sbString.ToString();
         }
+
+        public static DateTime GetDateTicket(this DateTime dataAgendamento, List<DateTime> feriados, int arg)
+        {
+            bool valida = true;
+            List<ComponenteData> datas = new List<ComponenteData>();
+
+            datas.Add(new ComponenteData(1, dataAgendamento, true));
+
+            for (int i = 1; i >= arg; i++)
+                datas.Add(new ComponenteData(i + 1, dataAgendamento.AddDays(i), true));
+
+            while (valida)
+            {
+                valida = AjustarData(datas, feriados, arg);
+
+                if(!valida)
+                    foreach (var data in datas)
+                        data.Data.AddDays(1);
+
+            }
+
+            return datas.Select(x => x.Data).FirstOrDefault();
+        }
+
+        public static List<ComponenteData> ValidarData(this List<ComponenteData> datas, List<DateTime> feriados)
+        {
+            foreach (var data in datas)
+            {
+                feriados.ForEach(x =>
+                {
+                    if (x == data.Data)
+                        data.Valida = false;
+                });
+
+                if (data.Data.DayOfWeek == DayOfWeek.Saturday || data.Data.DayOfWeek == DayOfWeek.Sunday)
+                    data.Valida = false;
+            }
+
+            return datas;
+        }
+
+        public static bool AjustarData(List<ComponenteData> datas, List<DateTime> feriados, int arg)
+        {
+            int conter = 0;
+
+            foreach (var data in ValidarData(datas, feriados))
+                if (data.Valida)
+                    conter++;
+
+            if (conter == arg)
+                return false;
+
+            return true;
+        }
+    }
+
+    public class ComponenteData
+    {
+        public ComponenteData(int dia, DateTime data, bool valida)
+        {
+            Dia = dia;
+            Data = data;
+            Valida = valida;
+        }
+
+        public ComponenteData()
+        {
+
+        }
+
+        public int Dia { get; set; }
+        public DateTime Data { get; set; }
+        public bool Valida { get; set; }
     }
 }

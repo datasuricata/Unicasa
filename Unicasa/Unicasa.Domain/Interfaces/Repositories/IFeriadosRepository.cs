@@ -3,8 +3,7 @@ using Unicasa.Domain.Interfaces.Repositories.Base;
 
 namespace Unicasa.Domain.Interfaces.Repositories
 {
-    public interface IImportacaoRepository : IRepository<Importacao>
+    public interface IFeriadosRepository : IRepository<Feriados>
     {
-        
     }
 }

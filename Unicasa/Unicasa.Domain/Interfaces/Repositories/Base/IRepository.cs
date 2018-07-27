@@ -5,9 +5,8 @@ using System.Linq.Expressions;
 
 namespace Unicasa.Domain.Interfaces.Repositories.Base
 {
-    public interface IRepository<TEntidade, TId>
+    public interface IRepository<TEntidade>
            where TEntidade : class
-           where TId : struct
     {
         IQueryable<TEntidade> ListarPor(Expression<Func<TEntidade, bool>> where, params Expression<Func<TEntidade, object>>[] includeProperties);
 
@@ -21,7 +20,7 @@ namespace Unicasa.Domain.Interfaces.Repositories.Base
 
         IQueryable<TEntidade> ListarOrdenadosPor<TKey>(Expression<Func<TEntidade, TKey>> ordem, bool ascendente = true, params Expression<Func<TEntidade, object>>[] includeProperties);
 
-        TEntidade ObterPorId(TId id, params Expression<Func<TEntidade, object>>[] includeProperties);
+        TEntidade ObterPorId(string id, params Expression<Func<TEntidade, object>>[] includeProperties);
 
         TEntidade Adicionar(TEntidade entidade);
 

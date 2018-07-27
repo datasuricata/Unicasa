@@ -4,7 +4,7 @@ using Unicasa.Domain.Interfaces.Repositories.Base;
 
 namespace Unicasa.Domain.Interfaces.Repositories
 {
-    public interface IUsuarioRepository : IRepository<Usuario, Guid>
+    public interface IUsuarioRepository : IRepository<Usuario>
     {
     }
 }

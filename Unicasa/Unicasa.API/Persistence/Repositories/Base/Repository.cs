@@ -8,9 +8,8 @@ using Unicasa.Domain.Interfaces.Repositories.Base;
 
 namespace Unicasa.API.Persistence.Repositories.Base
 {
-    public class Repository<TEntidade, TId> : IRepository<TEntidade, TId>
+    public class Repository<TEntidade> : IRepository<TEntidade>
             where TEntidade : BaseEntity
-            where TId : struct
     {
 
         private readonly DbContext _context;
@@ -35,7 +34,7 @@ namespace Unicasa.API.Persistence.Repositories.Base
             return Listar(includeProperties).FirstOrDefault(where);
         }
 
-        public TEntidade ObterPorId(TId id, params Expression<Func<TEntidade, object>>[] includeProperties)
+        public TEntidade ObterPorId(string id, params Expression<Func<TEntidade, object>>[] includeProperties)
         {
             if (includeProperties.Any())
             {

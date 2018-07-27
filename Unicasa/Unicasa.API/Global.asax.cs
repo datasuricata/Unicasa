@@ -1,5 +1,6 @@
 ﻿using System.Web;
 using System.Web.Http;
+using Unicasa.Api.Startups;
 
 namespace Unicasa.API
 {
@@ -7,7 +8,7 @@ namespace Unicasa.API
     {
         protected void Application_Start()
         {
-            GlobalConfiguration.Configure(Startup.Register);
+            GlobalConfiguration.Configure(WebApiStartup.ConfigureWebApi);
         }
     }
 }

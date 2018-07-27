@@ -11,26 +11,27 @@ using Unicasa.API.Persistence.Repositories;
 using Unicasa.API.Transactions;
 using Unicasa.Domain.Arguments;
 using Unicasa.Domain.Entities;
+using Unicasa.Domain.Interfaces.Repositories;
 
 namespace Unicasa.API.Controllers
 {
-    [RoutePrefix("api/usuario")]
-    public class UsuarioController : ControllerBase
+    [RoutePrefix("api/feriado")]
+    public class FeriadoController : ControllerBase
     {
-        private readonly RepositoryUsuario repository;
+        private readonly RepositoriyFeriado repository;
         private readonly UnicasaContext context;
 
-        public UsuarioController()
+        public FeriadoController()
         {
             context = new UnicasaContext();
-            repository = new RepositoryUsuario(context);
+            repository = new RepositoriyFeriado(context);
             uow = new UnitOfWork(context);
             Notification = new List<string>();
         }
 
         [Route("adicionar")]
         [HttpPost]
-        public async Task<HttpResponseMessage> Adicionar(UsuarioRequest request)
+        public async Task<HttpResponseMessage> Adicionar(Feriados request)
         {
             try
             {
@@ -40,11 +41,11 @@ namespace Unicasa.API.Controllers
                     return null;
                 }
 
-                var response = repository.Adicionar(Usuario.Registrar(request));
+                var response = repository.Adicionar(Feriados.Registrar(request));
 
                 if (response == null)
                 {
-                    Notification.Add("O usuário não foi salve no banco, tente novamante");
+                    Notification.Add("O feriado não foi salve no banco, tente novamante");
                     return null;
                 }
 
@@ -54,6 +55,36 @@ namespace Unicasa.API.Controllers
             {
                 return await ResponseExceptionAsync(ex);
             }
+        }
+
+        [Route("importar")]
+        [HttpPost]
+        public async Task<HttpResponseMessage> Importar(IEnumerable<Feriados> request)
+        {
+            try
+            {
+                if (request == null)
+                {
+                    Notification.Add("O arquivo não foi carregado, por favor tente novamente (Model)");
+                    return null;
+                }
+
+                var response = repository.AdicionarLista(request);
+
+                if (response == null)
+                {
+                    Notification.Add("Erro ao salvar dados no banco, tente novamente");
+                    return null;
+                }
+
+                return await ResponseAsync(response);
+            }
+            catch (Exception ex)
+            {
+                return await ResponseExceptionAsync(ex);
+            }
+
+
         }
 
         [Route("obterPorId")]
@@ -95,7 +126,7 @@ namespace Unicasa.API.Controllers
 
         [Route("editar")]
         [HttpPut]
-        public async Task<HttpResponseMessage> Editar(UsuarioRequest request)
+        public async Task<HttpResponseMessage> Editar(Feriados request)
         {
             try
             {
@@ -104,13 +135,12 @@ namespace Unicasa.API.Controllers
                     Notification.Add("Verifique as informações e tente novamente");
                     return null;
                 }
-
-                var usuario = repository.ObterPorId(request.Id);
-                var response = repository.Editar(Usuario.Editar(request, usuario));
+                var feriado = repository.ObterPorId(request.Id);
+                var response = repository.Editar(Feriados.Editar(feriado, request));
 
                 if (response == null)
                 {
-                    Notification.Add("O usuário não foi salve no banco, tente novamante");
+                    Notification.Add("O feriado não foi salvo no banco, tente novamante");
                     return null;
                 }
 

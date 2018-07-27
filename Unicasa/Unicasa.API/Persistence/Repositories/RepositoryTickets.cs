@@ -5,7 +5,7 @@ using Unicasa.Domain.Interfaces.Repositories;
 
 namespace Unicasa.API.Persistence.Repositories
 {
-    public class RepositoryTickets : Repository<Ticket, Guid>, ITicketRepository
+    public class RepositoryTickets : Repository<Ticket>, ITicketRepository
     {
         protected readonly UnicasaContext _context;
 

@@ -5,7 +5,7 @@ using Unicasa.Domain.Interfaces.Repositories;
 
 namespace Unicasa.API.Persistence.Repositories
 {
-    public class RepositoryImportacao : Repository<Importacao, Guid>, IImportacaoRepository
+    public class RepositoryImportacao : Repository<Importacao>, IImportacaoRepository
     {
         protected readonly UnicasaContext _context;
 

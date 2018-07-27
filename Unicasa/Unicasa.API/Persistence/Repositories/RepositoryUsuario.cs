@@ -5,7 +5,7 @@ using Unicasa.Domain.Interfaces.Repositories;
 
 namespace Unicasa.API.Persistence.Repositories
 {
-    public class RepositoryUsuario : Repository<Usuario, Guid>, IUsuarioRepository
+    public class RepositoryUsuario : Repository<Usuario>, IUsuarioRepository
     {
         protected readonly UnicasaContext _context;
 

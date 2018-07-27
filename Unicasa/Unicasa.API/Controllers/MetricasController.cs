@@ -9,73 +9,22 @@ using Unicasa.API.Controllers.Base;
 using Unicasa.API.Persistence;
 using Unicasa.API.Persistence.Repositories;
 using Unicasa.API.Transactions;
-using Unicasa.Domain.Arguments;
 using Unicasa.Domain.Entities;
 
 namespace Unicasa.API.Controllers
 {
-    [RoutePrefix("api/usuario")]
-    public class UsuarioController : ControllerBase
+    [RoutePrefix("api/metricas")]
+    public class MetricasController : ControllerBase
     {
-        private readonly RepositoryUsuario repository;
+        private readonly RepositoryMetricas repositoryMetricas;
         private readonly UnicasaContext context;
 
-        public UsuarioController()
+        public MetricasController()
         {
             context = new UnicasaContext();
-            repository = new RepositoryUsuario(context);
+            repositoryMetricas = new RepositoryMetricas(context);
             uow = new UnitOfWork(context);
             Notification = new List<string>();
-        }
-
-        [Route("adicionar")]
-        [HttpPost]
-        public async Task<HttpResponseMessage> Adicionar(UsuarioRequest request)
-        {
-            try
-            {
-                if (request == null)
-                {
-                    Notification.Add("Verifique as informações e tente novamente");
-                    return null;
-                }
-
-                var response = repository.Adicionar(Usuario.Registrar(request));
-
-                if (response == null)
-                {
-                    Notification.Add("O usuário não foi salve no banco, tente novamante");
-                    return null;
-                }
-
-                return await ResponseAsync(response);
-            }
-            catch (Exception ex)
-            {
-                return await ResponseExceptionAsync(ex);
-            }
-        }
-
-        [Route("obterPorId")]
-        [HttpGet]
-        public async Task<HttpResponseMessage> ObterPorId(string id)
-        {
-            try
-            {
-                if (string.IsNullOrEmpty(id))
-                {
-                    Notification.Add("Verifique as informações e tente novamente");
-                    return null;
-                }
-
-                var response = repository.ObterPorId(id);
-
-                return await ResponseAsync(response);
-            }
-            catch (Exception ex)
-            {
-                return await ResponseExceptionAsync(ex);
-            }
         }
 
         [Route("listar")]
@@ -84,8 +33,15 @@ namespace Unicasa.API.Controllers
         {
             try
             {
-                var response = repository.Listar().ToList();
-                return await ResponseAsync(response);
+                var response = repositoryMetricas.Listar().FirstOrDefault();
+
+                if (response == null)
+                {
+                    Notification.Add("Erro ao listar dados no banco, tente novamente");
+                    return null;
+                }
+
+                return Request.CreateResponse(HttpStatusCode.OK, response);
             }
             catch (Exception ex)
             {
@@ -94,8 +50,8 @@ namespace Unicasa.API.Controllers
         }
 
         [Route("editar")]
-        [HttpPut]
-        public async Task<HttpResponseMessage> Editar(UsuarioRequest request)
+        [HttpPost]
+        public async Task<HttpResponseMessage> Editar(Metricas request)
         {
             try
             {
@@ -105,12 +61,39 @@ namespace Unicasa.API.Controllers
                     return null;
                 }
 
-                var usuario = repository.ObterPorId(request.Id);
-                var response = repository.Editar(Usuario.Editar(request, usuario));
+                var response = repositoryMetricas.Editar(request);
 
                 if (response == null)
                 {
-                    Notification.Add("O usuário não foi salve no banco, tente novamante");
+                    Notification.Add("Erro ao salvar dados no banco, tente novamente");
+                    return null;
+                }
+
+                return Request.CreateResponse(HttpStatusCode.OK, response);
+            }
+            catch (Exception ex)
+            {
+                return await ResponseExceptionAsync(ex);
+            }
+        }
+
+        [Route("adicionar")]
+        [HttpGet]
+        public async Task<HttpResponseMessage> Adicionar(Metricas request)
+        {
+            try
+            {
+                if (request == null)
+                {
+                    Notification.Add("Verifique as informações e tente novamente");
+                    return null;
+                }
+
+                var response = repositoryMetricas.Adicionar(request);
+
+                if (response == null)
+                {
+                    Notification.Add("A metrica não foi salve no banco, tente novamante");
                     return null;
                 }
 
@@ -134,8 +117,8 @@ namespace Unicasa.API.Controllers
                     return null;
                 }
 
-                var usuario = repository.ObterPorId(id);
-                repository.Remover(usuario);
+                var usuario = repositoryMetricas.ObterPorId(id);
+                repositoryMetricas.Remover(usuario);
 
                 return Request.CreateResponse(HttpStatusCode.OK);
             }
@@ -144,5 +127,6 @@ namespace Unicasa.API.Controllers
                 return await ResponseExceptionAsync(ex);
             }
         }
+
     }
 }

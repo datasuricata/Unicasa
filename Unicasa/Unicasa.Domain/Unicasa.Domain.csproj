@@ -44,8 +44,10 @@
     <Compile Include="Arguments\AutenticarRequest.cs" />
     <Compile Include="Arguments\AutenticarResponse.cs" />
     <Compile Include="Arguments\DashResponse.cs" />
+    <Compile Include="Arguments\FiltroRequest.cs" />
     <Compile Include="Arguments\UsuarioRequest.cs" />
     <Compile Include="Entities\Base\BaseEntity.cs" />
+    <Compile Include="Entities\Feriados.cs" />
     <Compile Include="Entities\Importacao.cs" />
     <Compile Include="Entities\Gerenciador.cs" />
     <Compile Include="Entities\Metricas.cs" />
@@ -54,6 +56,7 @@
     <Compile Include="Helper\Enums.cs" />
     <Compile Include="Helper\UnicasaExtensions.cs" />
     <Compile Include="Interfaces\Repositories\Base\IRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IFeriadosRepository.cs" />
     <Compile Include="Interfaces\Repositories\IImportacaoRepository.cs" />
     <Compile Include="Interfaces\Repositories\IMetricasRepository.cs" />
     <Compile Include="Interfaces\Repositories\ITicketRepository.cs" />

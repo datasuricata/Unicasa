@@ -7,6 +7,7 @@ namespace Unicasa.Domain.Entities
     public class Ticket : BaseEntity
     {
         public string ImportacaoId { get; set; }
+        public string Chave { get; set; }
         public string Titulo { get; set; }
         public string Descricao { get; set; }
         public string Detalhe { get; set; }

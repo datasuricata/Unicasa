@@ -53,10 +53,50 @@ namespace Unicasa.API.Migrations
                     })
                 .PrimaryKey(t => t.Id);
             
+            CreateTable(
+                "dbo.Metricas",
+                c => new
+                    {
+                        Id = c.String(nullable: false, maxLength: 100, unicode: false),
+                        AgendamentosPorDia = c.Int(nullable: false),
+                        DiasMinimosEntrega = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id);
+            
+            CreateTable(
+                "dbo.Tickets",
+                c => new
+                    {
+                        Id = c.String(nullable: false, maxLength: 100, unicode: false),
+                        ImportacaoId = c.String(maxLength: 100, unicode: false),
+                        Chave = c.String(maxLength: 100, unicode: false),
+                        Titulo = c.String(maxLength: 100, unicode: false),
+                        Descricao = c.String(maxLength: 100, unicode: false),
+                        Detalhe = c.String(maxLength: 100, unicode: false),
+                        DataAgendamento = c.DateTime(nullable: false),
+                        DataEntrega = c.DateTime(nullable: false),
+                        TicketState = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id);
+            
+            CreateTable(
+                "dbo.Feriados",
+                c => new
+                    {
+                        Id = c.String(nullable: false, maxLength: 100, unicode: false),
+                        Titulo = c.String(maxLength: 100, unicode: false),
+                        DataFeriado = c.DateTime(nullable: false),
+                        Ativo = c.Boolean(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id);
+            
         }
         
         public override void Down()
         {
+            DropTable("dbo.Feriados");
+            DropTable("dbo.Tickets");
+            DropTable("dbo.Metricas");
             DropTable("dbo.Usuarios");
             DropTable("dbo.Importacoes");
         }

@@ -17,7 +17,7 @@ namespace Unicasa.Domain.Helper
             foreach (var t in data)
                 sbString.Append(t.ToString("x2"));
 
-            return sbString.ToString();
+            return sbString.ToString().ToUpper();
         }
 
         public static DateTime GetDateTicket(this DateTime dataAgendamento, List<DateTime> feriados, int arg)

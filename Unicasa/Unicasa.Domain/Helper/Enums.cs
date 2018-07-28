@@ -13,4 +13,12 @@
         Agendado = 2,
         Entregue = 3
     }
+
+    public enum RequestMethod
+    {
+        Get = 1,
+        Post = 2,
+        Put = 3,
+        Delete = 4
+    }
 }

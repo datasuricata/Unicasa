@@ -53,6 +53,8 @@
     <Compile Include="Entities\Metricas.cs" />
     <Compile Include="Entities\Ticket.cs" />
     <Compile Include="Entities\Usuario.cs" />
+    <Compile Include="Helper\ApiException.cs" />
+    <Compile Include="Helper\Components.cs" />
     <Compile Include="Helper\Enums.cs" />
     <Compile Include="Helper\UnicasaExtensions.cs" />
     <Compile Include="Interfaces\Repositories\Base\IRepository.cs" />

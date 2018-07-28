@@ -39,8 +39,8 @@ namespace Unicasa.API.Controllers
                     Notification.Add("Verifique as informações e tente novamente");
                     return null;
                 }
-
-                var response = repository.Adicionar(Usuario.Registrar(request));
+                var usuario = Usuario.Registrar(request);
+                var response = repository.Adicionar(usuario);
 
                 if (response == null)
                 {

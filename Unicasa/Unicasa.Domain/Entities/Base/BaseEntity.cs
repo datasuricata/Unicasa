@@ -6,7 +6,7 @@ namespace Unicasa.Domain.Entities.Base
     {
         protected BaseEntity()
         {
-        
+            Id = Guid.NewGuid().ToString().ToUpper();
         }
 
         public string GerarId()

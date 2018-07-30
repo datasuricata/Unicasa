@@ -1,4 +1,5 @@
-﻿
+﻿@model Unicasa.Web.Models.CargaModel
+
 @{
     ViewBag.Title = "Cargas";
     ViewBag.SmallDescription = "Cargas & informações detalhadas";
@@ -37,7 +38,7 @@
                    <p>
                        Clique aqui para criar um novo carregamento.
                    </p>
-                   <a href="@Url.Action("Upload","Carga")" class="btn btn-info">Carregar</a>
+                   <a href="@Url.Action("Upload", "Carga")" class="btn btn-info">Carregar</a>
                 </div>
             </div>
             <!-- END EXAMPLE TABLE PORTLET-->
@@ -58,153 +59,23 @@
                         <thead>
                             <tr>
                                 <th> Cód. </th>
-                                <th> Arquivo </th>
-                                <th> Data Upload </th>
-                                <th> Realizado Por </th>
-                                <th> Observação </th>
+                                <th> Lote </th>
+                                <th> Número Volume</th>
+                                <th> Pedido </th>
+                                <th> UF </th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td> UP22092018 </td>
-                                <td> Carga_19206654 </td>
-                                <td> 22/07/2018 16:00 </td>
-                                <td> Gustavo </td>
-                                <td> Carga da agencia: 2548 </td>
-                            </tr>
-                            <tr>
-                                <td> UP22092018 </td>
-                                <td> Carga_19206654 </td>
-                                <td> 22/07/2018 16:00 </td>
-                                <td> Gustavo </td>
-                                <td> Carga da agencia: 2548 </td>
-                            </tr>
-                            <tr>
-                                <td> UP22092018 </td>
-                                <td> Carga_19206654 </td>
-                                <td> 22/07/2018 16:00 </td>
-                                <td> Gustavo </td>
-                                <td> Carga da agencia: 2548 </td>
-                            </tr>
-                            <tr>
-                                <td> UP22092018 </td>
-                                <td> Carga_19206654 </td>
-                                <td> 22/07/2018 16:00 </td>
-                                <td> Gustavo </td>
-                                <td> Carga da agencia: 2548 </td>
-                            </tr>
-                            <tr>
-                                <td> UP22092018 </td>
-                                <td> Carga_19206654 </td>
-                                <td> 22/07/2018 16:00 </td>
-                                <td> Gustavo </td>
-                                <td> Carga da agencia: 2548 </td>
-                            </tr>
-                            <tr>
-                                <td> UP22092018 </td>
-                                <td> Carga_19206654 </td>
-                                <td> 22/07/2018 16:00 </td>
-                                <td> Gustavo </td>
-                                <td> Carga da agencia: 2548 </td>
-                            </tr>
-                            <tr>
-                                <td> UP22092018 </td>
-                                <td> Carga_19206654 </td>
-                                <td> 22/07/2018 16:00 </td>
-                                <td> Gustavo </td>
-                                <td> Carga da agencia: 2548 </td>
-                            </tr>
-                            <tr>
-                                <td> UP22092018 </td>
-                                <td> Carga_19206654 </td>
-                                <td> 22/07/2018 16:00 </td>
-                                <td> Gustavo </td>
-                                <td> Carga da agencia: 2548 </td>
-                            </tr>
-                            <tr>
-                                <td> UP22092018 </td>
-                                <td> Carga_19206654 </td>
-                                <td> 22/07/2018 16:00 </td>
-                                <td> Gustavo </td>
-                                <td> Carga da agencia: 2548 </td>
-                            </tr>
-                            <tr>
-                                <td> UP22092018 </td>
-                                <td> Carga_19206654 </td>
-                                <td> 22/07/2018 16:00 </td>
-                                <td> Gustavo </td>
-                                <td> Carga da agencia: 2548 </td>
-                            </tr>
-                            <tr>
-                                <td> UP22092018 </td>
-                                <td> Carga_19206654 </td>
-                                <td> 22/07/2018 16:00 </td>
-                                <td> Gustavo </td>
-                                <td> Carga da agencia: 2548 </td>
-                            </tr>
-                            <tr>
-                                <td> UP22092018 </td>
-                                <td> Carga_19206654 </td>
-                                <td> 22/07/2018 16:00 </td>
-                                <td> Gustavo </td>
-                                <td> Carga da agencia: 2548 </td>
-                            </tr>
-                            <tr>
-                                <td> UP22092018 </td>
-                                <td> Carga_19206654 </td>
-                                <td> 22/07/2018 16:00 </td>
-                                <td> Gustavo </td>
-                                <td> Carga da agencia: 2548 </td>
-                            </tr>
-                            <tr>
-                                <td> UP22092018 </td>
-                                <td> Carga_19206654 </td>
-                                <td> 22/07/2018 16:00 </td>
-                                <td> Gustavo </td>
-                                <td> Carga da agencia: 2548 </td>
-                            </tr>
-                            <tr>
-                                <td> UP22092018 </td>
-                                <td> Carga_19206654 </td>
-                                <td> 22/07/2018 16:00 </td>
-                                <td> Gustavo </td>
-                                <td> Carga da agencia: 2548 </td>
-                            </tr>
-                            <tr>
-                                <td> UP22092018 </td>
-                                <td> Carga_19206654 </td>
-                                <td> 22/07/2018 16:00 </td>
-                                <td> Gustavo </td>
-                                <td> Carga da agencia: 2548 </td>
-                            </tr>
-                            <tr>
-                                <td> UP22092018 </td>
-                                <td> Carga_19206654 </td>
-                                <td> 22/07/2018 16:00 </td>
-                                <td> Gustavo </td>
-                                <td> Carga da agencia: 2548 </td>
-                            </tr>
-                            <tr>
-                                <td> UP22092018 </td>
-                                <td> Carga_19206654 </td>
-                                <td> 22/07/2018 16:00 </td>
-                                <td> Gustavo </td>
-                                <td> Carga da agencia: 2548 </td>
-                            </tr>
-                            <tr>
-                                <td> UP22092018 </td>
-                                <td> Carga_19206654 </td>
-                                <td> 22/07/2018 16:00 </td>
-                                <td> Gustavo </td>
-                                <td> Carga da agencia: 2548 </td>
-                            </tr>
-                            <tr>
-                                <td> UP22092018 </td>
-                                <td> Carga_19206654 </td>
-                                <td> 22/07/2018 16:00 </td>
-                                <td> Gustavo </td>
-                                <td> Carga da agencia: 2548 </td>
-                            </tr>
+                            @foreach (var carga in Model.Importacoes)
+                            {
+                                <tr>
+                                    <td> @carga.Id </td>
+                                    <td> @carga.Lote </td>
+                                    <td> @carga.NumVolume </td>
+                                    <td> @carga.Pedido </td>
+                                    <td> @carga.UF </td>
+                                </tr>
+                            }
                         </tbody>
                     </table>
                 </div>

@@ -3,14 +3,13 @@ using Unicasa.Domain.Entities;
 
 namespace Unicasa.API.Persistence.Map
 {
-    public class MapImportacao : EntityTypeConfiguration<Importacao>
+    public class MapCargas : EntityTypeConfiguration<Cargas>
     {
-        public MapImportacao()
+        public MapCargas()
         {
-            ToTable("Importacoes");
+            ToTable("Cargas");
 
             Property(p => p.Id).IsRequired();
-            Property(p => p.CargaId).IsRequired();
         }
     }
 }

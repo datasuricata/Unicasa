@@ -13,7 +13,6 @@ namespace Unicasa.Web.Controllers
 {
     public class UsuarioController : BaseController
     {
-        // GET: User
         public async Task<ActionResult> Index()
         {
             var response = await Get<List<Usuario>>(_Usuario.Listar);
@@ -23,6 +22,55 @@ namespace Unicasa.Web.Controllers
             vm.Perfis = Components.GetDrowdown<UserRole>();
 
             return View(vm);
+        }
+        [HttpPost]
+        public async Task<ActionResult> Create(UsuarioModel vm)
+        {
+
+            var command = vm.Usuario;
+
+            var response = await Post<Usuario>(_Usuario.Adicionar, command);
+
+            if (response == null)
+                SetError("Usuário não criado, tente novamente.");
+
+            else
+                SetSuccess("Usuário: " + command.NomeCompleto + " criado com sucesso.");
+
+            return RedirectToAction("Index");
+        }
+
+        public async Task<ActionResult> Update(string id)
+        {
+            var vm = new UsuarioModel();
+            vm.Perfis = Components.GetDrowdown<UserRole>();
+
+            var request = await GetById<Usuario>(_Usuario.ObterPorId, id);
+
+            if (request == null)
+                SetError("Erro ao obter usuário.");
+
+            vm.Usuario = request;
+
+            return View(vm);
+        }
+        [HttpPost]
+        public async Task<ActionResult> Update(UsuarioModel vm)
+        {
+            var command = vm.Usuario;
+
+            var response = await Post<Usuario>(_Usuario.Editar, command);
+
+            if (response == null)
+                SetError("Usuário não criado, tente novamente.");
+
+            return RedirectToAction("Index");
+        }
+
+        public async Task<ActionResult> Delete(string id)
+        {
+            var response = await GetById<string>(_Usuario.Excluir, id);
+            return RedirectToAction("Index");
         }
     }
 }

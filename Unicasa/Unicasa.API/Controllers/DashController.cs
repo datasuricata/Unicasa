@@ -41,7 +41,7 @@ namespace Unicasa.API.Controllers
                 var request = repositoryTicket.Listar();
 
                 dash.TicketsPendentes = request.Where(x => x.TicketState == TicketState.Agendado).Count();
-                dash.TotalEntrgue= request.Where(x => x.TicketState == TicketState.Entregue).Count();
+                dash.TotalEntrgue = request.Where(x => x.TicketState == TicketState.Entregue).Count();
                 dash.TotalUsuarios = repositoryUsuario.Listar().Count();
 
                 return Request.CreateResponse(HttpStatusCode.OK, dash);

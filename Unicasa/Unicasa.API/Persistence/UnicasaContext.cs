@@ -12,7 +12,10 @@ namespace Unicasa.API.Persistence
 
         public DbSet<Importacao> Importacoes { get; set; }
         public DbSet<Usuario> Usuarios { get; set; }
-
+        public DbSet<Metricas> Metricas { get; set; }
+        public DbSet<Cargas> Cargas { get; set; }
+        public DbSet<Feriados> Feriados { get; set; }
+        public DbSet<Ticket> Tickets { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -24,6 +27,4 @@ namespace Unicasa.API.Persistence
             base.OnModelCreating(modelBuilder);
         }
     }
-
-
 }

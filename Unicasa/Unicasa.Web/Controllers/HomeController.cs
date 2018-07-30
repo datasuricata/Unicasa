@@ -1,26 +1,20 @@
-﻿using System.Web.Mvc;
+﻿using System.Threading.Tasks;
+using System.Web.Mvc;
+using Unicasa.Dashboard.Requests.Endpoints;
+using Unicasa.Domain.Arguments;
+using Unicasa.Web.Controllers.Base;
 
 namespace Unicasa.Web.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
-            return View();
-        }
+            var model = new DashResponse();
 
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
+            model = await Get<DashResponse>(_Dash.Listar);
 
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
+            return View(model);
         }
     }
 }

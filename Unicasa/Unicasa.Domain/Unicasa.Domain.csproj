@@ -43,10 +43,13 @@
   <ItemGroup>
     <Compile Include="Arguments\AutenticarRequest.cs" />
     <Compile Include="Arguments\AutenticarResponse.cs" />
+    <Compile Include="Arguments\Base\BaseResponse.cs" />
     <Compile Include="Arguments\DashResponse.cs" />
     <Compile Include="Arguments\FiltroRequest.cs" />
+    <Compile Include="Arguments\ImportacaoRequest.cs" />
     <Compile Include="Arguments\UsuarioRequest.cs" />
     <Compile Include="Entities\Base\BaseEntity.cs" />
+    <Compile Include="Entities\Cargas.cs" />
     <Compile Include="Entities\Feriados.cs" />
     <Compile Include="Entities\Importacao.cs" />
     <Compile Include="Entities\Gerenciador.cs" />
@@ -61,6 +64,7 @@
     <Compile Include="Interfaces\Repositories\IFeriadosRepository.cs" />
     <Compile Include="Interfaces\Repositories\IImportacaoRepository.cs" />
     <Compile Include="Interfaces\Repositories\IMetricasRepository.cs" />
+    <Compile Include="Interfaces\Repositories\ICargasRepository.cs" />
     <Compile Include="Interfaces\Repositories\ITicketRepository.cs" />
     <Compile Include="Interfaces\Repositories\IUsuarioRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

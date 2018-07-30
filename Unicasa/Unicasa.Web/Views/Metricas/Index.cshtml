@@ -1,4 +1,4 @@
-﻿
+﻿@model Unicasa.Domain.Entities.Metricas
 @{
     ViewBag.Title = "Métricas";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -19,14 +19,16 @@
                 </div>
                 <div class="portlet-body">
                     <!-- BEGIN FORM-->
-                    <form action="#" id="form_sample_3">
+                    @using (Html.BeginForm("Update", "Usuario", FormMethod.Post))
+                    {
+                        @Html.HiddenFor(m => m.Id)
                         <div class="form-body">
                             <div class="form-group form-md-line-input form-md-floating-label edited">
-                                <input type="text" class="form-control edited" name="name" id="form_control_1">
+                                @Html.TextBoxFor(m => m.AgendamentosPorDia, new { @class = "form-control" })
                                 <label for="form_control_1">Quantidade máxima de agendamentos por dia:</label>
                             </div>
                             <div class="form-group form-md-line-input form-md-floating-label">
-                                <input type="text" class="form-control edited" name="name" id="form_control_1">
+                                @Html.TextBoxFor(m => m.DiasMinimosEntrega, new { @class = "form-control" })
                                 <label for="form_control_1">Dias minimos de entrega:</label>
                             </div>
                         </div>
@@ -37,7 +39,7 @@
                                 </div>
                             </div>
                         </div>
-                    </form>
+                    }
                     <!-- END FORM-->
                 </div>
 

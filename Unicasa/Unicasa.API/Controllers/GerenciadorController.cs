@@ -62,7 +62,7 @@ namespace Unicasa.API.Controllers
         {
             try
             {
-                var response = repositoryTickets.Listar();
+                var response = repositoryTickets.Listar().ToList();
                 return await ResponseAsync(response);
             }
             catch (Exception ex)

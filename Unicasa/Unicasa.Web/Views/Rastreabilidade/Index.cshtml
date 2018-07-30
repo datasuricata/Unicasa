@@ -1,4 +1,7 @@
-﻿
+﻿@model Unicasa.Web.Models.TicketsModel
+@using Unicasa.Domain.Helper
+
+
 @{
     ViewBag.Title = "Rastreamento";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -16,10 +19,42 @@
                     <div class="tools"> </div>
                 </div>
                 <div class="portlet-body">
-                    <div class="row">
-                        <div class="col-md-12">
-                        </div>
-                    </div>
+                    <table class="table table-striped table-bordered table-hover" id="sample_1">
+                        <thead>
+                            <tr>
+                                <th> Cód. </th>
+                                <th> Titulo </th>
+                                <th> Descricao</th>
+                                <th> Detalhe </th>
+                                <th> Data Agendamento </th>
+                                <th> Data Entrega </th>
+                                <th> Status </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model.Tickets != null)
+                            {
+                                foreach (var carga in Model.Tickets)
+                                {
+                                    using (Html.BeginForm("Update", "Rastreabilidade", FormMethod.Post))
+                                    {
+                                        <tr>
+                                            @Html.HiddenFor(c => carga.Id)
+                                            <td> @carga.Chave </td>
+                                            <td> @Html.TextBoxFor(c => carga.Titulo, new { @class = "form-control" }) </td>
+                                            <td> @Html.TextBoxFor(c => carga.Descricao, new { @class = "form-control" }) </td>
+                                            <td> @Html.TextBoxFor(c => carga.Detalhe, new { @class = "form-control" }) </td>
+                                            <td> @Html.EditorFor(c => carga.DataAgendamento)</td>
+                                            <td> @Html.EditorFor(c => carga.DataEntrega)</td>
+                                            <td>
+                                                @Html.DropDownList("Tickets.TicketState", new SelectList(Enum.GetValues(typeof(TicketState))), "Selecione", new { @class = "form-control" })
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            }
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>

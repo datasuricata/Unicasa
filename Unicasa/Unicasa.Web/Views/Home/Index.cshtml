@@ -1,4 +1,6 @@
-﻿@{
+﻿@model Unicasa.Domain.Arguments.DashResponse
+
+@{
     ViewBag.Title = "Dashboard";
     ViewBag.SmallDescription = "Dashboard & informações gerais";
 }
@@ -21,27 +23,27 @@
                     <div class="portlet-body">
                         <div class="row list-separated text-center">
                             <div class="col-md-3 col-sm-3 col-xs-6">
-                                <div class="font-grey-mint font-sm"> Total Entradas </div>
+                                <div class="font-grey-mint font-sm"> Tickets Pendentes </div>
                                 <div class="uppercase font-hg font-red-flamingo">
-                                    13760
+                                    @Model.TicketsPendentes
                                 </div>
                             </div>
                             <div class="col-md-3 col-sm-3 col-xs-6">
                                 <div class="font-grey-mint font-sm"> Total de Agendamentos </div>
                                 <div class="uppercase font-hg theme-font">
-                                    4760
+                                    @Model.TotalAgendado
                                 </div>
                             </div>
                             <div class="col-md-3 col-sm-3 col-xs-6">
-                                <div class="font-grey-mint font-sm"> Entregas </div>
+                                <div class="font-grey-mint font-sm"> Total Entregas </div>
                                 <div class="uppercase font-hg font-purple">
-                                    11760
+                                    @Model.TotalEntrgue
                                 </div>
                             </div>
                             <div class="col-md-3 col-sm-3 col-xs-6">
                                 <div class="font-grey-mint font-sm"> Usuários Ativos </div>
                                 <div class="uppercase font-hg font-blue-sharp">
-                                    15
+                                    @Model.TotalUsuarios
                                 </div>
                             </div>
                         </div>

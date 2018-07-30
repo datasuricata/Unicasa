@@ -195,11 +195,16 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201807270644184_FirstMigration.cs" />
-    <Compile Include="Migrations\201807270644184_FirstMigration.Designer.cs">
-      <DependentUpon>201807270644184_FirstMigration.cs</DependentUpon>
+    <Compile Include="Migrations\201807300526022_FirstMigration.cs" />
+    <Compile Include="Migrations\201807300526022_FirstMigration.Designer.cs">
+      <DependentUpon>201807300526022_FirstMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201807300553220_FirstMigration2.cs" />
+    <Compile Include="Migrations\201807300553220_FirstMigration2.Designer.cs">
+      <DependentUpon>201807300553220_FirstMigration2.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Persistence\Map\MapCargas.cs" />
     <Compile Include="Persistence\Map\MapMetrica.cs" />
     <Compile Include="Persistence\Map\MapTicket.cs" />
     <Compile Include="Persistence\Map\MapImportacao.cs" />
@@ -209,6 +214,7 @@
     <Compile Include="Persistence\Repositories\RepositoriyFeriado.cs" />
     <Compile Include="Persistence\Repositories\RepositoryImportacao.cs" />
     <Compile Include="Persistence\Repositories\RepositoryMetricas.cs" />
+    <Compile Include="Persistence\Repositories\RepositoryCargas.cs" />
     <Compile Include="Persistence\Repositories\RepositoryTickets.cs" />
     <Compile Include="Persistence\Repositories\RepositoryUsuario.cs" />
     <Compile Include="Persistence\UnicasaContext.cs" />
@@ -229,7 +235,6 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\Unicasa.Domain\Unicasa.Domain.csproj">
       <Project>{BD76BE8F-6962-4330-80A8-902A86883F1D}</Project>
@@ -237,8 +242,11 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201807270644184_FirstMigration.resx">
-      <DependentUpon>201807270644184_FirstMigration.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201807300526022_FirstMigration.resx">
+      <DependentUpon>201807300526022_FirstMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201807300553220_FirstMigration2.resx">
+      <DependentUpon>201807300553220_FirstMigration2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

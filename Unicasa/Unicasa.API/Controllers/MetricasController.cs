@@ -78,7 +78,7 @@ namespace Unicasa.API.Controllers
         }
 
         [Route("adicionar")]
-        [HttpGet]
+        [HttpPost]
         public async Task<HttpResponseMessage> Adicionar(Metricas request)
         {
             try

@@ -8,6 +8,29 @@ namespace Unicasa.API.Migrations
         public override void Up()
         {
             CreateTable(
+                "dbo.Cargas",
+                c => new
+                    {
+                        Id = c.String(nullable: false, maxLength: 100, unicode: false),
+                        UsuarioImportacao = c.String(maxLength: 100, unicode: false),
+                        NomeArquivo = c.String(maxLength: 100, unicode: false),
+                        DataProcessamento = c.DateTime(nullable: false),
+                        Observacao = c.String(maxLength: 100, unicode: false),
+                    })
+                .PrimaryKey(t => t.Id);
+            
+            CreateTable(
+                "dbo.Feriados",
+                c => new
+                    {
+                        Id = c.String(nullable: false, maxLength: 100, unicode: false),
+                        Titulo = c.String(maxLength: 100, unicode: false),
+                        DataFeriado = c.DateTime(nullable: false),
+                        Ativo = c.Boolean(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id);
+            
+            CreateTable(
                 "dbo.Importacoes",
                 c => new
                     {
@@ -36,20 +59,9 @@ namespace Unicasa.API.Migrations
                         Esteira = c.String(maxLength: 100, unicode: false),
                         Expedicao = c.String(maxLength: 100, unicode: false),
                         CpfCnpj = c.String(maxLength: 100, unicode: false),
+                        CargaId = c.String(nullable: false, maxLength: 100, unicode: false),
                         Entregue = c.Boolean(nullable: false),
                         Agendado = c.Boolean(nullable: false),
-                    })
-                .PrimaryKey(t => t.Id);
-            
-            CreateTable(
-                "dbo.Usuarios",
-                c => new
-                    {
-                        Id = c.String(nullable: false, maxLength: 100, unicode: false),
-                        NomeCompleto = c.String(maxLength: 100, unicode: false),
-                        Email = c.String(maxLength: 100, unicode: false),
-                        Senha = c.String(maxLength: 100, unicode: false),
-                        UserRole = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.Id);
             
@@ -80,13 +92,14 @@ namespace Unicasa.API.Migrations
                 .PrimaryKey(t => t.Id);
             
             CreateTable(
-                "dbo.Feriados",
+                "dbo.Usuarios",
                 c => new
                     {
                         Id = c.String(nullable: false, maxLength: 100, unicode: false),
-                        Titulo = c.String(maxLength: 100, unicode: false),
-                        DataFeriado = c.DateTime(nullable: false),
-                        Ativo = c.Boolean(nullable: false),
+                        NomeCompleto = c.String(maxLength: 100, unicode: false),
+                        Email = c.String(maxLength: 100, unicode: false),
+                        Senha = c.String(maxLength: 100, unicode: false),
+                        UserRole = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.Id);
             
@@ -94,11 +107,12 @@ namespace Unicasa.API.Migrations
         
         public override void Down()
         {
-            DropTable("dbo.Feriados");
+            DropTable("dbo.Usuarios");
             DropTable("dbo.Tickets");
             DropTable("dbo.Metricas");
-            DropTable("dbo.Usuarios");
             DropTable("dbo.Importacoes");
+            DropTable("dbo.Feriados");
+            DropTable("dbo.Cargas");
         }
     }
 }

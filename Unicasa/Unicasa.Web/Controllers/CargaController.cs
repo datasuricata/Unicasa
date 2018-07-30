@@ -1,11 +1,13 @@
-﻿using LINQtoCSV;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using Unicasa.Dashboard.Requests.Endpoints;
+using Unicasa.Domain.Arguments;
+using Unicasa.Domain.Arguments.Base;
 using Unicasa.Domain.Entities;
 using Unicasa.Web.Controllers.Base;
 using Unicasa.Web.Models;
@@ -14,12 +16,15 @@ namespace Unicasa.Web.Controllers
 {
     public class CargaController : BaseController
     {
-        // GET: Relatorio
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
             var vm = new CargaModel();
 
-            //get list view
+            vm.Importacoes = new List<Importacao>();
+            var request = await Get<ImportacaoRequest>(_Importacao.Listar);
+
+            if (request.Importacoes != null)
+                vm.Importacoes = request.Importacoes.ToList();
 
             return View(vm);
         }
@@ -31,21 +36,25 @@ namespace Unicasa.Web.Controllers
 
             return View(vm);
         }
-
         [HttpPost]
-        public ActionResult Upload(CargaModel vm, HttpPostedFileBase attachmentcsv)
+        public async Task<ActionResult> Upload(CargaModel vm, HttpPostedFileBase attachmentcsv)
         {
             if (attachmentcsv == null)
                 return View();
 
             vm.Importacoes = new List<Importacao>();
 
-            StreamReader streamReader = new StreamReader(attachmentcsv.InputStream);
+            StreamReader stream = new StreamReader(attachmentcsv.InputStream);
 
+            var carga = new Cargas()
+            {
+                NomeArquivo = attachmentcsv.FileName,
+                UsuarioImportacao = Environment.UserName.ToString(),
+                Observacao = vm.Observacoes
+            };
             var lista = new List<string>();
 
-            //Read the contents of CSV file.
-            using (var file = streamReader)
+            using (var file = stream)
             {
                 var line = string.Empty;
 
@@ -53,9 +62,9 @@ namespace Unicasa.Web.Controllers
                 {
                     lista.Add(line);
                 }
-            }
 
-            //Execute a loop over the rows.
+
+            }
             foreach (string row in lista)
             {
                 if (!string.IsNullOrEmpty(row))
@@ -85,10 +94,24 @@ namespace Unicasa.Web.Controllers
                         Fechamento = row.Split('|')[20],
                         Esteira = row.Split('|')[21],
                         Expedicao = row.Split('|')[22],
-                        CpfCnpj = row.Split('|')[23]
+                        CpfCnpj = row.Split('|')[23],
+                        Agendado = false,
+                        Entregue = false,
+                        CargaId = carga.Id,
                     });
                 }
             }
+
+            var importacao = new ImportacaoRequest()
+            {
+                Importacoes = vm.Importacoes,
+                Carga = carga
+            };
+
+            var request = await Post<BaseResponse>(_Importacao.Importar, importacao);
+
+            if (request == null)
+                SetError("Falha na importação");
 
             return Redirect("Upload");
         }

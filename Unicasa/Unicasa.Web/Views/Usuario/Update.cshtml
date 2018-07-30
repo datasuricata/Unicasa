@@ -1,0 +1,24 @@
+﻿@model Unicasa.Web.Models.UsuarioModel
+@using Unicasa.Domain.Helper
+
+@{
+    Layout = null;
+}
+
+@using (Html.BeginForm("Update", "Usuario", FormMethod.Post))
+{
+    @Html.HiddenFor(m => m.Usuario.Id)
+    <h4>Informe todos os dados para criar um novo usuario</h4>
+    <p>
+        <h6>NOME:</h6>
+        @Html.TextBoxFor(m => m.Usuario.NomeCompleto, new { @class = "form-control" })
+    </p>
+    <p>
+        <h6>PERFIL:</h6>
+        @Html.DropDownList("Usuario.UserRole", new SelectList(Enum.GetValues(typeof(UserRole))), "Selecione", new { @class = "form-control" })
+    </p>
+    <p>
+        <h6>EMAIL:</h6>
+        @Html.TextBoxFor(m => m.Usuario.Email, new { @class = "form-control" })
+    </p>
+}

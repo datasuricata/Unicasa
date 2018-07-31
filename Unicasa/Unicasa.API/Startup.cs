@@ -7,9 +7,11 @@ using System.Globalization;
 using System.Threading;
 using System.Web.Http;
 using Unicasa.Api.Startups;
-using Unicasa.API.DI;
+using Unicasa.API;
 using Unicasa.API.Security;
 using Unity;
+
+[assembly: OwinStartup(typeof(Startup))]
 
 namespace Unicasa.API
 {

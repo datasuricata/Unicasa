@@ -35,22 +35,9 @@ namespace Unicasa.API.Security
                 //IUsuarioService serviceUsuario = _container.Resolve<IUsuarioService>();
                 IUsuarioRepository repository = _container.Resolve<IUsuarioRepository>();
 
-                var request = new AutenticarRequest();
-
-                request.Email = context.UserName;
-                request.Senha = context.Password;
+                var request = repository.ObterPor(x => x.Email == context.UserName && x.Senha == context.Password);
 
                 if (request == null)
-                {
-                    context.SetError("invalid_grant", "Dados invalidos!");
-                    return;
-                }
-
-                var usuario = new Usuario(request.Email, request.Senha);
-
-                usuario = repository.ObterPor(x => x.Email == usuario.Email && x.Senha == usuario.Senha);
-
-                if (usuario == null)
                 {
                     context.SetError("invalid_grant", "Usuario não encontrado!");
                     return;
@@ -59,7 +46,7 @@ namespace Unicasa.API.Security
                 var identity = new ClaimsIdentity(context.Options.AuthenticationType);
 
                 //Definindo as Claims
-                identity.AddClaim(new Claim("Usuario", JsonConvert.SerializeObject(usuario)));
+                identity.AddClaim(new Claim("Usuario", JsonConvert.SerializeObject(request)));
 
                 var principal = new GenericPrincipal(identity, new string[] { });
 

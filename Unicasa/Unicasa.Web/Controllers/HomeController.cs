@@ -12,7 +12,8 @@ namespace Unicasa.Web.Controllers
         {
             var model = new DashResponse();
 
-            model = await Get<DashResponse>(_Dash.Listar);
+            var request = await Get<DashResponse>(_Dash.Listar);
+            model = request;
 
             return View(model);
         }

@@ -21,10 +21,10 @@ namespace Unicasa.Web.Controllers
             var vm = new CargaModel();
 
             vm.Importacoes = new List<Importacao>();
-            var request = await Get<ImportacaoRequest>(_Importacao.Listar);
+            var request = await Get<ImportacaoResponse>(_Importacao.ListarCargas);
 
-            if (request.Importacoes != null)
-                vm.Importacoes = request.Importacoes.ToList();
+            if (request != null)
+                vm.Cargas = request.Cargas;
 
             return View(vm);
         }
@@ -95,7 +95,7 @@ namespace Unicasa.Web.Controllers
                         Esteira = row.Split('|')[21],
                         Expedicao = row.Split('|')[22],
                         CpfCnpj = row.Split('|')[23],
-                        Agendado = false,
+                        Importado = false,
                         Entregue = false,
                         CargaId = carga.Id,
                     });
@@ -114,6 +114,25 @@ namespace Unicasa.Web.Controllers
                 SetError("Falha na importação");
 
             return Redirect("Upload");
+        }
+
+        public async Task<ActionResult> Sincronizar(string id)
+        {
+            if (id == null)
+            {
+                SetError("Id é vazio");
+                return RedirectToAction("Index");
+            }
+
+            var request = await GetById<bool>(_Gerenciador.Sincronizar, id);
+
+            if (!request)
+            {
+                SetError("Erro sincronizar tickets");
+                return RedirectToAction("Index");
+            }
+
+            return RedirectToAction("Index", "Rastreabilidade");
         }
     }
 }

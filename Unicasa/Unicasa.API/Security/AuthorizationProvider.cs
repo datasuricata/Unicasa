@@ -6,7 +6,10 @@ using System.Security.Claims;
 using System.Security.Principal;
 using System.Threading;
 using System.Threading.Tasks;
+using Unicasa.API.Persistence.Repositories;
 using Unicasa.Domain.Arguments;
+using Unicasa.Domain.Entities;
+using Unicasa.Domain.Interfaces.Repositories;
 using Unity;
 
 namespace Unicasa.API.Security
@@ -30,34 +33,33 @@ namespace Unicasa.API.Security
             try
             {
                 //IUsuarioService serviceUsuario = _container.Resolve<IUsuarioService>();
-
+                IUsuarioRepository repository = _container.Resolve<IUsuarioRepository>();
 
                 var request = new AutenticarRequest();
 
                 request.Email = context.UserName;
                 request.Senha = context.Password;
 
-                //var response = serviceUsuario.AutenticarUsuario(request);
+                if (request == null)
+                {
+                    context.SetError("invalid_grant", "Dados invalidos!");
+                    return;
+                }
 
-                //if (serviceUsuario.IsInvalid())
-                //{
-                //    if (response == null)
-                //    {
-                //        context.SetError("invalid_grant", "Preencha um e-mail válido e uma senha com pelo menos 6 caracteres.");
-                //        return;
-                //    }
-                //}
+                var usuario = new Usuario(request.Email, request.Senha);
 
-                //if (response == null)
-                //{
-                //    context.SetError("invalid_grant", "Usuario não encontrado!");
-                //    return;
-                //}
+                usuario = repository.ObterPor(x => x.Email == usuario.Email && x.Senha == usuario.Senha);
+
+                if (usuario == null)
+                {
+                    context.SetError("invalid_grant", "Usuario não encontrado!");
+                    return;
+                }
 
                 var identity = new ClaimsIdentity(context.Options.AuthenticationType);
 
                 //Definindo as Claims
-               // identity.AddClaim(new Claim("Usuario", JsonConvert.SerializeObject(response)));
+                identity.AddClaim(new Claim("Usuario", JsonConvert.SerializeObject(usuario)));
 
                 var principal = new GenericPrincipal(identity, new string[] { });
 

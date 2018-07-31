@@ -125,20 +125,58 @@ namespace Unicasa.API.Controllers
             }
         }
 
-        [Route("listar/cargas")]
+        [Route("cargas")]
+        [HttpGet]
         public async Task<HttpResponseMessage> ListarCargas()
         {
             try
             {
-                var response = repositoryCargas.Listar().ToList();
+                var listar = repositoryCargas.Listar().ToList();
 
-                if (response == null)
+                if (listar == null)
                 {
                     Notification.Add("Erro ao listar dados no banco, tente novamente");
                     return null;
                 }
 
+                var response = new ImportacaoResponse(listar);
                 return await ResponseAsync(response);
+            }
+            catch (Exception ex)
+            {
+                return await ResponseExceptionAsync(ex);
+            }
+        }
+
+        [Route("excluir")]
+        [HttpDelete]
+        public async Task<HttpResponseMessage> ExcluirCarga(string id)
+        {
+            try
+            {
+                if (id == null)
+                {
+                    Notification.Add("Verifique as informações e tente novamente");
+                    return null;
+                }
+
+                bool removido = false;
+
+                var carga = repositoryCargas.ObterPorId(id);
+                var importacoes = repositoryImportacao.ListarPor(x => x.CargaId == id).ToList();
+
+                if (importacoes != null)
+                {
+                    importacoes.ForEach(x =>
+                    {
+                        repositoryImportacao.Remover(x);
+                    });
+
+                    repositoryCargas.Remover(carga);
+                    removido = true;
+                }
+
+                return await ResponseAsync(removido);
             }
             catch (Exception ex)
             {

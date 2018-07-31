@@ -9,5 +9,6 @@ namespace Unicasa.Domain.Arguments
         public string Chave { get; set; }
         public DateTime DataAgendamento { get; set; }
         public DateTime DataEntrega { get; set; }
+        public DatePeriod DataPeriodo { get; set; }
     }
 }

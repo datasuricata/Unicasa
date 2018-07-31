@@ -45,8 +45,10 @@
     <Compile Include="Arguments\AutenticarResponse.cs" />
     <Compile Include="Arguments\Base\BaseResponse.cs" />
     <Compile Include="Arguments\DashResponse.cs" />
+    <Compile Include="Arguments\FiltroResponse.cs" />
     <Compile Include="Arguments\FiltroRequest.cs" />
     <Compile Include="Arguments\ImportacaoRequest.cs" />
+    <Compile Include="Arguments\ImportacaoResponse.cs" />
     <Compile Include="Arguments\UsuarioRequest.cs" />
     <Compile Include="Entities\Base\BaseEntity.cs" />
     <Compile Include="Entities\Cargas.cs" />

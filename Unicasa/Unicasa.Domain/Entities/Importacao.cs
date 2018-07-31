@@ -63,6 +63,6 @@ namespace Unicasa.Domain.Entities
         public string CpfCnpj { get; set; }
         public string CargaId { get; set; }
         public bool Entregue { get; set; }
-        public bool Agendado { get; set; }
+        public bool Importado { get; set; }
     }
 }

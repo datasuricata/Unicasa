@@ -3,7 +3,7 @@ namespace Unicasa.API.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class FirstMigration : DbMigration
+    public partial class firstmigration : DbMigration
     {
         public override void Up()
         {
@@ -61,7 +61,7 @@ namespace Unicasa.API.Migrations
                         CpfCnpj = c.String(maxLength: 100, unicode: false),
                         CargaId = c.String(nullable: false, maxLength: 100, unicode: false),
                         Entregue = c.Boolean(nullable: false),
-                        Agendado = c.Boolean(nullable: false),
+                        Importado = c.Boolean(nullable: false),
                     })
                 .PrimaryKey(t => t.Id);
             
@@ -85,8 +85,8 @@ namespace Unicasa.API.Migrations
                         Titulo = c.String(maxLength: 100, unicode: false),
                         Descricao = c.String(maxLength: 100, unicode: false),
                         Detalhe = c.String(maxLength: 100, unicode: false),
-                        DataAgendamento = c.DateTime(nullable: false),
-                        DataEntrega = c.DateTime(nullable: false),
+                        DataAgendamento = c.DateTime(),
+                        DataEntrega = c.DateTime(),
                         TicketState = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.Id);

@@ -24,7 +24,6 @@ namespace Unicasa.Domain.Helper
         {
             bool valida = true;
             List<ComponenteData> datas = new List<ComponenteData>();
-
             datas.Add(new ComponenteData(1, dataAgendamento, true));
 
             for (int i = 1; i >= arg; i++)

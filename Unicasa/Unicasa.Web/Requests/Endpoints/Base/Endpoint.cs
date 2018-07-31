@@ -7,7 +7,7 @@
         /// All Endpoint Infos
         /// </summary>
         public const string Base = "api/";
-        public const string Dash = Base + "dash/";
+        public const string Dash = Base + "info/";
         public const string Feriado = Base + "feriado/";
         public const string Importacao = Base + "importacao/";
         public const string Metricas = Base + "metricas/";

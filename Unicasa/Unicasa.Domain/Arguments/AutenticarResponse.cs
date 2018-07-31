@@ -11,7 +11,7 @@ namespace Unicasa.Domain.Arguments
 
         public static explicit operator AutenticarResponse(Usuario v)
         {
-            return new AutenticarResponse() { Id = v.Id, Message = "Usuario criaado com sucesso" };
+            return new AutenticarResponse() { Id = v.Id, Message = "Usuario criado com sucesso" };
         }
     }
 }

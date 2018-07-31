@@ -178,9 +178,7 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
-    <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\SwaggerConfig.cs" />
     <Compile Include="Controllers\Base\ControllerBase.cs" />
     <Compile Include="Controllers\MetricasController.cs" />
@@ -195,13 +193,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201807300526022_FirstMigration.cs" />
-    <Compile Include="Migrations\201807300526022_FirstMigration.Designer.cs">
-      <DependentUpon>201807300526022_FirstMigration.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201807300553220_FirstMigration2.cs" />
-    <Compile Include="Migrations\201807300553220_FirstMigration2.Designer.cs">
-      <DependentUpon>201807300553220_FirstMigration2.cs</DependentUpon>
+    <Compile Include="Migrations\201807310410022_firstmigration.cs" />
+    <Compile Include="Migrations\201807310410022_firstmigration.Designer.cs">
+      <DependentUpon>201807310410022_firstmigration.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Persistence\Map\MapCargas.cs" />
@@ -242,11 +236,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201807300526022_FirstMigration.resx">
-      <DependentUpon>201807300526022_FirstMigration.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201807300553220_FirstMigration2.resx">
-      <DependentUpon>201807300553220_FirstMigration2.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201807310410022_firstmigration.resx">
+      <DependentUpon>201807310410022_firstmigration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -8,6 +8,7 @@ namespace Unicasa.Dashboard.Requests.Endpoints
         public const string Filtrar = Endpoint.Gerenciador + "filtrar";
         public const string ObterPorId = Endpoint.Gerenciador + "obterPorId";
         public const string Adicionar = Endpoint.Gerenciador + "adicionar/ticket";
-        public const string editar = Endpoint.Gerenciador + "editar";
+        public const string Editar = Endpoint.Gerenciador + "editar";
+        public const string Sincronizar = Endpoint.Gerenciador + "sincronizar/tickets";
     }
 }

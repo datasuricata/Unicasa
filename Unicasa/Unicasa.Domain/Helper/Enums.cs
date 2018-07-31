@@ -21,4 +21,12 @@
         Put = 3,
         Delete = 4
     }
+
+    public enum DatePeriod
+    {
+        Selecione = 0,
+        Semanal = 1,
+        Quinzenal = 15,
+        Mensal = 30
+    }
 }

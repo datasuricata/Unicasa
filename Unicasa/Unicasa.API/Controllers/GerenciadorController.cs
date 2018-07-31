@@ -39,7 +39,7 @@ namespace Unicasa.API.Controllers
         }
 
         [Route("obterPorId")]
-        [HttpGet]
+        [HttpGet] //Retorna GerenciadorResponse
         public async Task<HttpResponseMessage> ObterPorId(string id)
         {
             try
@@ -50,7 +50,13 @@ namespace Unicasa.API.Controllers
                     return null;
                 }
 
-                var response = repositoryTickets.ObterPorId(id);
+                var ticket = repositoryTickets.ObterPorId(id);
+
+                var response = new GerenciadorResponse()
+                {
+                    Ticket = ticket
+                };
+
                 return await ResponseAsync(response);
             }
             catch (Exception ex)
@@ -60,12 +66,18 @@ namespace Unicasa.API.Controllers
         }
 
         [Route("listar")]
-        [HttpGet]
+        [HttpGet] //Retorna GerenciadorResponse
         public async Task<HttpResponseMessage> Listar()
         {
             try
             {
-                var response = repositoryTickets.Listar().ToList();
+                var tickets = repositoryTickets.Listar().ToList();
+
+                var response = new GerenciadorResponse()
+                {
+                    Tickets = tickets
+                };
+
                 return await ResponseAsync(response);
             }
             catch (Exception ex)
@@ -75,7 +87,7 @@ namespace Unicasa.API.Controllers
         }
 
         [Route("filtrar")]
-        [HttpPost]
+        [HttpPost] //Retorna FiltroResponse
         public async Task<HttpResponseMessage> Filtrar(FiltroRequest request)
         {
             try
@@ -108,8 +120,8 @@ namespace Unicasa.API.Controllers
         }
 
         [Route("adicionar/ticket")]
-        [HttpPost]
-        public async Task<HttpResponseMessage> Adicionar(Ticket request)
+        [HttpPost] //Retorna GerenciadorResponse
+        public async Task<HttpResponseMessage> Adicionar(GerenciadorRequest request)
         {
             try
             {
@@ -119,14 +131,19 @@ namespace Unicasa.API.Controllers
                     return null;
                 }
 
-                request = ValidaEntrada(request);
-                var response = repositoryTickets.Adicionar(request);
+                request.Ticket = ValidaEntrada(request.Ticket);
+                var ticket = repositoryTickets.Adicionar(request.Ticket);
 
-                if (response == null)
+                if (ticket == null)
                 {
                     Notification.Add("O Ticket não foi criado, tente novamente");
                     return null;
                 }
+
+                var response = new GerenciadorResponse()
+                {
+                    Ticket = ticket
+                };
 
                 return await ResponseAsync(response);
             }
@@ -137,8 +154,8 @@ namespace Unicasa.API.Controllers
         }
 
         [Route("editar")]
-        [HttpPut]
-        public async Task<HttpResponseMessage> Editar(Ticket request)
+        [HttpPut] //Retorna GerenciadorResponse
+        public async Task<HttpResponseMessage> Editar(GerenciadorRequest request)
         {
             try
             {
@@ -148,15 +165,20 @@ namespace Unicasa.API.Controllers
                     return null;
                 }
 
-                var response = repositoryTickets.Editar(request);
+                request.Ticket = ValidaEntrada(request.Ticket);
 
-                if (response == null)
+                var ticket = repositoryTickets.Editar(request.Ticket);
+
+                if (ticket == null)
                 {
-                    Notification.Add("O Ticket não foi salvo no banco, tente novamente");
+                    Notification.Add("O Ticket não alterado e salvo no banco, tente novamente");
                     return null;
                 }
 
-                Notification.Add("Ticket Alterado");
+                var response = new GerenciadorResponse()
+                {
+                    Ticket = ticket
+                };
 
                 return await ResponseAsync(response);
             }
@@ -167,7 +189,7 @@ namespace Unicasa.API.Controllers
         }
 
         [Route("sincronizar/tickets")]
-        [HttpGet]
+        [HttpGet] //Retorna Bool
         public async Task<HttpResponseMessage> Sincronizar(string id)
         {
             try
@@ -227,42 +249,25 @@ namespace Unicasa.API.Controllers
             }
         }
 
-        [Route("app/entrega")]
-        [HttpPost]
-        public async Task<HttpResponseMessage> AppEntrega(List<string> request)
+        [Route("app/GetByChave")]
+        [HttpGet] //Retorna GerenciadorResponse
+        public async Task<HttpResponseMessage> AppGetChave(string id)
         {
             try
             {
-                if (request == null)
+                if (id == null)
                 {
                     Notification.Add("Verifique as informações e tente novamente");
                     return null;
                 }
 
-                //todo refatorar
-                var response = repositoryTickets.Listar().ToList();
+                var tickets = repositoryTickets.ListarPor(x => x.Chave == id).ToList();
 
-                response.ForEach(x =>
+
+                var response = new GerenciadorResponse()
                 {
-                    request.ForEach(s =>
-                    {
-                        if (x.Chave == s)
-                        {
-                            x.DataEntrega = DateTime.Now;
-                            x.TicketState = TicketState.Entregue;
-                        }
-                    });
-                });
-
-                IEnumerable<Ticket> tickets = response;
-
-                var update = repositoryTickets.AdicionarLista(tickets);
-
-                if (update == null)
-                {
-                    Notification.Add("Os Ticket não foram atualizados no banco, tente novamente");
-                    return null;
-                }
+                    Tickets = tickets
+                };
 
                 return await ResponseAsync(response);
             }
@@ -272,8 +277,64 @@ namespace Unicasa.API.Controllers
             }
         }
 
+        [Route("app/entrega")]
+        [HttpPost] //Retorna GerenciadorResponse
+        public async Task<HttpResponseMessage> AppEntrega(GerenciadorRequest request)
+        {
+            try
+            {
+                if (request == null)
+                {
+                    Notification.Add("Verifique as informações e tente novamente");
+                    return null;
+                }
+
+                if (!request.TicketIds.Any())
+                {
+                    Notification.Add("Verifique as informações e tente novamente");
+                    return null;
+                }
+
+                //todo refatorar
+                var lista = repositoryTickets.Listar().ToList();
+
+                lista.ForEach(x =>
+                {
+                    request.TicketIds.ForEach(s =>
+                    {
+                        if (x.Chave == s)
+                        {
+                            x.DataEntrega = DateTime.Now;
+                            x.TicketState = TicketState.Entregue;
+                        }
+                    });
+                });
+
+                IEnumerable<Ticket> entidades = lista;
+
+                var tickets = repositoryTickets.AdicionarLista(entidades);
+
+                if (tickets == null)
+                {
+                    Notification.Add("Os Ticket não foram atualizados no banco, tente novamente");
+                    return null;
+                }
+
+                var response = new GerenciadorResponse()
+                {
+                    Tickets = tickets.ToList()
+                };
+
+                return await ResponseAsync(lista);
+            }
+            catch (Exception ex)
+            {
+                return await ResponseExceptionAsync(ex);
+            }
+        }
+
         [Route("app/filtrar")]
-        [HttpPost]
+        [HttpPost] //Retorna FiltroResponse
         public async Task<HttpResponseMessage> AppFiltrar(FiltroRequest request)
         {
             try
@@ -298,34 +359,6 @@ namespace Unicasa.API.Controllers
                 };
 
                 return await ResponseAsync(filtrado);
-            }
-            catch (Exception ex)
-            {
-                return await ResponseExceptionAsync(ex);
-            }
-        }
-
-        [Route("app/GetByChave")]
-        [HttpGet]
-        public async Task<HttpResponseMessage> AppGetChave(string id)
-        {
-            try
-            {
-                if (id == null)
-                {
-                    Notification.Add("Verifique as informações e tente novamente");
-                    return null;
-                }
-
-                var response = repositoryTickets.ListarPor(x => x.Chave == id).ToList();
-
-
-                var filtro = new FiltroResponse()
-                {
-                    Tickets = response
-                };
-
-                return await ResponseAsync(filtro);
             }
             catch (Exception ex)
             {

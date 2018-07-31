@@ -183,5 +183,34 @@ namespace Unicasa.API.Controllers
                 return await ResponseExceptionAsync(ex);
             }
         }
+
+        [Route("GetById")]
+        [HttpGet]
+        public async Task<HttpResponseMessage> GetById(string id)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(id))
+                {
+                    Notification.Add("Id não pode ser vazio.");
+                    return null;
+                }
+
+                var response = repositoryImportacao.ObterPorId(id);
+
+                if (response == null)
+                {
+                    Notification.Add("Importação não localizada.");
+                    return null;
+                }
+
+                return await ResponseAsync(response);
+
+            }
+            catch (Exception ex)
+            {
+                return await ResponseExceptionAsync(ex);
+            }
+        }
     }
 }

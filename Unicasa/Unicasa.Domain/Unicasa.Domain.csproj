@@ -47,6 +47,8 @@
     <Compile Include="Arguments\DashResponse.cs" />
     <Compile Include="Arguments\FiltroResponse.cs" />
     <Compile Include="Arguments\FiltroRequest.cs" />
+    <Compile Include="Arguments\GerenciadorRequest.cs" />
+    <Compile Include="Arguments\GerenciadorResponse.cs" />
     <Compile Include="Arguments\ImportacaoRequest.cs" />
     <Compile Include="Arguments\ImportacaoResponse.cs" />
     <Compile Include="Arguments\UsuarioRequest.cs" />

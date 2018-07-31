@@ -366,6 +366,61 @@ namespace Unicasa.API.Controllers
             }
         }
 
+        [Route("app/filtrar/importacoes")]
+        [HttpPost] //Retorna FilterGerenciadorResponse
+        public async Task<HttpResponseMessage> AppFiltrarImportacoes(FiltroRequest request)
+        {
+            try
+            {
+                if (request == null)
+                {
+                    Notification.Add("Verifique as informações e tente novamente");
+                    return null;
+                }
+
+                var filtrado = new GerenciadorResponse();
+                var lista = new List<FilterGerenciadorResponse>();
+
+                var response = Filtro(request);
+
+                if (response == null)
+                {
+                    Notification.Add("Ocorreu um erro ao aplicar o filtro, contate o suporte");
+                    return null;
+                }
+
+                var importacoes = repositoryImportacao.Listar().ToList();
+
+                if (importacoes == null)
+                {
+                    Notification.Add("Ocorreu um erro ao aplicar o filtro, contate o suporte");
+                    return null;
+                }
+
+                foreach (var importacao in importacoes)
+                {
+                    foreach (var ticket in response)
+                    {
+                        if (ticket.ImportacaoId == importacao.Id)
+                        {
+                            var filtro = new FilterGerenciadorResponse();
+                            filtro.Ticket = ticket;
+                            filtro.Importacao = importacao;
+                            lista.Add(filtro);
+                        }
+                    }
+                }
+
+                filtrado.Filtrados = lista;
+
+                return await ResponseAsync(filtrado);
+            }
+            catch (Exception ex)
+            {
+                return await ResponseExceptionAsync(ex);
+            }
+        }
+
         #region [ Privates ]
 
         private Ticket ValidaEntrada(Ticket request)

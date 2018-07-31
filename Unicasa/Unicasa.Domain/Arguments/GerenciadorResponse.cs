@@ -14,5 +14,17 @@ namespace Unicasa.Domain.Arguments
         public Ticket Ticket { get; set; }
         public List<string> TicketIds { get; set; }
         public List<Ticket> Tickets { get; set; }
+        public List<FilterGerenciadorResponse> Filtrados { get; set; } 
+    }
+
+    public class FilterGerenciadorResponse
+    {
+        public FilterGerenciadorResponse()
+        {
+
+        }
+
+        public Ticket Ticket { get; set; }
+        public Importacao Importacao { get; set; }
     }
 }

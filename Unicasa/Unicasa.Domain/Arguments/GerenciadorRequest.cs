@@ -15,5 +15,6 @@ namespace Unicasa.Domain.Arguments
         public Ticket Ticket { get; set; }
         public List<string> TicketIds { get; set; }
         public List<Ticket> Tickets { get; set; }
+
     }
 }

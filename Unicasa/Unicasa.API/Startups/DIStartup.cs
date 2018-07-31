@@ -9,7 +9,6 @@ namespace Unicasa.Api.Startups
         public static void ConfigureDependencyInjection(HttpConfiguration config, UnityContainer container)
         {
             DependencyResolver.Resolve(container);
-
             config.DependencyResolver = new UnityResolver(container);
         }
     }

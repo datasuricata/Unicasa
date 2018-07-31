@@ -187,6 +187,7 @@
     <Compile Include="Controllers\GerenciadorController.cs" />
     <Compile Include="Controllers\RelatoriosController.cs" />
     <Compile Include="Controllers\FeriadoController.cs" />
+    <Compile Include="Controllers\ContaController.cs" />
     <Compile Include="Controllers\UsuarioController.cs" />
     <Compile Include="DI\DependencyResolver.cs" />
     <Compile Include="DI\UnityResolver.cs" />

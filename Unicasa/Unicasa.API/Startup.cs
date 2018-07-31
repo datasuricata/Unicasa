@@ -3,6 +3,8 @@ using Microsoft.Owin.Cors;
 using Microsoft.Owin.Security.OAuth;
 using Owin;
 using System;
+using System.Globalization;
+using System.Threading;
 using System.Web.Http;
 using Unicasa.Api.Startups;
 using Unicasa.API.DI;
@@ -18,7 +20,11 @@ namespace Unicasa.API
             HttpConfiguration config = new HttpConfiguration();
 
             var container = new UnityContainer();
-            DependencyResolver.Resolve(container);
+
+            //TODO VALIDAR CULTUREINFO
+            Thread.CurrentThread.CurrentCulture = new CultureInfo("pt-BR");
+
+            //DependencyResolver.Resolve(container);
 
             DIStartup.ConfigureDependencyInjection(config, container);
             WebApiStartup.ConfigureWebApi(config);
@@ -27,7 +33,6 @@ namespace Unicasa.API
             app.UseCors(CorsOptions.AllowAll);
 
             app.UseWebApi(config);
-
         }
 
         public void ConfigureOAuth(IAppBuilder app, UnityContainer container)
@@ -36,7 +41,7 @@ namespace Unicasa.API
             {
                 AllowInsecureHttp = true,
                 TokenEndpointPath = new PathString("/token"),
-                AccessTokenExpireTimeSpan = TimeSpan.FromDays(1),
+                AccessTokenExpireTimeSpan = TimeSpan.FromDays(30),
                 Provider = new AuthorizationProvider(container)
             };
 

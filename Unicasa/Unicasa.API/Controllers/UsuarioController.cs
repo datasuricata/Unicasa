@@ -144,40 +144,5 @@ namespace Unicasa.API.Controllers
                 return await ResponseExceptionAsync(ex);
             }
         }
-
-        [Route("login")]
-        [HttpPost]
-        public async Task<HttpResponseMessage> Login(AutenticarRequest request)
-        {
-            try
-            {
-                if (request == null)
-                {
-                    Notification.Add("Verifique as informações e tente novamente");
-                    return null;
-                }
-
-                var usuario = new Usuario(request.Email, request.Senha);
-                usuario = repository.ObterPor(x => x.Email == usuario.Email && x.Senha == usuario.Senha);
-
-                if(usuario == null)
-                {
-                    Notification.Add("Usuario não encontrado");
-                    return null;
-                }
-
-                var response = new AutenticarResponse()
-                {
-                    Id = usuario.Id,
-                    Message = "Autorizado: " + usuario.NomeCompleto
-                };
-
-                return Request.CreateResponse(response);
-            }
-            catch (Exception ex)
-            {
-                return await ResponseExceptionAsync(ex);
-            }
-        }
     }
 }

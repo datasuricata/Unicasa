@@ -111,7 +111,7 @@ namespace Unicasa.API.Controllers
                     Tickets = response
                 };
 
-                return await ResponseAsync(response);
+                return await ResponseAsync(filtro);
             }
             catch (Exception ex)
             {
@@ -353,12 +353,12 @@ namespace Unicasa.API.Controllers
                     return null;
                 }
 
-                var filtrado = new FiltroResponse()
+                var filtro = new FiltroResponse()
                 {
                     Tickets = response
                 };
 
-                return await ResponseAsync(filtrado);
+                return await ResponseAsync(filtro);
             }
             catch (Exception ex)
             {

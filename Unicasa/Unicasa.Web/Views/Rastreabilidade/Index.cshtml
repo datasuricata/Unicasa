@@ -22,13 +22,14 @@
                     <table class="table table-striped table-bordered table-hover" id="sample_1">
                         <thead>
                             <tr>
-                                <th> Cód. </th>
-                                <th> Titulo </th>
+                                <th> Chave </th>
+                                <th> Lote </th>
                                 <th> Descricao</th>
-                                <th> Detalhe </th>
+                                <th> Ord. Compra </th>
                                 <th> Data Agendamento </th>
                                 <th> Data Entrega </th>
                                 <th> Status </th>
+                                <th> Ação </th>
                             </tr>
                         </thead>
                         <tbody>
@@ -41,14 +42,15 @@
                                         <tr>
                                             @Html.HiddenFor(c => carga.Id)
                                             <td> @carga.Chave </td>
-                                            <td> @Html.TextBoxFor(c => carga.Titulo, new { @class = "form-control" }) </td>
-                                            <td> @Html.TextBoxFor(c => carga.Descricao, new { @class = "form-control" }) </td>
-                                            <td> @Html.TextBoxFor(c => carga.Detalhe, new { @class = "form-control" }) </td>
-                                            <td> @Html.EditorFor(c => carga.DataAgendamento)</td>
-                                            <td> @Html.EditorFor(c => carga.DataEntrega)</td>
+                                            <td> @Html.DisplayFor(c => carga.Titulo, new { @class = "form-control" }) </td>
+                                            <td> @Html.DisplayFor(c => carga.Descricao, new { @class = "form-control" }) </td>
+                                            <td> @Html.DisplayFor(c => carga.Detalhe, new { @class = "form-control" }) </td>
+                                            <td> @Html.TextBoxFor(c => carga.DataAgendamento, new { @class = "form-control", type="date" })</td>
+                                            <td> @Html.TextBoxFor(c => carga.DataEntrega, new { @class = "form-control", type = "date" })</td>
                                             <td>
-                                                @Html.DropDownList("Tickets.TicketState", new SelectList(Enum.GetValues(typeof(TicketState))), "Selecione", new { @class = "form-control" })
+                                                @Html.DropDownListFor(c => carga.TicketState, new SelectList(Enum.GetValues(typeof(TicketState))), "Selecione", new { @class = "form-control" })
                                             </td>
+                                            <td> <input type="submit" name="@carga.Id" class="btn btn-success" value="Salvar"/> </td>
                                         </tr>
                                     }
                                 }

@@ -192,16 +192,16 @@
     <Compile Include="Controllers\UsuarioController.cs" />
     <Compile Include="DI\DependencyResolver.cs" />
     <Compile Include="DI\UnityResolver.cs" />
-    <Compile Include="Migrations\201808011937446_firstmigration.cs" />
-    <Compile Include="Migrations\201808011937446_firstmigration.Designer.cs">
-      <DependentUpon>201808011937446_firstmigration.cs</DependentUpon>
+    <Compile Include="Migrations\201808012110588_UnicasaMigration.cs" />
+    <Compile Include="Migrations\201808012110588_UnicasaMigration.Designer.cs">
+      <DependentUpon>201808012110588_UnicasaMigration.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Persistence\Map\MapCargas.cs" />
     <Compile Include="Persistence\Map\MapMetrica.cs" />
     <Compile Include="Persistence\Map\MapTicket.cs" />
     <Compile Include="Persistence\Map\MapImportacao.cs" />
-    <Compile Include="Persistence\Map\MapFeriados.cs" />
+    <Compile Include="Persistence\Map\MapAgenda.cs" />
     <Compile Include="Persistence\Map\MapUsuario.cs" />
     <Compile Include="Persistence\Repositories\Base\Repository.cs" />
     <Compile Include="Persistence\Repositories\RepositoriyFeriado.cs" />
@@ -237,8 +237,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201808011937446_firstmigration.resx">
-      <DependentUpon>201808011937446_firstmigration.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201808012110588_UnicasaMigration.resx">
+      <DependentUpon>201808012110588_UnicasaMigration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

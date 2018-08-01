@@ -3,11 +3,11 @@ using Unicasa.Domain.Entities;
 
 namespace Unicasa.API.Persistence.Map
 {
-    public class MapFeriados : EntityTypeConfiguration<Agenda>
+    public class MapAgenda : EntityTypeConfiguration<Agenda>
     {
-        public MapFeriados()
+        public MapAgenda()
         {
-            ToTable("Feriados");
+            ToTable("Agendamentos");
 
             Property(p => p.Id).IsRequired();
         }

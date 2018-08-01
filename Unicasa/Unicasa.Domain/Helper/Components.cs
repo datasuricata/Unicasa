@@ -8,12 +8,8 @@ namespace Unicasa.Domain.Helper
     {
         public Components()
         {
-            GenericDropdown = new GenericDropdown();
-            GenericCheckBoxListItem = new GenericCheckBoxListItem();
-        }
 
-        public GenericCheckBoxListItem GenericCheckBoxListItem { get; set; }
-        public GenericDropdown GenericDropdown { get; set; }
+        }
 
         public List<GenericDropdown> GetDrowdown<T>(List<T> list, string text, string value)
         {

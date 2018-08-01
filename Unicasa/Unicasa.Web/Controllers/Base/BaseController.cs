@@ -1,8 +1,11 @@
 ﻿using Newtonsoft.Json;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using Unicasa.Domain.Arguments.Base;
 using Unicasa.Domain.Helper;
+using Unicasa.Web.Helpers.Exceptions;
 using Unicasa.Web.Requests;
 
 namespace Unicasa.Web.Controllers.Base
@@ -14,7 +17,6 @@ namespace Unicasa.Web.Controllers.Base
         protected Components Components;
         protected string Token;
         protected List<string> Notifications;
-
 
         #endregion
 
@@ -43,7 +45,6 @@ namespace Unicasa.Web.Controllers.Base
             }
             return View();
         }
-
         protected string DropDownToJson(List<GenericCheckBoxListItem> request)
         {
             var lista = new Dictionary<string, string>();
@@ -56,27 +57,10 @@ namespace Unicasa.Web.Controllers.Base
             return JsonConvert.SerializeObject(lista);
         }
 
-
         #endregion
 
         #region [ TASKS ASYNC ]
 
-        protected async Task<T> Get<T>(string Uri)
-        {
-            GetToken();
-            var request = new DataRequest<T>();
-            var result = await request.Get(Uri, Token);
-
-            return result;
-        }
-        protected async Task<T> Post<T>(string Uri, object command)
-        {
-            GetToken();
-            var request = new DataRequest<T>();
-            var result = await request.Post(Uri, command, Token);
-
-            return result;
-        }
         protected async Task PostAnonymous<T>(string Uri, object command)
         {
             GetToken();
@@ -84,41 +68,118 @@ namespace Unicasa.Web.Controllers.Base
             await request.PostAnonymous(Uri, command, Token);
 
         }
+
+        protected async Task<T> Get<T>(string Uri)
+        {
+            var request = new DataRequest<T>();
+            try
+            {
+                GetToken();
+                var result = await request.Get(Uri, Token);
+                StoreErrors(request);
+                return result;
+            }
+            catch (ApiException e)
+            {
+                SetError(e.Message);
+                return default(T);
+            }
+        }
+        protected async Task<T> Post<T>(string Uri, object command)
+        {
+            var request = new DataRequest<T>();
+            try
+            {
+                GetToken();
+                var result = await request.Post(Uri, command, Token);
+
+                StoreErrors(request);
+
+                if (request.ErrosRequest == null)
+                    if (Response.StatusDescription == "OK")
+                        SetSuccess("OK");
+
+                return result;
+            }
+            catch (ApiException e)
+            {
+                SetError(e.Message);
+                return default(T);
+            }
+        }
         protected async Task<T> GetById<T>(string Uri, string id)
         {
-            GetToken();
             var request = new DataRequest<T>();
-            var result = await request.GetById(Uri, id, Token);
-
-            return result;
+            try
+            {
+                GetToken();
+                var result = await request.GetById(Uri, id, Token);
+                StoreErrors(request);
+                return result;
+            }
+            catch (ApiException e)
+            {
+                SetError(e.Message);
+                return default(T);
+            }
         }
         protected async Task<T> Put<T>(string Uri, object command)
         {
-            GetToken();
             var request = new DataRequest<T>();
-            var result = await request.Put(Uri, command, Token);
+            try
+            {
+                GetToken();
+                var result = await request.Put(Uri, command, Token);
 
-            return result;
+                StoreErrors(request);
+
+                if (request.ErrosRequest == null)
+                    if (Response.StatusDescription == "OK")
+                        SetSuccess("OK");
+
+                return result;
+            }
+            catch (ApiException e)
+            {
+                SetError(e.Message);
+                return default(T);
+            }
         }
 
         #endregion
 
         #region [ MESSAGES ]
 
+        protected void StoreErrors<T>(DataRequest<T> request)
+        {
+            if (request.ErrosRequest != null)
+            {
+                BaseResponse response = JsonConvert.DeserializeObject<BaseResponse>(request.ErrosRequest);
+
+                if (response.Exceptions.Any())
+                {
+                    List<string> Message = new List<string>();
+
+                    foreach (var error in response.Exceptions)
+                        Message.Add(error);
+
+                    SetErrors(Message);
+                }
+                else
+                    SetSuccess(response.Message);
+            }
+        }
         protected void SetError(string message)
         {
             TempData["Message"] = message;
         }
-
+        protected void SetErrors(List<string> messages)
+        {
+            TempData["Messages"] = messages;
+        }
         protected void SetSuccess(string message)
         {
             TempData["MessageSuccess"] = message;
-        }
-
-        protected class returnJs
-        {
-            public int StatusCode { get; set; }
-            public string Mensagem { get; set; }
         }
 
         #endregion

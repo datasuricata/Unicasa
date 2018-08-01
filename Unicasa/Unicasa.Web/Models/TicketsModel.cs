@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Unicasa.Domain.Entities;
+using Unicasa.Domain.Helper;
 
 namespace Unicasa.Web.Models
 {
@@ -7,9 +8,15 @@ namespace Unicasa.Web.Models
     {
         public TicketsModel()
         {
+            Ticket = new Ticket();
             Tickets = new List<Ticket>();
+            Importacao = new Importacao();
+            DropdownEnums = new List<GenericDropdown>();
         }
 
         public List<Ticket> Tickets { get; set; }
+        public Importacao Importacao  { get; set; }
+        public Ticket Ticket { get; set; }
+        public List<GenericDropdown> DropdownEnums { get; set; }
     }
 }

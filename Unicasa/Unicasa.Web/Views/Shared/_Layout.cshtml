@@ -163,6 +163,26 @@
             <div class="page-wrapper-middle">
                 <!-- BEGIN CONTAINER -->
                 <div class="page-container">
+                    @if (TempData["Message"] != null)
+                    {
+                        <div class="alert alert-danger alert-dismissable fade in" role="alert">
+                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                @TempData["Message"]
+                                <br />
+                        </div>
+                    }
+                    @if (TempData["Messages"] != null)
+                    {
+                        <div class="alert alert-danger alert-dismissable fade in" role="alert">
+                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                            @foreach (var error in (IEnumerable<String>)TempData["Messages"])
+                            {
+                                @error
+                                <br />
+                            }
+                        </div>
+                    }
+
                     <!-- BEGIN CONTENT -->
                     <div class="page-content-wrapper">
                         <!-- BEGIN CONTENT BODY -->

@@ -184,7 +184,7 @@ namespace Unicasa.API.Controllers
             }
         }
 
-        [Route("GetById")]
+        [Route("getById")]
         [HttpGet]
         public async Task<HttpResponseMessage> GetById(string id)
         {

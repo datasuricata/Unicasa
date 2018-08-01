@@ -1,0 +1,103 @@
+﻿@model Unicasa.Web.Models.TicketsModel
+
+@{
+    Layout = null;
+}
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="col-md-4">
+                    <h6>Lote:</h6>
+                    @Html.TextBoxFor(m => m.Importacao.Lote, new { @class = "form-control" })
+                </div>
+                <div class="col-md-4">
+                    <h6>Transportadora:</h6>
+                    @Html.TextBoxFor(m => m.Importacao.CodTransportadora, new { @class = "form-control" })
+                </div>
+                <div class="col-md-4">
+                    <h6>Pedido:</h6>
+                    @Html.TextBoxFor(m => m.Importacao.Pedido, new { @class = "form-control" })
+                </div>
+                <div class="col-md-12">
+                    <h6>Descrição:</h6>
+                    @Html.TextBoxFor(m => m.Importacao.Descricao, new { @class = "form-control" })
+                </div>
+                <div class="col-md-4">
+                    <h6>Nº Volume:</h6>
+                    @Html.TextBoxFor(m => m.Importacao.NumVolume, new { @class = "form-control" })
+                </div>
+                <div class="col-md-8">
+                    <h6>Total de Volumes:</h6>
+                    @Html.TextBoxFor(m => m.Importacao.TotalVolume, new { @class = "form-control" })
+                </div>
+                <div class="col-md-6">
+                    <h6>Ordem de Compra:</h6>
+                    @Html.TextBoxFor(m => m.Importacao.OrdCompra, new { @class = "form-control" })
+                </div>
+                <div class="col-md-6">
+                    <h6>Carga:</h6>
+                    @Html.TextBoxFor(m => m.Importacao.Carga, new { @class = "form-control" })
+                </div>
+                <div class="col-md-4">
+                    <h6>Referencia Item:</h6>
+                    @Html.TextBoxFor(m => m.Importacao.RefItem, new { @class = "form-control" })
+                </div>
+                <div class="col-md-4">
+                    <h6>Barra:</h6>
+                    @Html.TextBoxFor(m => m.Importacao.Barra, new { @class = "form-control" })
+                </div>
+                <div class="col-md-4">
+                    <h6>Situação:</h6>
+                    @Html.TextBoxFor(m => m.Importacao.Situcao, new { @class = "form-control" })
+                </div>
+                <div class="col-md-6">
+                    <h6>Cliente:</h6>
+                    @Html.TextBoxFor(m => m.Importacao.Cliente, new { @class = "form-control" })
+                </div>
+                <div class="col-md-6">
+                    <h6>Endereço:</h6>
+                    @Html.TextBoxFor(m => m.Importacao.Endereco, new { @class = "form-control" })
+                </div>
+                <div class="col-md-6">
+                    <h6>Cidade:</h6>
+                    @Html.TextBoxFor(m => m.Importacao.Cidade, new { @class = "form-control" })
+                </div>
+                <div class="col-md-6">
+                    <h6>UF:</h6>
+                    @Html.TextBoxFor(m => m.Importacao.UF, new { @class = "form-control" })
+                </div>
+                <div class="col-md-4">
+                    <h6>Quantidade:</h6>
+                    @Html.TextBoxFor(m => m.Importacao.Quantidade, new { @class = "form-control" })
+                </div>
+                <div class="col-md-4">
+                    <h6>CNPJ/CPF:</h6>
+                    @Html.TextBoxFor(m => m.Importacao.CpfCnpj, new { @class = "form-control" })
+                </div>
+                <div class="col-md-4">
+                    <h6>Peso:</h6>
+                    @Html.TextBoxFor(m => m.Importacao.Peso, new { @class = "form-control" })
+                </div>
+                <div class="col-md-4">
+                    <h6>Cubagem:</h6>
+                    @Html.TextBoxFor(m => m.Importacao.Cubagem, new { @class = "form-control" })
+                </div>
+                <div class="col-md-8">
+                    <h6>Sub Familia:</h6>
+                    @Html.TextBoxFor(m => m.Importacao.SubFamilia, new { @class = "form-control" })
+                </div>
+                <div class="col-md-4">
+                    <h6>Fechamento:</h6>
+                    @Html.TextBoxFor(m => m.Importacao.Fechamento, new { @class = "form-control" })
+                </div>
+                <div class="col-md-4">
+                    <h6>Esteira de Embalagem:</h6>
+                    @Html.TextBoxFor(m => m.Importacao.Esteira, new { @class = "form-control" })
+                </div>
+                <div class="col-md-4">
+                    <h6>Box Expedição:</h6>
+                    @Html.TextBoxFor(m => m.Importacao.Expedicao, new { @class = "form-control" })
+                </div>
+            </div>
+        </div>
+    </div>

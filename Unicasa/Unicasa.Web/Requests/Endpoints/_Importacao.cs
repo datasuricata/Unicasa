@@ -9,5 +9,6 @@ namespace Unicasa.Dashboard.Requests.Endpoints
         public const string Listar = Endpoint.Importacao + "listar";
         public const string ListarCargas = Endpoint.Importacao + "cargas";
         public const string Excluir = Endpoint.Importacao + "excluir";
+        public const string ObterPorId = Endpoint.Importacao + "getById";
     }
 }

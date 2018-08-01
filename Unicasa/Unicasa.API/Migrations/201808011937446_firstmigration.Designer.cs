@@ -13,7 +13,7 @@ namespace Unicasa.API.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201807310410022_firstmigration"; }
+            get { return "201808011937446_firstmigration"; }
         }
         
         string IMigrationMetadata.Source

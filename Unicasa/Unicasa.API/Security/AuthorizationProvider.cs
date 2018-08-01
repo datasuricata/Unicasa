@@ -1,14 +1,10 @@
 ﻿using Microsoft.Owin.Security.OAuth;
-using Microsoft.Practices.Unity;
 using Newtonsoft.Json;
 using System;
 using System.Security.Claims;
 using System.Security.Principal;
 using System.Threading;
 using System.Threading.Tasks;
-using Unicasa.API.Persistence.Repositories;
-using Unicasa.Domain.Arguments;
-using Unicasa.Domain.Entities;
 using Unicasa.Domain.Interfaces.Repositories;
 using Unity;
 

@@ -14,7 +14,7 @@ namespace Unicasa.API.Persistence
         public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<Metricas> Metricas { get; set; }
         public DbSet<Cargas> Cargas { get; set; }
-        public DbSet<Feriados> Feriados { get; set; }
+        public DbSet<Agenda> Agenda { get; set; }
         public DbSet<Ticket> Tickets { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

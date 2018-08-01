@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using Unicasa.Dashboard.Requests.Endpoints;
@@ -54,6 +52,7 @@ namespace Unicasa.Web.Controllers
 
             return View(vm);
         }
+
         [HttpPost]
         public async Task<ActionResult> Update(UsuarioModel vm)
         {
@@ -62,7 +61,9 @@ namespace Unicasa.Web.Controllers
             var response = await Post<Usuario>(_Usuario.Editar, command);
 
             if (response == null)
-                SetError("Usuário não criado, tente novamente.");
+                SetError("Usuário não alterado, tente novamente.");
+            else
+                SetSuccess("Usuário alterado.");
 
             return RedirectToAction("Index");
         }

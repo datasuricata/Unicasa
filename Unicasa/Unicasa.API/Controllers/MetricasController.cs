@@ -68,8 +68,8 @@ namespace Unicasa.API.Controllers
                     Notification.Add("Erro ao salvar dados no banco, tente novamente");
                     return null;
                 }
+                return await ResponseAsync(response);
 
-                return Request.CreateResponse(HttpStatusCode.OK, response);
             }
             catch (Exception ex)
             {

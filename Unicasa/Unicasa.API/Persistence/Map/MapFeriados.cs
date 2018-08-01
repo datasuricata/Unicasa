@@ -3,7 +3,7 @@ using Unicasa.Domain.Entities;
 
 namespace Unicasa.API.Persistence.Map
 {
-    public class MapFeriados : EntityTypeConfiguration<Feriados>
+    public class MapFeriados : EntityTypeConfiguration<Agenda>
     {
         public MapFeriados()
         {

@@ -4,21 +4,30 @@
 @{
     Layout = null;
 }
+<div class="modal-body">
+    <div class="row">
+        <div class="col-md-12 bold">
 
-@using (Html.BeginForm("Update", "Usuario", FormMethod.Post))
-{
-    @Html.HiddenFor(m => m.Usuario.Id)
-    <h4>Informe todos os dados para criar um novo usuario</h4>
-    <p>
-        <h6>NOME:</h6>
-        @Html.TextBoxFor(m => m.Usuario.NomeCompleto, new { @class = "form-control" })
-    </p>
-    <p>
-        <h6>PERFIL:</h6>
-        @Html.DropDownList("Usuario.UserRole", new SelectList(Enum.GetValues(typeof(UserRole))), "Selecione", new { @class = "form-control" })
-    </p>
-    <p>
-        <h6>EMAIL:</h6>
-        @Html.TextBoxFor(m => m.Usuario.Email, new { @class = "form-control" })
-    </p>
-}
+            @using (Html.BeginForm("Update", "Usuario", FormMethod.Post))
+            {
+                @Html.HiddenFor(m => m.Usuario.Id)
+                <p>
+                    <h6>NOME:</h6>
+                    @Html.TextBoxFor(m => m.Usuario.NomeCompleto, new { @class = "form-control" })
+                </p>
+                <p>
+                    <h6>PERFIL:</h6>
+                    @Html.DropDownListFor(m => m.Usuario.UserRole, new SelectList(Enum.GetValues(typeof(UserRole))), new { @class = "form-control" })
+                </p>
+                <p>
+                    <h6>EMAIL:</h6>
+                    @Html.TextBoxFor(m => m.Usuario.Email, new { @class = "form-control" })
+                </p>
+            }
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" data-dismiss="modal" class="btn btn-outline dark">Cancelar</button>
+    <button type="button" class="btn green">Editar</button>
+</div>

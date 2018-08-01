@@ -187,14 +187,14 @@
     <Compile Include="Controllers\DashController.cs" />
     <Compile Include="Controllers\GerenciadorController.cs" />
     <Compile Include="Controllers\RelatoriosController.cs" />
-    <Compile Include="Controllers\FeriadoController.cs" />
+    <Compile Include="Controllers\AgendaController.cs" />
     <Compile Include="Controllers\ContaController.cs" />
     <Compile Include="Controllers\UsuarioController.cs" />
     <Compile Include="DI\DependencyResolver.cs" />
     <Compile Include="DI\UnityResolver.cs" />
-    <Compile Include="Migrations\201807310410022_firstmigration.cs" />
-    <Compile Include="Migrations\201807310410022_firstmigration.Designer.cs">
-      <DependentUpon>201807310410022_firstmigration.cs</DependentUpon>
+    <Compile Include="Migrations\201808011937446_firstmigration.cs" />
+    <Compile Include="Migrations\201808011937446_firstmigration.Designer.cs">
+      <DependentUpon>201808011937446_firstmigration.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Persistence\Map\MapCargas.cs" />
@@ -237,8 +237,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201807310410022_firstmigration.resx">
-      <DependentUpon>201807310410022_firstmigration.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201808011937446_firstmigration.resx">
+      <DependentUpon>201808011937446_firstmigration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

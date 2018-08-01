@@ -77,6 +77,7 @@ namespace Unicasa.API.Controllers
                 }
 
                 var usuario = new Usuario(request.Email, request.Senha);
+
                 usuario = repository.ObterPor(x => x.Email == usuario.Email && x.Senha == usuario.Senha);
 
                 if(usuario == null)
@@ -88,8 +89,34 @@ namespace Unicasa.API.Controllers
                 var response = new AutenticarResponse()
                 {
                     Id = usuario.Id,
+                    Perfil = usuario.UserRole,
                     Message = "Autorizado: " + usuario.NomeCompleto
                 };
+
+                HttpClient _client = new HttpClient();
+                _client.BaseAddress = Request.RequestUri;
+                _client.Timeout = TimeSpan.FromMinutes(30);
+                string requestUri = "/token";
+
+                var auth = new HttpRequestMessage(HttpMethod.Post, requestUri);
+
+                var keyValues = new List<KeyValuePair<string, string>>();
+                keyValues.Add(new KeyValuePair<string, string>("grant_type", "password"));
+                keyValues.Add(new KeyValuePair<string, string>("username", usuario.Email));
+                keyValues.Add(new KeyValuePair<string, string>("password", usuario.Senha));
+
+                auth.Content = new FormUrlEncodedContent(keyValues);
+
+                var autenticar = await _client.SendAsync(auth);
+
+                var retorno = await autenticar.Content.ReadAsStringAsync();
+
+                var obj = new { access_token = "" };
+                obj = JsonConvert.DeserializeAnonymousType(retorno, obj);
+
+                //return await ResponseAsync(new TokenClass(obj.access_token));
+
+                response.Token = obj.access_token;
 
                 return Request.CreateResponse(response);
             }

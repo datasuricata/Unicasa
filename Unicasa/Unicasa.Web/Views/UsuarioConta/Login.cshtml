@@ -1,4 +1,4 @@
-﻿
+﻿@model Unicasa.Domain.Arguments.AutenticarRequest
 @{
     Layout = null;
 }
@@ -53,18 +53,26 @@
             <div class="col-md-6 login-container bs-reset mt-login-5-bsfix">
                 <div class="login-content">
                     <h1>Granero & Unicasa</h1>
-                    <p> Efetue o login para acessar as funcionalidades de rastreabilidade do sistema. </p>
-                    <form action="javascript:;" class="login-form" method="post">
+                    @using (Html.BeginForm("Login", "UsuarioConta", FormMethod.Post, new { @class = "login-form", role = "form" }))
+                    {
+                        if (TempData["Message"] != null)
+                        {
+                            <div class="alert alert-danger alert-dismissable fade in" role="alert">
+                                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                @Html.Raw(TempData["Message"])
+                            </div>
+                        }
+                        <p> Efetue o login para acessar as funcionalidades de rastreabilidade do sistema. </p>
                         <div class="alert alert-danger display-hide">
                             <button class="close" data-close="alert"></button>
                             <span>Entre com login e senha.</span>
                         </div>
                         <div class="row">
                             <div class="col-xs-6">
-                                <input class="form-control form-control-solid placeholder-no-fix form-group" type="text" autocomplete="off" placeholder="usuario@dominio.com.br" name="username" required />
+                                <input class="form-control form-control-solid placeholder-no-fix form-group" type="text" autocomplete="off" placeholder="usuario@dominio.com.br" name="@Model.Email" required />
                             </div>
                             <div class="col-xs-6">
-                                <input class="form-control form-control-solid placeholder-no-fix form-group" type="password" autocomplete="off" placeholder="senha" name="password" required />
+                                <input class="form-control form-control-solid placeholder-no-fix form-group" type="password" autocomplete="off" placeholder="senha" name="@Model.Email" required />
                             </div>
                         </div>
                         <div class="row">
@@ -80,7 +88,8 @@
                                 <button class="btn green" type="submit">Acessar</button>
                             </div>
                         </div>
-                    </form>
+                    }
+
                 </div>
                 <div class="login-footer">
                     <div class="row bs-reset">

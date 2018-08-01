@@ -4,7 +4,7 @@ using Unicasa.Domain.Interfaces.Repositories;
 
 namespace Unicasa.API.Persistence.Repositories
 {
-    public class RepositoriyFeriado : Repository<Feriados>, IFeriadosRepository
+    public class RepositoriyFeriado : Repository<Agenda>, IFeriadosRepository
     {
         protected readonly UnicasaContext _context;
 

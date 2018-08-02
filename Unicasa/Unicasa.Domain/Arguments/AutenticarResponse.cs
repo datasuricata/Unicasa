@@ -10,6 +10,7 @@ namespace Unicasa.Domain.Arguments
         public string Message { get; set; }
         public UserRole Perfil { get; set;}
         public string Token { get; set; }
+        public string Nome { get; set; }
 
 
 

@@ -87,6 +87,7 @@ namespace Unicasa.API.Migrations
                         Detalhe = c.String(maxLength: 100, unicode: false),
                         DataAgendamento = c.DateTime(),
                         DataEntrega = c.DateTime(),
+                        DataColeta = c.DateTime(),
                         TicketState = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.Id);

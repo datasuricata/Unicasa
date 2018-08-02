@@ -3,9 +3,11 @@ using System.Web.Mvc;
 using Unicasa.Dashboard.Requests.Endpoints;
 using Unicasa.Domain.Entities;
 using Unicasa.Web.Controllers.Base;
+using Unicasa.Web.Filters;
 
 namespace Unicasa.Web.Controllers
 {
+    [AutorizeUser]
     public class MetricasController : BaseController
     {
         // GET: Metricas

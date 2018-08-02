@@ -23,19 +23,34 @@ namespace Unicasa.Web.Controllers
         public async Task<ActionResult> Login(AutenticarRequest vm)
         {
             //Valida login
-            if (vm == null)
-                SetError("Email ou senha invalidos.");
+            if (vm != null)
+            {
+                if (string.IsNullOrEmpty(vm.Email) || string.IsNullOrEmpty(vm.Email))
+                {
+                    SetError("Email ou senha invalidos.");
+                    return View();
+                }
+            }
+            else
+                return View();
 
             //Inicia requisição
             try
             {
                 var request = await Post<AutenticarResponse>(_UsuarioConta.Logar, vm);
 
+                if (request.Id == null)
+                {
+                    SetError("Usuario não encontrado.");
+                    return View();
+                }
+
                 #region [ Parametros de Sessão ]
 
                 Session.Clear();
                 Session.Timeout = 40;
                 Session["user_loged"] = true;
+                Session["user_name"] = request.Nome;
                 Session["AuthorizedUserId"] = request.Id;
                 Session["PerfilEnum"] = request.Perfil;
                 Session["access_token"] = request.Token;

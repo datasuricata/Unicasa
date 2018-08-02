@@ -54,7 +54,8 @@
     {
         <div class="alert alert-danger alert-dismissable fade in" role="alert">
             <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-            @foreach (var error in (IEnumerable<String>)TempData["Messages"]){@error<br />}
+            @foreach (var error in (IEnumerable<String>)TempData["Messages"])
+            {@error<br />}
         </div>
     }
     <div class="page-wrapper">
@@ -85,21 +86,16 @@
                                     <!-- BEGIN USER LOGIN DROPDOWN -->
                                     <li class="dropdown dropdown-user dropdown-dark">
                                         <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-                                            <span class="username username-hide-mobile">Nick</span>
+                                            <span class="username username-hide-mobile">@Session["user_name"].ToString()</span>
                                         </a>
                                         <ul class="dropdown-menu dropdown-menu-default">
+                                            @*<li>
+                                                    <a href="@Url.Action("Perfil","UsuarioConta")">
+                                                        <i class="icon-user"></i> Meu Profile
+                                                    </a>
+                                                </li>*@
                                             <li>
-                                                <a href="@Url.Action("Perfil","UsuarioConta")">
-                                                    <i class="icon-user"></i> Meu Profile
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="@Url.Action("TrocarSenha","UsuarioConta")">
-                                                    <i class="icon-key"></i> Trocar Senha
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="page_user_login_1.html">
+                                                <a href="@Url.Action("Logout","UsuarioConta")">
                                                     <i class="icon-key"></i> Log Out
                                                 </a>
                                             </li>
@@ -130,45 +126,51 @@
                                             Rastreabilidade
                                         </a>
                                     </li>
-                                    <li aria-haspopup="true" class="menu-dropdown classic-menu-dropdown ">
-                                        <a href="javascript:;">
-                                            Cargas
-                                            <span class="arrow"></span>
-                                        </a>
-                                        <ul class="dropdown-menu">
-                                            <li aria-haspopup="true" class=" ">
-                                                <a href="@Url.Action("Index","Carga")" class="nav-link  "> Acompanhamento </a>
-                                            </li>
-                                            <li aria-haspopup="true" class=" ">
-                                                <a href="@Url.Action("Upload","Carga")" class="nav-link  "> Carregar Arquivo </a>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li aria-haspopup="true" class="menu-dropdown classic-menu-dropdown ">
-                                        <a href="javascript:;">
-                                            Relatorio
-                                            <span class="arrow"></span>
-                                        </a>
-                                        <ul class="dropdown-menu pull-left">
-                                            <li aria-haspopup="true" class=" ">
-                                                <a href="@Url.Action("Index","Relatorios")" class="nav-link  "> Leituras </a>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li aria-haspopup="true" class="menu-dropdown classic-menu-dropdown ">
-                                        <a href="javascript:;">
-                                            Administração
-                                            <span class="arrow"></span>
-                                        </a>
-                                        <ul class="dropdown-menu">
-                                            <li aria-haspopup="true" class=" ">
-                                                <a href="@Url.Action("Index","Metricas")" class="nav-link  "> Métricas </a>
-                                            </li>
-                                            <li aria-haspopup="true" class=" ">
-                                                <a href="@Url.Action("Index","Usuario")" class="nav-link  "> Usuários </a>
-                                            </li>
-                                        </ul>
-                                    </li>
+                                    @if (Session["PerfilEnum"].ToString() == "Administrador" || Session["PerfilEnum"].ToString() == "Gerente")
+                                    {
+                                        <li aria-haspopup="true" class="menu-dropdown classic-menu-dropdown ">
+                                            <a href="javascript:;">
+                                                Cargas
+                                                <span class="arrow"></span>
+                                            </a>
+                                            <ul class="dropdown-menu">
+                                                <li aria-haspopup="true" class=" ">
+                                                    <a href="@Url.Action("Index","Carga")" class="nav-link  "> Acompanhamento </a>
+                                                </li>
+                                                <li aria-haspopup="true" class=" ">
+                                                    <a href="@Url.Action("Upload","Carga")" class="nav-link  "> Carregar Arquivo </a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li aria-haspopup="true" class="menu-dropdown classic-menu-dropdown ">
+                                            <a href="javascript:;">
+                                                Relatorio
+                                                <span class="arrow"></span>
+                                            </a>
+                                            <ul class="dropdown-menu pull-left">
+                                                <li aria-haspopup="true" class=" ">
+                                                    <a href="@Url.Action("Index","Relatorios")" class="nav-link "> Leituras </a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li aria-haspopup="true" class="menu-dropdown classic-menu-dropdown ">
+                                            <a href="javascript:;">
+                                                Administração
+                                                <span class="arrow"></span>
+                                            </a>
+                                            <ul class="dropdown-menu">
+                                                <li aria-haspopup="true" class=" ">
+                                                    <a href="@Url.Action("Index","Metricas")" class="nav-link  "> Métricas </a>
+                                                </li>
+                                                @if (Session["PerfilEnum"].ToString() == "Administrador")
+                                                {
+                                                    <li aria-haspopup="true" class=" ">
+                                                        <a href="@Url.Action("Index","Usuario")" class="nav-link  "> Usuários </a>
+                                                    </li>
+                                                }
+                                            </ul>
+                                        </li>
+                                    }
                                 </ul>
                             </div>
                             <!-- END MEGA MENU -->

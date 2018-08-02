@@ -69,10 +69,10 @@
                         </div>
                         <div class="row">
                             <div class="col-xs-6">
-                                <input class="form-control form-control-solid placeholder-no-fix form-group" type="text" autocomplete="off" placeholder="usuario@dominio.com.br" name="@Model.Email" required />
+                                @Html.TextBoxFor(m => m.Email, new { @class = "form-control form-control-solid placeholder-no-fix form-group", placeholder = "usuario@dominio.com.br"})
                             </div>
                             <div class="col-xs-6">
-                                <input class="form-control form-control-solid placeholder-no-fix form-group" type="password" autocomplete="off" placeholder="senha" name="@Model.Email" required />
+                                @Html.PasswordFor(m => m.Senha, new { @class = "form-control form-control-solid placeholder-no-fix form-group", placeholder = "senha..." })
                             </div>
                         </div>
                         <div class="row">
@@ -85,7 +85,7 @@
                                 </div>
                             </div>
                             <div class="col-sm-8 text-right">
-                                <button class="btn green" type="submit">Acessar</button>
+                                <input class="btn green" type="submit" value="Acessar">
                             </div>
                         </div>
                     }

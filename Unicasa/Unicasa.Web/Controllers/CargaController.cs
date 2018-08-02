@@ -10,10 +10,12 @@ using Unicasa.Domain.Arguments;
 using Unicasa.Domain.Arguments.Base;
 using Unicasa.Domain.Entities;
 using Unicasa.Web.Controllers.Base;
+using Unicasa.Web.Filters;
 using Unicasa.Web.Models;
 
 namespace Unicasa.Web.Controllers
 {
+    [AutorizeUser]
     public class CargaController : BaseController
     {
         public async Task<ActionResult> Index()

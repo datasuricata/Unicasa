@@ -6,11 +6,13 @@ using Unicasa.Domain.Arguments;
 using Unicasa.Domain.Entities;
 using Unicasa.Domain.Helper;
 using Unicasa.Web.Controllers.Base;
+using Unicasa.Web.Filters;
 using Unicasa.Web.Helpers.Exceptions;
 using Unicasa.Web.Models;
 
 namespace Unicasa.Web.Controllers
 {
+    [AutorizeUser]
     public class RastreabilidadeController : BaseController
     {
         public async Task<ActionResult> Index()
@@ -21,7 +23,7 @@ namespace Unicasa.Web.Controllers
 
             if (request != null)
             {
-                vm.Tickets = request.Tickets.Select(x => x).Take(10).ToList();
+                vm.Tickets = request.Tickets;
                 vm.DropdownEnums = Components.GetDrowdown<TicketState>();
             }
 

@@ -10,6 +10,7 @@ using Unicasa.API.Persistence;
 using Unicasa.API.Persistence.Repositories;
 using Unicasa.API.Transactions;
 using Unicasa.Domain.Arguments;
+using Unicasa.Domain.Arguments.Base;
 using Unicasa.Domain.Entities;
 using Unicasa.Domain.Helper;
 
@@ -71,7 +72,7 @@ namespace Unicasa.API.Controllers
         {
             try
             {
-                var tickets = repositoryTickets.Listar().ToList();
+                var tickets = repositoryTickets.Listar().Select(x => x).Take(10).ToList();
 
                 var response = new GerenciadorResponse()
                 {
@@ -278,7 +279,7 @@ namespace Unicasa.API.Controllers
         }
 
         [Route("app/entrega")]
-        [HttpPost] //Retorna GerenciadorResponse
+        [HttpPut] //Retorna GerenciadorResponse
         public async Task<HttpResponseMessage> AppEntrega(GerenciadorRequest request)
         {
             try
@@ -296,9 +297,9 @@ namespace Unicasa.API.Controllers
                 }
 
                 //todo refatorar
-                var lista = repositoryTickets.Listar().ToList();
+                var entidades = repositoryTickets.Listar().ToList();
 
-                lista.ForEach(x =>
+                entidades.ForEach(x =>
                 {
                     request.TicketIds.ForEach(s =>
                     {
@@ -310,22 +311,21 @@ namespace Unicasa.API.Controllers
                     });
                 });
 
-                IEnumerable<Ticket> entidades = lista;
-
-                var tickets = repositoryTickets.AdicionarLista(entidades);
-
-                if (tickets == null)
+                foreach (var entidade in entidades)
                 {
-                    Notification.Add("Os Ticket não foram atualizados no banco, tente novamente");
-                    return null;
+                    var ticket = repositoryTickets.Editar(entidade);
+
+                    if (ticket == null)
+                        Notification.Add("Os Ticket não foram atualizados no banco, tente novamente: " + entidade.Id);
                 }
 
-                var response = new GerenciadorResponse()
+                var response = new BaseResponse()
                 {
-                    Tickets = tickets.ToList()
+                    Exceptions = Notification,
+                    Message = "Carga atualizada."
                 };
 
-                return await ResponseAsync(lista);
+                return await ResponseAsync(response);
             }
             catch (Exception ex)
             {

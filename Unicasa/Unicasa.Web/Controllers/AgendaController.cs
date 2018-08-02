@@ -11,10 +11,12 @@ using Unicasa.Domain.Arguments.Base;
 using Unicasa.Domain.Entities;
 using Unicasa.Domain.Helper;
 using Unicasa.Web.Controllers.Base;
+using Unicasa.Web.Filters;
 using Unicasa.Web.Models;
 
 namespace Unicasa.Web.Controllers
 {
+    [AutorizeUser]
     public class AgendaController : BaseController
     {
         public async Task<ActionResult> Index()

@@ -78,7 +78,8 @@
                                         <td> @carga.DataProcessamento.ToShortDateString() </td>
                                         <td> @carga.Observacao </td>
                                         <td>
-                                            <a href="@Url.Action("Sincronizar", "Carga", new { carga.Id })" class="btn btn-danger">Sincronizar Tickets</a>
+                                            <a href="@Url.Action("Sincronizar", "Carga", new { carga.Id })" class="btn btn-success">Sincronizar Tickets</a>
+                                            <a href="@Url.Action("Deletar", "Carga", new { carga.Id })" class="btn btn-danger">Deletar</a>
                                         </td>
                                     </tr>
                                 }

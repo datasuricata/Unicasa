@@ -90,7 +90,8 @@ namespace Unicasa.API.Controllers
                 {
                     Id = usuario.Id,
                     Perfil = usuario.UserRole,
-                    Message = "Autorizado: " + usuario.NomeCompleto
+                    Message = "Autorizado: " + usuario.NomeCompleto,
+                    Nome = usuario.NomeCompleto
                 };
 
                 HttpClient _client = new HttpClient();

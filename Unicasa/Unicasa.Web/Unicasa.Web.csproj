@@ -5529,6 +5529,9 @@
     <Content Include="Views\Usuario\Index.cshtml" />
     <Content Include="Views\Usuario\Update.cshtml" />
     <Content Include="Views\Rastreabilidade\Detalhes.cshtml" />
+    <Content Include="Views\Agenda\Index.cshtml" />
+    <Content Include="Views\Agenda\Update.cshtml" />
+    <Content Include="Views\Agenda\Upload.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

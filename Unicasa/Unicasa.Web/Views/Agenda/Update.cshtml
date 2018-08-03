@@ -1,0 +1,39 @@
+﻿@model Unicasa.Web.Models.AgendaModel
+@using Unicasa.Domain.Helper
+
+@{
+    Layout = null;
+}
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+    <h4 class="modal-title">Editar Agendamento</h4>
+</div>
+
+@using (Html.BeginForm("Update", "Agenda", FormMethod.Post))
+{
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-md-12 bold">
+
+                @Html.HiddenFor(m => m.Agenda.Id)
+                <p>
+                    <h6>Ativo?</h6>
+                    @Html.CheckBoxFor(m => m.Agenda.Ativo, new { @class = "form-control" })
+                </p>
+                <p>
+                    <h6>Titulo:</h6>
+                    @Html.TextBoxFor(m => m.Agenda.Titulo, new { @class = "form-control" })
+                </p>
+                <p>
+                    <h6>Data:</h6>
+                    @Html.TextBoxFor(m => m.Agenda.DataFeriado, new { @class = "form-control", type = "date" })
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn dark btn-outline" data-dismiss="modal">Fechar</button>
+        <button type="submit" class="btn green">Salvar</button>
+    </div>
+}
+

@@ -55,6 +55,7 @@ namespace Unicasa.Web.Controllers
             }
         }
 
+        [HttpPost]
         public async Task<ActionResult> Update(TicketsModel vm, Ticket ticket)
         {
             try

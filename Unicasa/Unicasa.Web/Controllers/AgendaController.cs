@@ -64,7 +64,7 @@ namespace Unicasa.Web.Controllers
         {
             var command = vm.Agenda;
 
-            var response = await Post<BaseResponse>(_Agenda.Editar, command);
+            var response = await Put<BaseResponse>(_Agenda.Editar, command);
 
             if (response == null)
                 SetError("Agenda não alterada, tente novamente.");

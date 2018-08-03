@@ -4,12 +4,17 @@
 @{
     Layout = null;
 }
-<div class="modal-body">
-    <div class="row">
-        <div class="col-md-12 bold">
 
-            @using (Html.BeginForm("Update", "Usuario", FormMethod.Post))
-            {
+@using (Html.BeginForm("Update", "Usuario", FormMethod.Post))
+{
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+        <h4 class="modal-title">Editar Usuario</h4>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-md-12 bold">
+
                 @Html.HiddenFor(m => m.Usuario.Id)
                 <p>
                     <h6>NOME:</h6>
@@ -23,11 +28,11 @@
                     <h6>EMAIL:</h6>
                     @Html.TextBoxFor(m => m.Usuario.Email, new { @class = "form-control" })
                 </p>
-            }
+            </div>
         </div>
     </div>
-</div>
-<div class="modal-footer">
-    <button type="button" data-dismiss="modal" class="btn btn-outline dark">Cancelar</button>
-    <button type="button" class="btn green">Editar</button>
-</div>
+    <div class="modal-footer">
+        <button type="button" class="btn dark btn-outline" data-dismiss="modal">Fechar</button>
+        <button type="submit" class="btn green">Salvar</button>
+    </div>
+}

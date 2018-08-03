@@ -11,6 +11,7 @@ using Unicasa.Domain.Arguments.Base;
 using Unicasa.Domain.Entities;
 using Unicasa.Web.Controllers.Base;
 using Unicasa.Web.Filters;
+using Unicasa.Web.Helpers.Exceptions;
 using Unicasa.Web.Models;
 
 namespace Unicasa.Web.Controllers
@@ -41,81 +42,89 @@ namespace Unicasa.Web.Controllers
         [HttpPost]
         public async Task<ActionResult> Upload(CargaModel vm, HttpPostedFileBase attachmentcsv)
         {
-            if (attachmentcsv == null)
-                return View();
-
-            vm.Importacoes = new List<Importacao>();
-
-            StreamReader stream = new StreamReader(attachmentcsv.InputStream);
-
-            var carga = new Cargas()
+            try
             {
-                NomeArquivo = attachmentcsv.FileName,
-                UsuarioImportacao = Environment.UserName.ToString(),
-                Observacao = vm.Observacoes
-            };
-            var lista = new List<string>();
+                if (attachmentcsv == null)
+                    return View();
 
-            using (var file = stream)
-            {
-                var line = string.Empty;
+                vm.Importacoes = new List<Importacao>();
 
-                while ((line = file.ReadLine()) != null)
+                StreamReader stream = new StreamReader(attachmentcsv.InputStream);
+
+                var carga = new Cargas()
                 {
-                    lista.Add(line);
-                }
+                    NomeArquivo = attachmentcsv.FileName,
+                    UsuarioImportacao = Environment.UserName.ToString(),
+                    Observacao = vm.Observacoes
+                };
+                var lista = new List<string>();
 
-
-            }
-            foreach (string row in lista)
-            {
-                if (!string.IsNullOrEmpty(row))
+                using (var file = stream)
                 {
-                    vm.Importacoes.Add(new Importacao
+                    var line = string.Empty;
+
+                    while ((line = file.ReadLine()) != null)
                     {
-                        Lote = row.Split('|')[0],
-                        CodTransportadora = row.Split('|')[1],
-                        Pedido = row.Split('|')[2],
-                        Descricao = row.Split('|')[3],
-                        NumVolume = row.Split('|')[4],
-                        TotalVolume = row.Split('|')[5],
-                        OrdCompra = row.Split('|')[6],
-                        Carga = row.Split('|')[7],
-                        RefItem = row.Split('|')[8],
-                        Barra = row.Split('|')[9],
-                        Situcao = row.Split('|')[10],
-                        Cliente = row.Split('|')[11],
-                        Endereco = row.Split('|')[12],
-                        Cidade = row.Split('|')[13],
-                        UF = row.Split('|')[14],
-                        Quantidade = row.Split('|')[15],
-                        Documento = "",
-                        Peso = row.Split('|')[17],
-                        Cubagem = row.Split('|')[18],
-                        SubFamilia = row.Split('|')[19],
-                        Fechamento = row.Split('|')[20],
-                        Esteira = row.Split('|')[21],
-                        Expedicao = row.Split('|')[22],
-                        CpfCnpj = row.Split('|')[23],
-                        Importado = false,
-                        Entregue = false,
-                        CargaId = carga.Id,
-                    });
+                        lista.Add(line);
+                    }
+
+
                 }
+                foreach (string row in lista)
+                {
+                    if (!string.IsNullOrEmpty(row))
+                    {
+                        vm.Importacoes.Add(new Importacao
+                        {
+                            Lote = row.Split('|')[0],
+                            CodTransportadora = row.Split('|')[1],
+                            Pedido = row.Split('|')[2],
+                            Descricao = row.Split('|')[3],
+                            NumVolume = row.Split('|')[4],
+                            TotalVolume = row.Split('|')[5],
+                            OrdCompra = row.Split('|')[6],
+                            Carga = row.Split('|')[7],
+                            RefItem = row.Split('|')[8],
+                            Barra = row.Split('|')[9],
+                            Situcao = row.Split('|')[10],
+                            Cliente = row.Split('|')[11],
+                            Endereco = row.Split('|')[12],
+                            Cidade = row.Split('|')[13],
+                            UF = row.Split('|')[14],
+                            Quantidade = row.Split('|')[15],
+                            Documento = "",
+                            Peso = row.Split('|')[17],
+                            Cubagem = row.Split('|')[18],
+                            SubFamilia = row.Split('|')[19],
+                            Fechamento = row.Split('|')[20],
+                            Esteira = row.Split('|')[21],
+                            Expedicao = row.Split('|')[22],
+                            CpfCnpj = row.Split('|')[23],
+                            Importado = false,
+                            Entregue = false,
+                            CargaId = carga.Id,
+                        });
+                    }
+                }
+
+                var importacao = new ImportacaoRequest()
+                {
+                    Importacoes = vm.Importacoes,
+                    Carga = carga
+                };
+
+                var request = await Post<BaseResponse>(_Importacao.Importar, importacao);
+
+                if (request == null)
+                    SetError("Falha na importação");
+
+                return RedirectToAction("Index");
             }
-
-            var importacao = new ImportacaoRequest()
+            catch (ApiException ex)
             {
-                Importacoes = vm.Importacoes,
-                Carga = carga
-            };
-
-            var request = await Post<BaseResponse>(_Importacao.Importar, importacao);
-
-            if (request == null)
-                SetError("Falha na importação");
-
-            return Redirect("Upload");
+                SetError(ex.Message);
+                return Redirect("Upload");
+            }
         }
 
         public async Task<ActionResult> Sincronizar(string id)

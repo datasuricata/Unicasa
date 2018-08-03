@@ -42,6 +42,8 @@ namespace Unicasa.API.Controllers
                     return null;
                 }
 
+                request.Ativo = true;
+
                 var agenda = repository.Adicionar(Agenda.Registrar(request));
 
                 if (agenda == null)
@@ -127,7 +129,13 @@ namespace Unicasa.API.Controllers
         {
             try
             {
-                var response = repository.Listar().ToList();
+                var agendamentos = repository.Listar().ToList();
+
+                var response = new AgendaResponse()
+                {
+                    Agendamentos = agendamentos
+                };
+
                 return await ResponseAsync(response);
             }
             catch (Exception ex)

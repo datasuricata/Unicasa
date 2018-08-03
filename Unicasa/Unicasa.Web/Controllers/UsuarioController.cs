@@ -60,7 +60,7 @@ namespace Unicasa.Web.Controllers
         {
             var command = vm.Usuario;
 
-            var response = await Post<Usuario>(_Usuario.Editar, command);
+            var response = await Put<Usuario>(_Usuario.Editar, command);
 
             if (response == null)
                 SetError("Usuário não alterado, tente novamente.");

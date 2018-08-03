@@ -1,0 +1,42 @@
+﻿@model Unicasa.Web.Models.TicketsModel
+@using Unicasa.Domain.Helper
+
+@{
+    Layout = null;
+}
+
+@using (Html.BeginForm("Update", "Rastreabilidade", FormMethod.Post))
+{
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+        <h4 class="modal-title">Editar Ticket</h4>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-md-12 bold">
+
+                @Html.HiddenFor(m => m.Ticket.Id)
+                <p>
+                    <h6>Data do Agendamento:</h6>
+                    @Html.TextBoxFor(m => m.Ticket.DataAgendamento, new { @class = "form-control", type = "data" })
+                </p>
+                <p>
+                    <h6>Data de Entrega:</h6>
+                    @Html.TextBoxFor(m => m.Ticket.DataEntrega, new { @class = "form-control", type = "data" })
+                </p>
+                <p>
+                    <h6>Data de Coleta:</h6>
+                    @Html.TextBoxFor(m => m.Ticket.DataColeta, new { @class = "form-control", type = "data" })
+                </p>
+                <p>
+                    <h6>Status do Ticket:</h6>
+                    @Html.DropDownListFor(m => m.Ticket.TicketState, new SelectList(Enum.GetValues(typeof(TicketState))), new { @class = "form-control" })
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn dark btn-outline" data-dismiss="modal">Fechar</button>
+        <button type="submit" class="btn green">Salvar</button>
+    </div>
+}

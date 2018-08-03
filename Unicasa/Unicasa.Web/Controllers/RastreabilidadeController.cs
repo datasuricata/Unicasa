@@ -55,8 +55,36 @@ namespace Unicasa.Web.Controllers
             }
         }
 
+        public async Task<ActionResult> Update(string id)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(id))
+                {
+                    SetError("Sem identificador");
+                    return Redirect("Index");
+                }
+
+                var request = await GetById<GerenciadorResponse>(_Gerenciador.ObterPorId, id);
+
+                if (request == null)
+                {
+                    SetError("Não localizado.");
+                    return Redirect("Index");
+                }
+                var vm = new TicketsModel(){Ticket = request.Ticket};
+
+                return View(vm);
+            }
+            catch (ApiException ex)
+            {
+                SetError(ex.Message);
+                return Redirect("Index");
+            }
+
+        }
         [HttpPost]
-        public async Task<ActionResult> Update(TicketsModel vm, Ticket ticket)
+        public async Task<ActionResult> Update(TicketsModel vm)
         {
             try
             {

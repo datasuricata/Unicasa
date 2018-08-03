@@ -37,15 +37,15 @@
                     <table class="table table-striped table-bordered table-hover dt-responsive" id="sample_1">
                         <thead class="text-center">
                             <tr>
-                                <th class="all" style="column-width:120px;">Pedido</th>
-                                <th class="desktop">Lote</th>
+                                <th class="all">Pedido</th>
+                                <th class="none">Lote</th>
                                 <th class="none">Descrição</th>
-                                <th class="desktop" style="column-width:120px;">Ord. Compra</th>
-                                <th class="desktop" style="column-width:120px;">Data Agendamento</th>
+                                <th class="desktop">Data Agendamento</th>
+                                <th class="none">Ord. Compra</th>
                                 <th class="none">Data Coleta</th>
                                 <th class="none">Data Entrega</th>
                                 <th class="desktop">Status</th>
-                                <th class="desktop" style="column-width:150px;">Ação</th>
+                                <th style="width:320px;" class="desktop">Ação</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -56,19 +56,22 @@
                                     using (Html.BeginForm("Update", "Rastreabilidade", FormMethod.Post, new { id = carga.Id }))
                                     {
                                         <tr>
-                                            @Html.HiddenFor(x => carga.Id)
                                             <td> @carga.Chave </td>
                                             <td> @carga.Titulo </td>
                                             <td> @carga.Descricao </td>
+                                            <td> @carga.DataAgendamento</td>
                                             <td> @carga.Detalhe </td>
-                                            <td> @Html.TextBoxFor(c => carga.DataAgendamento, new { @class = "form-control", type = "date" })</td>
                                             <td> @carga.DataColeta.ToString()</td>
                                             <td> @carga.DataEntrega.ToString()</td>
-                                            <td> @Html.DropDownListFor(c => carga.TicketState, new SelectList(Model.DropdownEnums, "Value", "Text"), new { @class = "form-control" })</td>
+                                            <td> @carga.TicketState.ToString()</td>
                                             <td>
-                                                <div class="btn-group vertical-align-left">
-                                                    <a class="btn btn-xs btn-outline dark" style="width:150px;" data-toggle="modal" data-target="#editar" href="@Url.Action("Detalhes", "Rastreabilidade", new { id = carga.ImportacaoId })">Detalhes</a>
-                                                    <button type="submit" class="btn red btn-xs btn-outline" style="width:150px;">Editar</button>
+                                                <div class="btn-group">
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <a class="btn btn-xs btn-outline dark" style="width:150px;" data-toggle="modal" data-target="#detalhes" href="@Url.Action("Detalhes", "Rastreabilidade", new { id = carga.ImportacaoId })">Detalhes</a>
+                                                            <a class="btn red btn-xs btn-outline" style="width:150px;" data-toggle="modal" data-target="#editar" href="@Url.Action("Update", "Rastreabilidade", new { id = carga.Id })">Editar</a>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </td>
                                         </tr>
@@ -84,12 +87,20 @@
 </div>
 
 
-<div class="modal fade" id="editar" tabindex="-1" role="basic" aria-hidden="true" style="display: none;">
+<div class="modal fade" id="detalhes" tabindex="-1" role="basic" aria-hidden="true" style="display: none;">
     <div class="modal-dialog">
         <div class="modal-content">
 
             @{Html.RenderPartial("Detalhes", Model);}
 
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="editar" tabindex="-1" role="basic" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            @{Html.RenderPartial("Update", Model);}
         </div>
     </div>
 </div>

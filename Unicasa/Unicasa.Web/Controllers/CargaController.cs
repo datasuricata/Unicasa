@@ -118,7 +118,7 @@ namespace Unicasa.Web.Controllers
                 if (request == null)
                     SetError("Falha na importação");
 
-                return RedirectToAction("Index");
+                return RedirectToAction("Sincronizar", new { id = request.Id });
             }
             catch (ApiException ex)
             {
@@ -142,6 +142,27 @@ namespace Unicasa.Web.Controllers
                 SetError("Erro sincronizar tickets");
                 return RedirectToAction("Index");
             }
+
+            return RedirectToAction("Index", "Rastreabilidade");
+        }
+
+        public async Task<ActionResult> Excluir(string id)
+        {
+            if (id == null)
+            {
+                SetError("Id é vazio");
+                return RedirectToAction("Index");
+            }
+
+            var request = await Put<BaseResponse>(_Importacao.Excluir, id);
+
+            if (request == null)
+            {
+                SetError("Erro sincronizar tickets");
+                return RedirectToAction("Index");
+            }
+
+            SetSuccess(request.Message);
 
             return RedirectToAction("Index", "Rastreabilidade");
         }

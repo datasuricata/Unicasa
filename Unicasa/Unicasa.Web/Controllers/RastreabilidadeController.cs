@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using System.Web.Mvc;
 using Unicasa.Dashboard.Requests.Endpoints;
 using Unicasa.Domain.Arguments;
+using Unicasa.Domain.Arguments.Base;
 using Unicasa.Domain.Entities;
 using Unicasa.Domain.Helper;
 using Unicasa.Web.Controllers.Base;
@@ -55,6 +56,31 @@ namespace Unicasa.Web.Controllers
             }
         }
 
+        public async Task<ActionResult> DetalhesChave(string id)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(id))
+                    Notifications.Add("Identificador esta vazio");
+
+                var vm = new TicketsModel();
+
+                var request = await GetById<GerenciadorResponse>(_Gerenciador.OberPorChave, id);
+
+                if (request == null)
+                    Notifications.Add("Não localizado");
+
+                vm.Tickets = request.Tickets;
+
+                return View(vm);
+            }
+            catch (ApiException)
+            {
+                SetErrors(Notifications);
+                return RedirectToAction("Index");
+            }
+        }
+
         public async Task<ActionResult> Update(string id)
         {
             try
@@ -65,14 +91,21 @@ namespace Unicasa.Web.Controllers
                     return Redirect("Index");
                 }
 
-                var request = await GetById<GerenciadorResponse>(_Gerenciador.ObterPorId, id);
+                var request = await GetById<GerenciadorResponse>(_Gerenciador.OberPorChave, id);
 
                 if (request == null)
                 {
                     SetError("Não localizado.");
                     return Redirect("Index");
                 }
-                var vm = new TicketsModel(){Ticket = request.Ticket};
+                var vm = new TicketsModel()
+                {
+                    Tickets = request.Tickets,
+                    Chave = request.Tickets.FirstOrDefault().Chave,
+                    Agendamento = request.Tickets.FirstOrDefault().DataAgendamento,
+                    Entrega = request.Tickets.FirstOrDefault().DataEntrega,
+                    Coleta = request.Tickets.FirstOrDefault().DataColeta
+                };
 
                 return View(vm);
             }
@@ -91,13 +124,26 @@ namespace Unicasa.Web.Controllers
                 if (vm == null)
                     Notifications.Add("Modelo inválido");
 
-                var command = new GerenciadorRequest();
-                command.Ticket = vm.Ticket;
+                var command = new GerenciadorRequest()
+                {
+                    Agendamento = vm.Agendamento,
+                    Chave = vm.Chave,
+                    Coleta = vm.Coleta,
+                    Entrega = vm.Entrega,
+                    Ticket = vm.Ticket,
+                    Tickets = vm.Tickets,
+                    TicketState = vm.TicketState
+                };
 
-                var response = await Post<GerenciadorResponse>(_Gerenciador.Editar, command);
+                var response = await Put<BaseResponse>(_Gerenciador.Editar, command);
 
                 if (response != null)
-                    SetSuccess("Ord. de serviço atualizada");
+                {
+                    if (response.Message != null)
+                        SetSuccess(response.Message);
+                    else
+                        SetError("Não atualziados");
+                }
 
                 return RedirectToAction("Index");
             }

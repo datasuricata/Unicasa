@@ -120,43 +120,9 @@ namespace Unicasa.API.Controllers
             }
         }
 
-        [Route("adicionar/ticket")]
-        [HttpPost] //Retorna GerenciadorResponse
-        public async Task<HttpResponseMessage> Adicionar(GerenciadorRequest request)
-        {
-            try
-            {
-                if (request == null)
-                {
-                    Notification.Add("Verifique as informações e tente novamente");
-                    return null;
-                }
-
-                request.Ticket = ValidaEntrada(request.Ticket);
-                var ticket = repositoryTickets.Adicionar(request.Ticket);
-
-                if (ticket == null)
-                {
-                    Notification.Add("O Ticket não foi criado, tente novamente");
-                    return null;
-                }
-
-                var response = new GerenciadorResponse()
-                {
-                    Ticket = ticket
-                };
-
-                return await ResponseAsync(response);
-            }
-            catch (Exception ex)
-            {
-                return await ResponseExceptionAsync(ex);
-            }
-        }
-
-        [Route("editar")]
+        [Route("editar/lote")]
         [HttpPut] //Retorna GerenciadorResponse
-        public async Task<HttpResponseMessage> Editar(GerenciadorRequest request)
+        public async Task<HttpResponseMessage> EditarLote(GerenciadorRequest request)
         {
             try
             {
@@ -166,20 +132,34 @@ namespace Unicasa.API.Controllers
                     return null;
                 }
 
-                request.Ticket = ValidaEntrada(request.Ticket);
+                var entrada = ValidaEntrada(request.Agendamento);
+                var response = new BaseResponse();
 
-                var ticket = repositoryTickets.Editar(request.Ticket);
-
-                if (ticket == null)
+                if (entrada != null)
                 {
-                    Notification.Add("O Ticket não alterado e salvo no banco, tente novamente");
-                    return null;
+                    var query = repositoryTickets.ListarPor(x => x.Chave == request.Chave).ToList();
+
+                    if (query == null)
+                    {
+                        Notification.Add("Produto não localizado");
+                        return null;
+                    }
+
+                    foreach (var x in query)
+                    {
+                        x.DataAgendamento = entrada;
+                        x.DataColeta = request.Coleta;
+                        x.DataEntrega = request.Entrega;
+                        x.TicketState = request.TicketState;
+
+                        var ticket = repositoryTickets.Editar(x);
+
+                        if (ticket == null)
+                            Notification.Add("O Ticket: " + x.Id + " não alterado e salvo no banco, tente novamente");
+                    }
+
+                    response.Message = "Pedido atualizado.";
                 }
-
-                var response = new GerenciadorResponse()
-                {
-                    Ticket = ticket
-                };
 
                 return await ResponseAsync(response);
             }
@@ -231,6 +211,7 @@ namespace Unicasa.API.Controllers
                             Descricao = importacao.Descricao,
                             Detalhe = importacao.OrdCompra,
                             Titulo = importacao.Lote,
+                            Cliente = importacao.Cliente
                         });
                     }
                 });
@@ -298,20 +279,79 @@ namespace Unicasa.API.Controllers
 
                 //todo refatorar
                 var entidades = repositoryTickets.Listar().ToList();
+                var editados = new List<Ticket>();
 
                 entidades.ForEach(x =>
                 {
-                    request.TicketIds.ForEach(s =>
+                    request.Tickets.ForEach(s =>
                     {
-                        if (x.Chave == s)
+                        if (x.Id == s.Id)
                         {
-                            x.DataEntrega = DateTime.Now;
+                            x.DataEntrega = s.DataEntrega;
                             x.TicketState = TicketState.Entregue;
+
+                            editados.Add(x);
                         }
                     });
                 });
 
-                foreach (var entidade in entidades)
+                foreach (var entidade in editados)
+                {
+                    var ticket = repositoryTickets.Editar(entidade);
+
+                    if (ticket == null)
+                        Notification.Add("Os Ticket não foram atualizados no banco, tente novamente: " + entidade.Id);
+                }
+
+                var response = new BaseResponse()
+                {
+                    Exceptions = Notification,
+                    Message = "Carga atualizada."
+                };
+
+                return await ResponseAsync(response);
+            }
+            catch (Exception ex)
+            {
+                return await ResponseExceptionAsync(ex);
+            }
+        }
+
+        [Route("app/coleta")]
+        [HttpPut] //Retorna GerenciadorResponse
+        public async Task<HttpResponseMessage> AppColeta(GerenciadorRequest request)
+        {
+            try
+            {
+                if (request == null)
+                {
+                    Notification.Add("Verifique as informações e tente novamente");
+                    return null;
+                }
+
+                if (!request.TicketIds.Any())
+                {
+                    Notification.Add("Verifique as informações e tente novamente");
+                    return null;
+                }
+
+                //todo refatorar
+                var entidades = repositoryTickets.Listar().ToList();
+                var editados = new List<Ticket>();
+
+                entidades.ForEach(x =>
+                {
+                    request.Tickets.ForEach(s =>
+                    {
+                        if (x.Id == s.Id)
+                        {
+                            x.DataColeta = s.DataColeta;
+                            editados.Add(x);
+                        }
+                    });
+                });
+
+                foreach (var entidade in editados)
                 {
                     var ticket = repositoryTickets.Editar(entidade);
 
@@ -423,7 +463,7 @@ namespace Unicasa.API.Controllers
 
         #region [ Privates ]
 
-        private Ticket ValidaEntrada(Ticket request)
+        private DateTime? ValidaEntrada(DateTime? request)
         {
             var metricas = repositoryMetricas.Listar().FirstOrDefault();
             var entradas = repositoryTickets.ListarPor(x => x.DataAgendamento == DateTime.Now).ToList();
@@ -447,7 +487,7 @@ namespace Unicasa.API.Controllers
                 return null;
             }
 
-            if (entradas.Count() <= metricas.AgendamentosPorDia)
+            if (entradas.Count() >= metricas.AgendamentosPorDia)
             {
                 Notification.Add("Limite de agendamentos por dia: " + entradas.Count() + " de " + metricas.AgendamentosPorDia);
                 return null;
@@ -455,14 +495,14 @@ namespace Unicasa.API.Controllers
 
             var listaDatas = feriados.Select(x => x.DataFeriado).ToList();
 
-            request.DataAgendamento = UnicasaExtensions.GetDateTicket(request.DataAgendamento.Value, listaDatas, metricas.DiasMinimosEntrega);
+            var data = UnicasaExtensions.GetDateTicket(request.Value, listaDatas, metricas.DiasMinimosEntrega);
 
-            return request;
+            return data;
         }
 
         private List<Ticket> Filtro(FiltroRequest request)
         {
-            var query = repositoryTickets.Listar();
+            var query = repositoryTickets.Listar().Take(50);
 
             if (!string.IsNullOrEmpty(request.Chave))
                 query.Where(x => x.Chave == request.Chave);

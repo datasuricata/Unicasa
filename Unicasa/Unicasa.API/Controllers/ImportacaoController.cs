@@ -62,7 +62,10 @@ namespace Unicasa.API.Controllers
                     return null;
                 }
 
-                var message = new BaseResponse();
+                var message = new BaseResponse()
+                {
+                    Id = domain.Id
+                };
 
                 return await ResponseAsync(message);
             }
@@ -149,7 +152,7 @@ namespace Unicasa.API.Controllers
         }
 
         [Route("excluir")]
-        [HttpDelete]
+        [HttpPut]
         public async Task<HttpResponseMessage> ExcluirCarga(string id)
         {
             try
@@ -160,7 +163,7 @@ namespace Unicasa.API.Controllers
                     return null;
                 }
 
-                bool removido = false;
+                var response = new BaseResponse();
 
                 var carga = repositoryCargas.ObterPorId(id);
                 var importacoes = repositoryImportacao.ListarPor(x => x.CargaId == id).ToList();
@@ -173,10 +176,10 @@ namespace Unicasa.API.Controllers
                     });
 
                     repositoryCargas.Remover(carga);
-                    removido = true;
+                    response.Message = "Lote removido da base de dados.";
                 }
 
-                return await ResponseAsync(removido);
+                return await ResponseAsync(response);
             }
             catch (Exception ex)
             {

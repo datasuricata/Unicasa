@@ -38,11 +38,12 @@
                         <thead class="text-center">
                             <tr>
                                 <th class="all">Pedido</th>
+                                <th class="desktop">Qnt. Itens</th>
                                 <th class="none">Lote</th>
+                                <th class="desktop">Cliente</th>
                                 <th class="none">Descrição</th>
-                                <th class="desktop">Data Agendamento</th>
                                 <th class="none">Ord. Compra</th>
-                                <th class="none">Data Coleta</th>
+                                <th class="none">Data Agendamento</th>
                                 <th class="none">Data Entrega</th>
                                 <th class="desktop">Status</th>
                                 <th style="width:320px;" class="desktop">Ação</th>
@@ -51,30 +52,32 @@
                         <tbody>
                             @if (Model.Ticket != null)
                             {
-                                foreach (var carga in Model.Tickets)
+
+                                foreach (var pedidos in Model.Tickets.GroupBy(x => x.Chave).ToList())
                                 {
-                                    using (Html.BeginForm("Update", "Rastreabilidade", FormMethod.Post, new { id = carga.Id }))
+                                    using (Html.BeginForm("Update", "Rastreabilidade", FormMethod.Post, new { id = pedidos.Key }))
                                     {
-                                        <tr>
-                                            <td> @carga.Chave </td>
-                                            <td> @carga.Titulo </td>
-                                            <td> @carga.Descricao </td>
-                                            <td> @carga.DataAgendamento</td>
-                                            <td> @carga.Detalhe </td>
-                                            <td> @carga.DataColeta.ToString()</td>
-                                            <td> @carga.DataEntrega.ToString()</td>
-                                            <td> @carga.TicketState.ToString()</td>
-                                            <td>
-                                                <div class="btn-group">
-                                                    <div class="row">
-                                                        <div class="col-md-12">
-                                                            <a class="btn btn-xs btn-outline dark" style="width:150px;" data-toggle="modal" data-target="#detalhes" href="@Url.Action("Detalhes", "Rastreabilidade", new { id = carga.ImportacaoId })">Detalhes</a>
-                                                            <a class="btn red btn-xs btn-outline" style="width:150px;" data-toggle="modal" data-target="#editar" href="@Url.Action("Update", "Rastreabilidade", new { id = carga.Id })">Editar</a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
+                            <tr>
+                                <td>@pedidos.Key</td>
+                                <td>@pedidos.Count()</td>
+                                <td>@pedidos.Select(x => x).FirstOrDefault().Titulo</td>
+                                <td>@pedidos.Select(x => x).FirstOrDefault().Cliente</td>
+                                <td>@pedidos.Select(x => x).FirstOrDefault().Descricao</td>
+                                <td>@pedidos.Select(x => x).FirstOrDefault().Detalhe</td>
+                                <td>@pedidos.Select(x => x).FirstOrDefault().DataAgendamento</td>
+                                <td>@pedidos.Select(x => x).FirstOrDefault().DataEntrega</td>
+                                <td>@pedidos.Select(x => x).FirstOrDefault().TicketState.ToString()</td>
+                                <td>
+                                    <div class="btn-group">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <a class="btn btn-xs btn-outline dark" style="width:150px;" data-toggle="modal" data-target="#detalhes" href="@Url.Action("DetalhesChave", "Rastreabilidade", new { id = pedidos.Key })">Detalhes</a>
+                                                <a class="btn red btn-xs btn-outline" style="width:150px;" data-toggle="modal" data-target="#editar" href="@Url.Action("Update", "Rastreabilidade", new { id = pedidos.Key })">Editar</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
                                     }
                                 }
                             }
@@ -87,11 +90,21 @@
 </div>
 
 
-<div class="modal fade" id="detalhes" tabindex="-1" role="basic" aria-hidden="true" style="display: none;">
+<div class="modal fade" id="subDetalhes" tabindex="-1" role="basic" aria-hidden="true" style="display: none;">
     <div class="modal-dialog">
         <div class="modal-content">
 
             @{Html.RenderPartial("Detalhes", Model);}
+
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="detalhes" tabindex="-1" role="basic" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            @{Html.RenderPartial("DetalhesChave", Model);}
 
         </div>
     </div>
@@ -104,6 +117,8 @@
         </div>
     </div>
 </div>
+
+
 
 
 @section scripts{

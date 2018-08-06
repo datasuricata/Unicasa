@@ -5533,6 +5533,7 @@
     <Content Include="Views\Agenda\Update.cshtml" />
     <Content Include="Views\Agenda\Upload.cshtml" />
     <Content Include="Views\Rastreabilidade\Update.cshtml" />
+    <Content Include="Views\Rastreabilidade\DetalhesChave.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -46,13 +46,12 @@
         <div class="row bs-reset">
             <div class="col-md-6 bs-reset mt-login-5-bsfix">
                 <div class="login-container" style="background-image:url(../Content/assets/pages/img/login/bg1.jpeg)">
-                    <img class="login-logo" src="~/Content/assets/pages/img/login/LogoGraneroLogin.png" />
-                    @*<img class="login-logo" src="~/Content/assets/pages/img/login/logo.jpeg" />*@
+                    @*<img class="login-logo" src="~/Content/assets/pages/img/login/LogoGraneroLogin.png" />*@
                 </div>
             </div>
             <div class="col-md-6 login-container bs-reset mt-login-5-bsfix">
                 <div class="login-content">
-                    <h1>Granero & Unicasa</h1>
+                    <h1>Granero</h1>
                     @using (Html.BeginForm("Login", "UsuarioConta", FormMethod.Post, new { @class = "login-form", role = "form" }))
                     {
                         if (TempData["Message"] != null)
@@ -95,7 +94,7 @@
                     <div class="row bs-reset">
                         <div class="col-xs-7 bs-reset">
                             <div class="login-copyright text-right">
-                                <p>Copyright &copy; Unicasa @DateTime.Now.ToShortDateString()</p>
+                                <p>Copyright &copy; Granero Transportes @DateTime.Now.Year.ToString()</p>
                             </div>
                         </div>
                     </div>

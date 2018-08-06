@@ -3,7 +3,7 @@ namespace Unicasa.API.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class UnicasaMigration : DbMigration
+    public partial class graneromigration : DbMigration
     {
         public override void Up()
         {
@@ -81,6 +81,7 @@ namespace Unicasa.API.Migrations
                     {
                         Id = c.String(nullable: false, maxLength: 100, unicode: false),
                         ImportacaoId = c.String(maxLength: 100, unicode: false),
+                        Cliente = c.String(maxLength: 100, unicode: false),
                         Chave = c.String(maxLength: 100, unicode: false),
                         Titulo = c.String(maxLength: 100, unicode: false),
                         Descricao = c.String(maxLength: 100, unicode: false),
@@ -103,7 +104,9 @@ namespace Unicasa.API.Migrations
                         UserRole = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.Id);
-            
+
+            Sql("INSERT INTO dbo.Usuarios (Id, NomeCompleto, Email, Senha, UserRole) VALUES ('E178FC1D-F905-4113-9580-1C139F35AEB7', 'master' ,'admin', '03C1DBAA940DF84CA0726143046A2340', 99)");
+            Sql("INSERT INTO dbo.Metricas (Id, AgendamentosPorDia, DiasMinimosEntrega) VALUES ('1', '8' ,'2')");
         }
         
         public override void Down()

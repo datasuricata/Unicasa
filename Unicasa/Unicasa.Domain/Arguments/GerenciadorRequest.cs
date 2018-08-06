@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Unicasa.Domain.Entities;
+using Unicasa.Domain.Helper;
 
 namespace Unicasa.Domain.Arguments
 {
@@ -15,6 +17,11 @@ namespace Unicasa.Domain.Arguments
         public Ticket Ticket { get; set; }
         public List<string> TicketIds { get; set; }
         public List<Ticket> Tickets { get; set; }
+        public string Chave { get; set; }
+        public TicketState TicketState { get; set; }
+        public DateTime? Agendamento { get; set; }
+        public DateTime? Coleta { get; set; }
+        public DateTime? Entrega { get; set; }
 
     }
 }

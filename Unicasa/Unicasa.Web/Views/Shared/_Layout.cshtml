@@ -69,8 +69,8 @@
                             <!-- BEGIN LOGO -->
                             <div class="page-logo text">
                                 <a href="../Home/Index">
-                                    @*<img src="~/Content/assets/layouts/layout3/img/logo-default.jpg" alt="logo" class="logo-default">*@
-                                    <h3 class="caption-subject font-green-steel uppercase bold">Granero - Unicasa </h3>
+                                    <img class="login-logo" style="width:260px;" src="~/Content/assets/pages/img/login/LogoGraneroLogin.png" />
+                                    @*<h3 class="caption-subject font-green-steel uppercase bold">Granero - Unicasa </h3>*@
                                 </a>
                             </div>
                             <!-- END LOGO -->
@@ -123,7 +123,7 @@
                                     </li>
                                     <li aria-haspopup="true" class="menu-dropdown classic-menu-dropdown ">
                                         <a href="@Url.Action("Index","Rastreabilidade")" class="nav-link  active">
-                                            Rastreabilidade
+                                            Agendamento
                                         </a>
                                     </li>
                                     @if (Session["PerfilEnum"].ToString() == "Administrador" || Session["PerfilEnum"].ToString() == "Gerente")
@@ -250,20 +250,7 @@
                         <div class="row">
                             <div class="col-md-3 col-sm-6 col-xs-12 footer-block">
                                 <h2>Sobre</h2>
-                                <p> XYZ Bolinha Quadrado. </p>
-                                <p> XYZ Bolinha Quadrado. </p>
-                                <p> XYZ Bolinha Quadrado. </p>
-                                <p> XYZ Bolinha Quadrado. </p>
-                            </div>
-                            <div class="col-md-3 col-sm-6 col-xs-12 footer-block">
-                                <h2>Contato</h2>
-                                <address class="margin-bottom-40">
-                                    Phone: +55 41 9 9862-3719
-                                    <br> Email:
-                                    <a href="mailto:info@unicasa.com.br">info@unicasa.com.br</a>
-                                    <a href="mailto:info@unicasa.com.br">info@unicasa.com.br</a>
-                                    <a href="mailto:info@unicasa.com.br">info@unicasa.com.br</a>
-                                </address>
+                                <p> Granero Transportes. </p>
                             </div>
                         </div>
                     </div>
@@ -272,7 +259,7 @@
                 <!-- BEGIN INNER FOOTER -->
                 <div class="page-footer">
                     <div class="container">
-                        @DateTime.Now.Year.ToString() &copy; Granero & Unicasa |
+                        @DateTime.Now.Year.ToString() &copy; Granero Transportes |
                         <a target="_blank" href="http://www.datasuricata.com.br">Data Suricata</a> &nbsp;
                     </div>
                 </div>

@@ -72,7 +72,7 @@ namespace Unicasa.API.Controllers
         {
             try
             {
-                var tickets = repositoryTickets.Listar().Select(x => x).Take(10).ToList();
+                var tickets = repositoryTickets.Listar().ToList();
 
                 var response = new GerenciadorResponse()
                 {
@@ -502,7 +502,7 @@ namespace Unicasa.API.Controllers
 
         private List<Ticket> Filtro(FiltroRequest request)
         {
-            var query = repositoryTickets.Listar().Take(50);
+            var query = repositoryTickets.Listar();
 
             if (!string.IsNullOrEmpty(request.Chave))
                 query.Where(x => x.Chave == request.Chave);

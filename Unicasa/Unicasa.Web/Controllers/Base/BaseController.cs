@@ -95,10 +95,6 @@ namespace Unicasa.Web.Controllers.Base
 
                 StoreErrors(request);
 
-                if (request.ErrosRequest == null)
-                    if (Response.StatusDescription == "OK")
-                        SetSuccess("OK");
-
                 return result;
             }
             catch (ApiException e)
@@ -132,10 +128,6 @@ namespace Unicasa.Web.Controllers.Base
                 var result = await request.Put(Uri, command, Token);
 
                 StoreErrors(request);
-
-                if (request.ErrosRequest == null)
-                    if (Response.StatusDescription == "OK")
-                        SetSuccess("OK");
 
                 return result;
             }

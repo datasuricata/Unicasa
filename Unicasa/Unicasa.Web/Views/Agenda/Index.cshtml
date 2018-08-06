@@ -2,24 +2,21 @@
 @using Unicasa.Domain.Helper
 
 @{
-    ViewBag.Title = "Administração do Usuário";
-    ViewBag.SmallDescription = "Usuários & informações detalhadas";
+    ViewBag.Title = "Administração da Agenda";
+    ViewBag.SmallDescription = "Cadastro de Feriados";
     Layout = "~/Views/Shared/_Layout.cshtml";
 
 }
 
 @section styles{
-    <link href="../Content/assets/global/plugins/datatables/datatables.min.css" rel="stylesheet" type="text/css" />
-    <link href="../Content/assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css" rel="stylesheet" type="text/css" />
     <link href="../Content/assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
     <link href="../Content/assets/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css" />
     <link href="../Content/assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="../Content/assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css" />
+    <link href="../Content/assets/global/plugins/datatables/datatables.min.css" rel="stylesheet" type="text/css" />
+    <link href="../Content/assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css" rel="stylesheet" type="text/css" />
     <link href="../Content/assets/global/css/components.min.css" rel="stylesheet" id="style_components" type="text/css" />
     <link href="../Content/assets/global/css/plugins.min.css" rel="stylesheet" type="text/css" />
-    <link href="../Content/assets/layouts/layout3/css/layout.min.css" rel="stylesheet" type="text/css" />
-    <link href="../Content/assets/layouts/layout3/css/themes/default.min.css" rel="stylesheet" type="text/css" id="style_color" />
-    <link href="../Content/assets/layouts/layout3/css/custom.min.css" rel="stylesheet" type="text/css" />
 }
 
 <!-- BEGIN PAGE CONTENT INNER -->
@@ -31,15 +28,15 @@
                 <div class="portlet-title">
                     <div class="caption font-dark">
                         <i class="icon-settings font-dark"></i>
-                        <span class="caption-subject bold uppercase">Gerenciador</span>
+                        <span class="caption-subject bold uppercase">Gerenciador de Feriados</span>
                     </div>
                     <div class="tools"> </div>
                 </div>
                 <div class="portlet-body">
                     <p>
-                        Clique aqui para criar um novo usuário.
+                        Clique aqui para criar um novo feriado.
                     </p>
-                    <a class="btn btn-outline dark" data-toggle="modal" href="#criar"> Criar agendamento </a>
+                    <a class="btn btn-outline dark" data-toggle="modal" href="#criar"> Criar feriado </a>
                 </div>
             </div>
             <!-- END EXAMPLE TABLE PORTLET-->
@@ -50,7 +47,7 @@
                 <div class="portlet-title">
                     <div class="caption font-dark">
                         <i class="icon-settings font-dark"></i>
-                        <span class="caption-subject bold uppercase">Usuários</span>
+                        <span class="caption-subject bold uppercase">Datas Cadastradas</span>
                     </div>
                     <div class="tools"> </div>
                 </div>
@@ -67,7 +64,7 @@
                         <tbody>
                             @if (Model.Agendamentos.Any())
                             {
-                                foreach(var agenda in Model.Agendamentos)
+                                foreach (var agenda in Model.Agendamentos)
                                 {
                                     <tr>
                                         <td> @agenda.Ativo </td>
@@ -136,20 +133,16 @@
 @section scripts{
     <script src="~/Content/assets/global/plugins/jquery.min.js" type="text/javascript"></script>
     <script src="~/Content/assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="~/Content/assets/global/scripts/datatable.js" type="text/javascript"></script>
+    <script src="~/Content/assets/global/plugins/datatables/datatables.min.js" type="text/javascript"></script>
+    <script src="~/Content/assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js" type="text/javascript"></script>
     <script src="~/Content/assets/global/plugins/js.cookie.min.js" type="text/javascript"></script>
     <script src="~/Content/assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
     <script src="~/Content/assets/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
     <script src="~/Content/assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>
     <script src="~/Content/assets/global/plugins/jquery-ui/jquery-ui.min.js" type="text/javascript"></script>
     <script src="~/Content/assets/global/scripts/app.min.js" type="text/javascript"></script>
+    <script src="~/Content/assets/pages/scripts/table-datatables-responsive.min.js" type="text/javascript"></script>
     <script src="~/Content/assets/pages/scripts/ui-modals.min.js" type="text/javascript"></script>
-    <script src="~/Content/assets/layouts/layout3/scripts/layout.min.js" type="text/javascript"></script>
-    <script src="~/Content/assets/layouts/layout3/scripts/demo.min.js" type="text/javascript"></script>
-    <script src="~/Content/assets/layouts/global/scripts/quick-sidebar.min.js" type="text/javascript"></script>
-    <script src="~/Content/assets/layouts/global/scripts/quick-nav.min.js" type="text/javascript"></script>
-    <script src="~/Content/assets/global/scripts/datatable.js" type="text/javascript"></script>
-    <script src="~/Content/assets/pages/scripts/table-datatables-rowreorder.min.js" type="text/javascript"></script>
-    <script src="~/Content/assets/global/plugins/datatables/datatables.min.js" type="text/javascript"></script>
-    <script src="~/Content/assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js" type="text/javascript"></script>
-
 }
+

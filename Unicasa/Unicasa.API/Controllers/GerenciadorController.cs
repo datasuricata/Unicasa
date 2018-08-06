@@ -148,9 +148,7 @@ namespace Unicasa.API.Controllers
                     foreach (var x in query)
                     {
                         x.DataAgendamento = entrada;
-                        x.DataColeta = request.Coleta;
-                        x.DataEntrega = request.Entrega;
-                        x.TicketState = request.TicketState;
+                        x.TicketState = TicketState.Agendado;
 
                         var ticket = repositoryTickets.Editar(x);
 
@@ -175,11 +173,7 @@ namespace Unicasa.API.Controllers
         {
             try
             {
-                if (id == null)
-                {
-                    Notification.Add("Verifique as informações e tente novamente");
-                    return null;
-                }
+                if (id == null){Notification.Add("Verifique as informações e tente novamente");return null;}
 
                 bool sincronizado = false;
 
@@ -187,11 +181,7 @@ namespace Unicasa.API.Controllers
 
                 List<Ticket> tickets = new List<Ticket>();
 
-                if (response == null)
-                {
-                    Notification.Add("Tickets não sincronizados, tente novamente");
-                    return null;
-                }
+                if (response == null){Notification.Add("Tickets não sincronizados, tente novamente");return null;}
 
                 response.ForEach(x =>
                 {
@@ -466,32 +456,16 @@ namespace Unicasa.API.Controllers
         private DateTime? ValidaEntrada(DateTime? request)
         {
             var metricas = repositoryMetricas.Listar().FirstOrDefault();
-            var entradas = repositoryTickets.ListarPor(x => x.DataAgendamento == DateTime.Now).ToList();
+
+            var entradas = repositoryTickets.ListarPor(x => x.DataAgendamento == DateTime.Now).GroupBy(g => g.Chave).Count();
+
             var feriados = repositoriyFeriado.Listar().Where(x => x.Ativo == true).ToList();
 
-            if (entradas == null)
-            {
-                Notification.Add("Sem tickets registros na base");
-                return null;
-            }
+            if (metricas == null) {Notification.Add("Sem metricas registradas na base"); return null;}
 
-            if (metricas == null)
-            {
-                Notification.Add("Sem metricas registradas na base");
-                return null;
-            }
+            if (feriados == null) {Notification.Add("Sem feriados registrados na base"); return null;}
 
-            if (feriados == null)
-            {
-                Notification.Add("Sem feriados registrados na base");
-                return null;
-            }
-
-            if (entradas.Count() >= metricas.AgendamentosPorDia)
-            {
-                Notification.Add("Limite de agendamentos por dia: " + entradas.Count() + " de " + metricas.AgendamentosPorDia);
-                return null;
-            }
+            if (entradas >= metricas.AgendamentosPorDia) {Notification.Add("Limite de agendamentos por dia: " + entradas + " de " + metricas.AgendamentosPorDia); return null;}
 
             var listaDatas = feriados.Select(x => x.DataFeriado).ToList();
 

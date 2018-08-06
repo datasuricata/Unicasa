@@ -23,15 +23,11 @@ namespace Unicasa.Domain.Helper
         public static DateTime GetDateTicket(this DateTime dataAgendamento, List<DateTime> feriados, int arg)
         {
             var datas = new List<ComponenteData>();
-
             datas.Add(new ComponenteData(1, dataAgendamento, true));
-
             bool valida = AjustarData(datas, feriados, arg);
 
             for (int i = 1; i <= arg; i++)
-            {
                 datas.Add(new ComponenteData(i + 1, dataAgendamento.AddDays(i), true));
-            }
 
             while (valida)
             {
@@ -44,7 +40,7 @@ namespace Unicasa.Domain.Helper
                 valida = AjustarData(datas, feriados, arg);
             }
 
-            return datas.Select(x => x.Data).FirstOrDefault();
+            return datas.Select(x => x.Data).LastOrDefault();
         }
 
         public static List<ComponenteData> ValidarData(this List<ComponenteData> datas, List<DateTime> feriados)
@@ -53,11 +49,7 @@ namespace Unicasa.Domain.Helper
             {
                 data.Valida = true;
 
-                feriados.ForEach(x =>
-                {
-                    if (x == data.Data)
-                        data.Valida = false;
-                });
+                feriados.ForEach(x =>{if (x == data.Data)data.Valida = false;});
 
                 if (data.Data.DayOfWeek == DayOfWeek.Saturday || data.Data.DayOfWeek == DayOfWeek.Sunday)
                     data.Valida = false;
@@ -71,10 +63,8 @@ namespace Unicasa.Domain.Helper
             int conter = 0;
 
             foreach (var data in ValidarData(datas, feriados))
-            {
                 if (data.Valida)
                     conter++;
-            }
 
             if (conter > arg)
                 return false;

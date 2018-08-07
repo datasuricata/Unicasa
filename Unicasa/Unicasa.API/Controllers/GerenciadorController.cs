@@ -179,15 +179,20 @@ namespace Unicasa.API.Controllers
         {
             try
             {
-                if (id == null){Notification.Add("Verifique as informações e tente novamente");return null;}
+                if (id == null) { Notification.Add("Verifique as informações e tente novamente"); return null; }
 
                 bool sincronizado = false;
+                bool existe = false;
 
                 var response = repositoryImportacao.ListarPor(x => x.CargaId == id).ToList();
+                var usuarios = repositoryUsuario.Listar().ToList();
+
+                if (usuarios != null)
+                    existe = (usuarios.Count() > 1);
 
                 List<Ticket> tickets = new List<Ticket>();
 
-                if (response == null){Notification.Add("Tickets não sincronizados, tente novamente");return null;}
+                if (response == null) { Notification.Add("Tickets não sincronizados, tente novamente"); return null; }
 
                 response.ForEach(x =>
                 {
@@ -213,8 +218,8 @@ namespace Unicasa.API.Controllers
 
                         if (!string.IsNullOrEmpty(importacao.RefItem))
                         {
-                            var usuario = new Usuario(importacao.RefItem, importacao.RefItem);
-                            ImportarUsuario(usuario);
+                            var entity = new Usuario(importacao.RefItem, importacao.RefItem);
+                            ImportarUsuario(entity, existe, usuarios);
                         }
                     }
                 });
@@ -474,11 +479,11 @@ namespace Unicasa.API.Controllers
 
             var feriados = repositoriyFeriado.Listar().Where(x => x.Ativo == true).ToList();
 
-            if (metricas == null) {Notification.Add("Sem metricas registradas na base"); return null;}
+            if (metricas == null) { Notification.Add("Sem metricas registradas na base"); return null; }
 
-            if (feriados == null) {Notification.Add("Sem feriados registrados na base"); return null;}
+            if (feriados == null) { Notification.Add("Sem feriados registrados na base"); return null; }
 
-            if (entradas >= metricas.AgendamentosPorDia) {Notification.Add("Limite de agendamentos por dia: " + entradas + " de " + metricas.AgendamentosPorDia); return null;}
+            if (entradas >= metricas.AgendamentosPorDia) { Notification.Add("Limite de agendamentos por dia: " + entradas + " de " + metricas.AgendamentosPorDia); return null; }
 
             var listaDatas = feriados.Select(x => x.DataFeriado).ToList();
 
@@ -515,18 +520,25 @@ namespace Unicasa.API.Controllers
             return query.ToList();
         }
 
-        private void ImportarUsuario(Usuario usuario)
+        private void ImportarUsuario(Usuario usuario, bool primeiroImport, List<Usuario> usuarios)
         {
-            var existe = repositoryUsuario.Existe(x => x.Email == usuario.Email && x.Senha == usuario.Senha);
             var response = new Usuario();
 
-            if (!existe)
+            if (primeiroImport)
+            {
+                var existe = repositoryUsuario.Existe(x => x.Email == usuario.Email && x.Senha == usuario.Senha);
+
+                if (!existe)
+                    response = repositoryUsuario.Adicionar(usuario);
+            }
+
+            else if (!usuarios.Any(x => x.Email == usuario.Email))
                 response = repositoryUsuario.Adicionar(usuario);
 
-            if(response != null)
-                Notification.Add("Usuário "+ usuario.Email + " não importado.");
+            if (response != null)
+                Notification.Add("Usuário " + usuario.Email + " não importado.");
 
-            uow.Commit();
+            //uow.Commit();
         }
 
         #endregion

@@ -19,12 +19,17 @@ namespace Unicasa.API.Controllers
     [RoutePrefix("api/gerenciador")]
     public class GerenciadorController : ControllerBase
     {
+        #region [ PARAMETROS ]
+
         private readonly RepositoryTickets repositoryTickets;
         private readonly RepositoryMetricas repositoryMetricas;
         private readonly RepositoriyFeriado repositoriyFeriado;
+        private readonly RepositoryUsuario repositoryUsuario;
         private readonly RepositoryImportacao repositoryImportacao;
 
         private readonly UnicasaContext context;
+
+        #endregion
 
         public GerenciadorController()
         {
@@ -34,6 +39,7 @@ namespace Unicasa.API.Controllers
             repositoryMetricas = new RepositoryMetricas(context);
             repositoriyFeriado = new RepositoriyFeriado(context);
             repositoryImportacao = new RepositoryImportacao(context);
+            repositoryUsuario = new RepositoryUsuario(context);
 
             uow = new UnitOfWork(context);
             Notification = new List<string>();
@@ -201,8 +207,15 @@ namespace Unicasa.API.Controllers
                             Descricao = importacao.Descricao,
                             Detalhe = importacao.OrdCompra,
                             Titulo = importacao.Lote,
-                            Cliente = importacao.Cliente
+                            Cliente = importacao.Cliente,
+                            Operador = importacao.RefItem ?? ""
                         });
+
+                        if (!string.IsNullOrEmpty(importacao.RefItem))
+                        {
+                            var usuario = new Usuario(importacao.RefItem, importacao.RefItem);
+                            ImportarUsuario(usuario);
+                        }
                     }
                 });
 
@@ -500,6 +513,20 @@ namespace Unicasa.API.Controllers
                 query.Where(x => x.DataAgendamento == DateTime.Now && x.DataAgendamento == (DateTime.Now.AddDays(-30)));
 
             return query.ToList();
+        }
+
+        private void ImportarUsuario(Usuario usuario)
+        {
+            var existe = repositoryUsuario.Existe(x => x.Email == usuario.Email && x.Senha == usuario.Senha);
+            var response = new Usuario();
+
+            if (!existe)
+                response = repositoryUsuario.Adicionar(usuario);
+
+            if(response != null)
+                Notification.Add("Usuário "+ usuario.Email + " não importado.");
+
+            uow.Commit();
         }
 
         #endregion

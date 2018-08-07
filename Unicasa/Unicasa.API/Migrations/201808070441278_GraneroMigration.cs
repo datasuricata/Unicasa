@@ -86,6 +86,7 @@ namespace Unicasa.API.Migrations
                         Titulo = c.String(maxLength: 100, unicode: false),
                         Descricao = c.String(maxLength: 100, unicode: false),
                         Detalhe = c.String(maxLength: 100, unicode: false),
+                        Operador = c.String(maxLength: 100, unicode: false),
                         DataAgendamento = c.DateTime(),
                         DataEntrega = c.DateTime(),
                         DataColeta = c.DateTime(),
@@ -105,9 +106,9 @@ namespace Unicasa.API.Migrations
                     })
                 .PrimaryKey(t => t.Id);
 
-            Sql("INSERT INTO dbo.Usuarios (Id, NomeCompleto, Email, Senha, UserRole) VALUES ('E178FC1D-F905-4113-9580-1C139F35AEB7', 'master' ,'admin', '03C1DBAA940DF84CA0726143046A2340', 99)");
-            Sql("INSERT INTO dbo.Metricas (Id, AgendamentosPorDia, DiasMinimosEntrega) VALUES ('1', '8' ,'2')");
-
+            //admin key qawsed123yhuj
+            Sql("INSERT INTO dbo.Usuarios (Id, NomeCompleto, Email, Senha, UserRole) VALUES ('E178FC1D-F905-4113-9580-1C139F35AEB7', 'master' ,'master', '03C1DBAA940DF84CA0726143046A2340', 99)");
+            Sql("INSERT INTO dbo.Metricas (Id, AgendamentosPorDia, DiasMinimosEntrega) VALUES ('1', '4' ,'2')");
         }
         
         public override void Down()

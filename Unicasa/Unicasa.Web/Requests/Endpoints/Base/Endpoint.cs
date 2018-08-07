@@ -14,5 +14,6 @@
         public const string Usuario = Base + "usuario/";
         public const string UsuarioConta = Base + "usuario/conta/";
         public const string Gerenciador = Base + "gerenciador/";
+        public const string Relatorios = Base + "relatorios/";
     }
 }

@@ -152,7 +152,7 @@ namespace Unicasa.API.Controllers
         }
 
         [Route("excluir")]
-        [HttpPut]
+        [HttpGet]
         public async Task<HttpResponseMessage> ExcluirCarga(string id)
         {
             try

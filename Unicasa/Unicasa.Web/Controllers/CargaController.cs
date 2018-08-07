@@ -154,7 +154,7 @@ namespace Unicasa.Web.Controllers
                 return RedirectToAction("Index");
             }
 
-            var request = await Put<BaseResponse>(_Importacao.Excluir, id);
+            var request = await GetById<BaseResponse>(_Importacao.Excluir, id);
 
             if (request == null)
             {

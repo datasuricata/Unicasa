@@ -12,6 +12,7 @@ namespace Unicasa.Domain.Entities
         public string Titulo { get; set; }
         public string Descricao { get; set; }
         public string Detalhe { get; set; }
+        public string Operador { get; set; }
 
         public DateTime? DataAgendamento { get; set; }
         public DateTime? DataEntrega { get; set; }

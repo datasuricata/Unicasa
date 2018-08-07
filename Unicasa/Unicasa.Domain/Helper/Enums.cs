@@ -9,6 +9,7 @@
 
     public enum TicketState
     {
+        Selecione = 0,
         Aguardando = 1,
         Agendado = 2,
         Entregue = 3

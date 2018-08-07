@@ -1,0 +1,100 @@
+﻿@model Unicasa.Web.Models.RelatorioModel
+@using Unicasa.Domain.Helper
+
+@{
+    ViewBag.Title = "Relatório de Leituras";
+    ViewBag.SmallDescription = "Relatório de acompanhamento";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section styles{
+    <link href="../Content/assets/global/plugins/datatables/datatables.min.css" rel="stylesheet" type="text/css" />
+    <link href="../Content/assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css" rel="stylesheet" type="text/css" />
+    <link href="../Content/assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <link href="../Content/assets/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css" />
+    <link href="../Content/assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="../Content/assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css" />
+    <link href="../Content/assets/global/css/components.min.css" rel="stylesheet" id="style_components" type="text/css" />
+    <link href="../Content/assets/global/css/plugins.min.css" rel="stylesheet" type="text/css" />
+    <link href="../Content/assets/layouts/layout3/css/layout.min.css" rel="stylesheet" type="text/css" />
+    <link href="../Content/assets/layouts/layout3/css/themes/default.min.css" rel="stylesheet" type="text/css" id="style_color" />
+    <link href="../Content/assets/layouts/layout3/css/custom.min.css" rel="stylesheet" type="text/css" />
+}
+
+<!-- BEGIN PAGE CONTENT INNER -->
+<div class="page-content-inner">
+    <div class="row">
+        <div class="col-md-12">
+            <!-- BEGIN EXAMPLE TABLE PORTLET-->
+            <div class="portlet light ">
+                <div class="portlet-title">
+                    <div class="caption font-dark">
+                        <i class="icon-settings font-dark"></i>
+                        <span class="caption-subject bold uppercase">@ViewBag.Title</span>
+                    </div>
+                    <div class="tools"> </div>
+                </div>
+                <div class="portlet-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="col-md-4">
+                                <p>Data Inicial</p>
+                                @Html.TextBoxFor(m => m.DataInicial, new { @class = "form-control", type = "date" })
+                            </div>
+                            <div class="col-md-4">
+                                <p>Data Final</p>
+                                @Html.TextBoxFor(m => m.DataFinal, new { @class = "form-control", type = "date" })
+                            </div>
+                            <div class="col-md-4">
+                                <p>Periodo</p>
+                                @Html.DropDownListFor(m => m.Periodo, new SelectList(Enum.GetValues(typeof(DatePeriod))), "Selecione", new { @class = "form-control" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- END EXAMPLE TABLE PORTLET-->
+        </div>
+        <div class="col-md-12">
+            <!-- BEGIN EXAMPLE TABLE PORTLET-->
+            <div class="portlet light ">
+                <div class="portlet-title">
+                    <div class="caption font-dark">
+                        <i class="icon-settings font-dark"></i>
+                        <span class="caption-subject bold uppercase">@ViewBag.SmallDescription</span>
+                    </div>
+                    <div class="tools"> </div>
+                </div>
+                <div class="portlet-body">
+                    <table class="table table-striped table-bordered table-hover" id="sample_1">
+                        <thead>
+                            <tr>
+                                <th> Pedido </th>
+                                <th> Cliente </th>
+                                <th> Data de Coleta </th>
+                                <th> Data de Entrega </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model.Tickets.Any())
+                            {
+                                foreach (var user in Model.Tickets)
+                                {
+                                    <tr>
+                                        <td> @user.Chave </td>
+                                        <td> @user.Cliente </td>
+                                        <td> @user.DataColeta </td>
+                                        <td> @user.DataEntrega </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!-- END EXAMPLE TABLE PORTLET-->
+        </div>
+    </div>
+</div>
+
+

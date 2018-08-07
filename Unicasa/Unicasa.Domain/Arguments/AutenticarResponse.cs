@@ -11,8 +11,7 @@ namespace Unicasa.Domain.Arguments
         public UserRole Perfil { get; set;}
         public string Token { get; set; }
         public string Nome { get; set; }
-
-
+        public string Email { get; set; }
 
         public static explicit operator AutenticarResponse(Usuario v)
         {

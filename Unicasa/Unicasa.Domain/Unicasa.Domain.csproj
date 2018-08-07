@@ -53,6 +53,8 @@
     <Compile Include="Arguments\GerenciadorResponse.cs" />
     <Compile Include="Arguments\ImportacaoRequest.cs" />
     <Compile Include="Arguments\ImportacaoResponse.cs" />
+    <Compile Include="Arguments\RelatorioRequest.cs" />
+    <Compile Include="Arguments\RelatorioResponse.cs" />
     <Compile Include="Arguments\UsuarioRequest.cs" />
     <Compile Include="Entities\Base\BaseEntity.cs" />
     <Compile Include="Entities\Cargas.cs" />

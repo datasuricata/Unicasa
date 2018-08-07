@@ -178,6 +178,7 @@
     </Compile>
     <Compile Include="Models\AgendaModel.cs" />
     <Compile Include="Models\CargaModel.cs" />
+    <Compile Include="Models\RelatorioModel.cs" />
     <Compile Include="Models\TicketsModel.cs" />
     <Compile Include="Models\UsuarioModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -189,6 +190,7 @@
     <Compile Include="Requests\Endpoints\_Gerenciador.cs" />
     <Compile Include="Requests\Endpoints\_Importacao.cs" />
     <Compile Include="Requests\Endpoints\_Metricas.cs" />
+    <Compile Include="Requests\Endpoints\_Relatorios.cs" />
     <Compile Include="Requests\Endpoints\_Usuario.cs" />
     <Compile Include="Requests\Endpoints\_UsuarioConta.cs" />
   </ItemGroup>
@@ -5534,6 +5536,8 @@
     <Content Include="Views\Agenda\Upload.cshtml" />
     <Content Include="Views\Rastreabilidade\Update.cshtml" />
     <Content Include="Views\Rastreabilidade\DetalhesChave.cshtml" />
+    <Content Include="Views\Relatorios\Agendamentos.cshtml" />
+    <Content Include="Views\Relatorios\Leituras.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

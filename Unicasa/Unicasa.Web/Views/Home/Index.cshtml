@@ -28,24 +28,28 @@
                                     @Model.TicketsPendentes
                                 </div>
                             </div>
-                            <div class="col-md-3 col-sm-3 col-xs-6">
-                                <div class="font-grey-mint font-sm"> Total de Agendamentos </div>
-                                <div class="uppercase font-hg theme-font">
-                                    @Model.TotalAgendado
+                            @if (Session["PerfilEnum"].ToString() == "Administrador" || Session["PerfilEnum"].ToString() == "Gerente")
+                            {
+                                <div class="col-md-3 col-sm-3 col-xs-6">
+                                    <div class="font-grey-mint font-sm"> Total de Agendamentos </div>
+                                    <div class="uppercase font-hg theme-font">
+                                        @Model.TotalAgendado
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-3 col-sm-3 col-xs-6">
-                                <div class="font-grey-mint font-sm"> Total Entregas </div>
-                                <div class="uppercase font-hg font-purple">
-                                    @Model.TotalEntrgue
+                                <div class="col-md-3 col-sm-3 col-xs-6">
+                                    <div class="font-grey-mint font-sm"> Total Entregas </div>
+                                    <div class="uppercase font-hg font-purple">
+                                        @Model.TotalEntrgue
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-3 col-sm-3 col-xs-6">
-                                <div class="font-grey-mint font-sm"> Usuários Ativos </div>
-                                <div class="uppercase font-hg font-blue-sharp">
-                                    @Model.TotalUsuarios
+
+                                <div class="col-md-3 col-sm-3 col-xs-6">
+                                    <div class="font-grey-mint font-sm"> Usuários Ativos </div>
+                                    <div class="uppercase font-hg font-blue-sharp">
+                                        @Model.TotalUsuarios
+                                    </div>
                                 </div>
-                            </div>
+                            }
                         </div>
                     </div>
                 </div>

@@ -52,6 +52,7 @@ namespace Unicasa.Web.Controllers
                 Session["user_loged"] = true;
                 Session["user_name"] = request.Nome;
                 Session["AuthorizedUserId"] = request.Id;
+                Session["user_email"] = request.Email;
                 Session["PerfilEnum"] = request.Perfil;
                 Session["access_token"] = request.Token;
 

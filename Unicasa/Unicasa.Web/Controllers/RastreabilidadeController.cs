@@ -19,7 +19,7 @@ namespace Unicasa.Web.Controllers
         public async Task<ActionResult> Index()
         {
             var vm = new TicketsModel();
-
+            var login = Session["user_email"].ToString();
             var request = await Post<FiltroResponse>(_Gerenciador.Filtrar, new FiltroRequest());
 
             if (request != null)

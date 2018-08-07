@@ -27,6 +27,7 @@ namespace Unicasa.API.DI
             container.RegisterType<ITicketRepository, RepositoryTickets>(new HierarchicalLifetimeManager());
             container.RegisterType<IFeriadosRepository, RepositoriyFeriado>(new HierarchicalLifetimeManager());
             container.RegisterType<ICargasRepository, RepositoryCargas>(new HierarchicalLifetimeManager());
+            container.RegisterType<IAgendamentoRepository, AgendamentoRepository>(new HierarchicalLifetimeManager());
         }
     }
 }

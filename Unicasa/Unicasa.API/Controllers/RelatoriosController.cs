@@ -88,7 +88,7 @@ namespace Unicasa.API.Controllers
             if (request.Periodo == DatePeriod.Mensal)
                 query.Where(x => x.DataAgendamento == DateTime.Now && x.DataAgendamento == (DateTime.Now.AddDays(-30)));
 
-            return query.ToList();
+            return query.OrderBy(x => x.Chave).ToList();
         }
 
         #endregion

@@ -25,6 +25,7 @@ namespace Unicasa.API.Controllers
         private readonly RepositoryMetricas repositoryMetricas;
         private readonly RepositoriyFeriado repositoriyFeriado;
         private readonly RepositoryUsuario repositoryUsuario;
+        private readonly RepositoryAgendamentos repositoryAgendamentos;
         private readonly RepositoryImportacao repositoryImportacao;
 
         private readonly UnicasaContext context;
@@ -38,6 +39,7 @@ namespace Unicasa.API.Controllers
             repositoryTickets = new RepositoryTickets(context);
             repositoryMetricas = new RepositoryMetricas(context);
             repositoriyFeriado = new RepositoriyFeriado(context);
+            repositoryAgendamentos = new RepositoryAgendamentos(context);
             repositoryImportacao = new RepositoryImportacao(context);
             repositoryUsuario = new RepositoryUsuario(context);
 
@@ -162,6 +164,19 @@ namespace Unicasa.API.Controllers
                             Notification.Add("O Ticket: " + x.Id + " não alterado e salvo no banco, tente novamente");
                     }
 
+                    var agendamento = repositoryAgendamentos.ListarPor(x => x.DataAgendamento == entrada).FirstOrDefault();
+
+                    if (agendamento != null)
+                    {
+                        agendamento.Agendados++;
+                        repositoryAgendamentos.Editar(agendamento);
+                    }
+                    else
+                    {
+                        var agend = new Agendamentos() { DataAgendamento = entrada, Agendados = 1 };
+                        repositoryAgendamentos.Adicionar(agend);
+                    }
+
                     response.Message = "Pedido atualizado.";
                 }
 
@@ -184,17 +199,17 @@ namespace Unicasa.API.Controllers
                 bool sincronizado = false;
                 bool existe = false;
 
-                var response = repositoryImportacao.ListarPor(x => x.CargaId == id).ToList();
+                var importacoes = repositoryImportacao.ListarPor(x => x.CargaId == id).ToList();
                 var usuarios = repositoryUsuario.Listar().ToList();
 
                 if (usuarios != null)
-                    existe = (usuarios.Count() > 1);
+                    existe = (usuarios.Count() < 20);
 
                 List<Ticket> tickets = new List<Ticket>();
 
-                if (response == null) { Notification.Add("Tickets não sincronizados, tente novamente"); return null; }
+                if (importacoes == null) { Notification.Add("Tickets não sincronizados, tente novamente"); return null; }
 
-                response.ForEach(x =>
+                importacoes.ForEach(x =>
                 {
                     x.Importado = true;
 
@@ -213,16 +228,21 @@ namespace Unicasa.API.Controllers
                             Detalhe = importacao.OrdCompra,
                             Titulo = importacao.Lote,
                             Cliente = importacao.Cliente,
-                            Operador = importacao.RefItem ?? ""
+                            Operador = importacao.CpfCnpj.Trim()
                         });
-
-                        if (!string.IsNullOrEmpty(importacao.RefItem))
-                        {
-                            var entity = new Usuario(importacao.RefItem, importacao.RefItem);
-                            ImportarUsuario(entity, existe, usuarios);
-                        }
                     }
                 });
+
+                var userImports = tickets.Select(x => x.Operador).Distinct();
+
+                foreach (var item in userImports)
+                {
+                    if (!string.IsNullOrEmpty(item))
+                    {
+                        var entity = new Usuario(item, item);
+                        ImportarUsuario(entity, existe, usuarios);
+                    }
+                }
 
                 IEnumerable<Ticket> entidades = tickets;
 
@@ -231,7 +251,14 @@ namespace Unicasa.API.Controllers
                 if (sincronizar != null)
                     sincronizado = true;
 
-                return await ResponseAsync(sincronizado);
+                var response = new BaseResponse();
+
+                if (sincronizado)
+                    response.Message = "Ordens de serviço sincronizada.";
+                else
+                    response.Message = string.Empty;
+
+                return await ResponseAsync(response);
             }
             catch (Exception ex)
             {
@@ -475,7 +502,6 @@ namespace Unicasa.API.Controllers
         {
             var metricas = repositoryMetricas.Listar().FirstOrDefault();
 
-            var entradas = repositoryTickets.ListarPor(x => x.DataAgendamento == DateTime.Now).GroupBy(g => g.Chave).Count();
 
             var feriados = repositoriyFeriado.Listar().Where(x => x.Ativo == true).ToList();
 
@@ -483,12 +509,15 @@ namespace Unicasa.API.Controllers
 
             if (feriados == null) { Notification.Add("Sem feriados registrados na base"); return null; }
 
-            if (entradas >= metricas.AgendamentosPorDia) { Notification.Add("Limite de agendamentos por dia: " + entradas + " de " + metricas.AgendamentosPorDia); return null; }
-
             var listaDatas = feriados.Select(x => x.DataFeriado).ToList();
 
             var data = UnicasaExtensions.GetDateTicket(request.Value, listaDatas, metricas.DiasMinimosEntrega);
 
+            var entradas = repositoryAgendamentos.ListarPor(x => x.DataAgendamento == data).FirstOrDefault();
+
+            if (entradas != null)
+                if (entradas.Agendados >= metricas.AgendamentosPorDia) { Notification.Add("Limite de agendamentos por dia: " + entradas + " de " + metricas.AgendamentosPorDia); return null; }
+            
             return data;
         }
 
@@ -523,22 +552,24 @@ namespace Unicasa.API.Controllers
         private void ImportarUsuario(Usuario usuario, bool primeiroImport, List<Usuario> usuarios)
         {
             var response = new Usuario();
+            usuario.UserRole = UserRole.Varejo;
+            usuario.NomeCompleto = usuario.Email;
 
             if (primeiroImport)
             {
                 var existe = repositoryUsuario.Existe(x => x.Email == usuario.Email && x.Senha == usuario.Senha);
 
                 if (!existe)
+                {
                     response = repositoryUsuario.Adicionar(usuario);
+                }
             }
 
             else if (!usuarios.Any(x => x.Email == usuario.Email))
                 response = repositoryUsuario.Adicionar(usuario);
 
-            if (response != null)
-                Notification.Add("Usuário " + usuario.Email + " não importado.");
-
-            //uow.Commit();
+            //if (response != null)
+            //    Notification.Add("Usuário " + usuario.Email + " não importado.");
         }
 
         #endregion

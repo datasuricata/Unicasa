@@ -135,13 +135,15 @@ namespace Unicasa.Web.Controllers
                 return RedirectToAction("Index");
             }
 
-            var request = await GetById<bool>(_Gerenciador.Sincronizar, id);
+            var request = await GetById<BaseResponse>(_Gerenciador.Sincronizar, id);
 
-            if (!request)
+            if (string.IsNullOrEmpty(request.Message))
             {
                 SetError("Erro sincronizar tickets");
                 return RedirectToAction("Index");
             }
+            else
+                SetSuccess(request.Message);
 
             return RedirectToAction("Index", "Rastreabilidade");
         }

@@ -36,20 +36,28 @@
                 </div>
                 <div class="portlet-body">
                     <div class="row">
-                        <div class="col-md-12">
-                            <div class="col-md-4">
+                        @using (Html.BeginForm("Leituras", "Relatorios", FormMethod.Post))
+                        {
+                        <div class="col-md-12 text-center">
+                            <div class="col-md-3">
                                 <p>Data Inicial</p>
                                 @Html.TextBoxFor(m => m.DataInicial, new { @class = "form-control", type = "date" })
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <p>Data Final</p>
                                 @Html.TextBoxFor(m => m.DataFinal, new { @class = "form-control", type = "date" })
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <p>Periodo</p>
-                                @Html.DropDownListFor(m => m.Periodo, new SelectList(Enum.GetValues(typeof(DatePeriod))), "Selecione", new { @class = "form-control" })
+                                @Html.DropDownListFor(m => m.Periodo, new SelectList(Enum.GetValues(typeof(DatePeriod))),  new { @class = "form-control" })
+                            </div>
+                            <div class="col-md-3">
+                                <br />
+                                <br />
+                                <button type="submit" class="btn green">Pesquisar</button>
                             </div>
                         </div>
+                        }
                     </div>
                 </div>
             </div>

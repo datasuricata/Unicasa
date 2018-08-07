@@ -7,13 +7,13 @@ namespace Unicasa.API.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class GraneroMigration : IMigrationMetadata
+    public sealed partial class Granero_FirstMigration : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(GraneroMigration));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(Granero_FirstMigration));
         
         string IMigrationMetadata.Id
         {
-            get { return "201808070441278_GraneroMigration"; }
+            get { return "201808072329476_Granero_FirstMigration"; }
         }
         
         string IMigrationMetadata.Source

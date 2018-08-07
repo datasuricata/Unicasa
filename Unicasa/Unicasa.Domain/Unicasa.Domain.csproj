@@ -56,6 +56,7 @@
     <Compile Include="Arguments\RelatorioRequest.cs" />
     <Compile Include="Arguments\RelatorioResponse.cs" />
     <Compile Include="Arguments\UsuarioRequest.cs" />
+    <Compile Include="Entities\Agendamentos.cs" />
     <Compile Include="Entities\Base\BaseEntity.cs" />
     <Compile Include="Entities\Cargas.cs" />
     <Compile Include="Entities\Agenda.cs" />
@@ -70,6 +71,7 @@
     <Compile Include="Interfaces\Repositories\Base\IRepository.cs" />
     <Compile Include="Interfaces\Repositories\IFeriadosRepository.cs" />
     <Compile Include="Interfaces\Repositories\IImportacaoRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IAgendamentoRepository.cs" />
     <Compile Include="Interfaces\Repositories\IMetricasRepository.cs" />
     <Compile Include="Interfaces\Repositories\ICargasRepository.cs" />
     <Compile Include="Interfaces\Repositories\ITicketRepository.cs" />

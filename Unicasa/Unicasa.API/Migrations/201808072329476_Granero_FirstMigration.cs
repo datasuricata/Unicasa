@@ -3,12 +3,12 @@ namespace Unicasa.API.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class GraneroMigration : DbMigration
+    public partial class Granero_FirstMigration : DbMigration
     {
         public override void Up()
         {
             CreateTable(
-                "dbo.Agendamentos",
+                "dbo.Feriados",
                 c => new
                     {
                         Id = c.String(nullable: false, maxLength: 100, unicode: false),
@@ -105,7 +105,16 @@ namespace Unicasa.API.Migrations
                         UserRole = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.Id);
-
+            
+            CreateTable(
+                "dbo.Agendamentos",
+                c => new
+                    {
+                        Id = c.String(nullable: false, maxLength: 100, unicode: false),
+                        DataAgendamento = c.DateTime(),
+                        Agendados = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id);
             //admin key qawsed123yhuj
             Sql("INSERT INTO dbo.Usuarios (Id, NomeCompleto, Email, Senha, UserRole) VALUES ('E178FC1D-F905-4113-9580-1C139F35AEB7', 'master' ,'admin', 'F540DFD9907A4E4784BA8D205EDC8F88', 99)");
             Sql("INSERT INTO dbo.Metricas (Id, AgendamentosPorDia, DiasMinimosEntrega) VALUES ('1', '4' ,'2')");
@@ -113,12 +122,13 @@ namespace Unicasa.API.Migrations
         
         public override void Down()
         {
+            DropTable("dbo.Agendamentos");
             DropTable("dbo.Usuarios");
             DropTable("dbo.Tickets");
             DropTable("dbo.Metricas");
             DropTable("dbo.Importacoes");
             DropTable("dbo.Cargas");
-            DropTable("dbo.Agendamentos");
+            DropTable("dbo.Feriados");
         }
     }
 }

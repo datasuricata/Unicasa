@@ -192,11 +192,12 @@
     <Compile Include="Controllers\UsuarioController.cs" />
     <Compile Include="DI\DependencyResolver.cs" />
     <Compile Include="DI\UnityResolver.cs" />
-    <Compile Include="Migrations\201808070441278_GraneroMigration.cs" />
-    <Compile Include="Migrations\201808070441278_GraneroMigration.Designer.cs">
-      <DependentUpon>201808070441278_GraneroMigration.cs</DependentUpon>
+    <Compile Include="Migrations\201808072329476_Granero_FirstMigration.cs" />
+    <Compile Include="Migrations\201808072329476_Granero_FirstMigration.Designer.cs">
+      <DependentUpon>201808072329476_Granero_FirstMigration.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Persistence\Map\MapAgendamentos.cs" />
     <Compile Include="Persistence\Map\MapCargas.cs" />
     <Compile Include="Persistence\Map\MapMetrica.cs" />
     <Compile Include="Persistence\Map\MapTicket.cs" />
@@ -209,6 +210,8 @@
     <Compile Include="Persistence\Repositories\RepositoryMetricas.cs" />
     <Compile Include="Persistence\Repositories\RepositoryCargas.cs" />
     <Compile Include="Persistence\Repositories\RepositoryTickets.cs" />
+    <Compile Include="Persistence\Repositories\RepositoryAgendamentos.cs" />
+    <Compile Include="Persistence\Repositories\AgendamentoRepository.cs" />
     <Compile Include="Persistence\Repositories\RepositoryUsuario.cs" />
     <Compile Include="Persistence\UnicasaContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -237,8 +240,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201808070441278_GraneroMigration.resx">
-      <DependentUpon>201808070441278_GraneroMigration.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201808072329476_Granero_FirstMigration.resx">
+      <DependentUpon>201808072329476_Granero_FirstMigration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

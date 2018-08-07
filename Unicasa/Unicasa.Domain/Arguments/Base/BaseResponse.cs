@@ -7,7 +7,7 @@ namespace Unicasa.Domain.Arguments.Base
     {
         public BaseResponse()
         {
-            Message = "Operação Executada";
+            Message = "Operação não executada";
             Exceptions = new List<string>();
         }
 

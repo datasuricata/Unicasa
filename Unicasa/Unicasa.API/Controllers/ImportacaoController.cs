@@ -18,6 +18,7 @@ namespace Unicasa.API.Controllers
     public class ImportacaoController : ControllerBase
     {
         private readonly RepositoryImportacao repositoryImportacao;
+        private readonly RepositoryTickets repositoryTickets;
         private readonly RepositoryCargas repositoryCargas;
         private readonly UnicasaContext context;
 
@@ -25,6 +26,7 @@ namespace Unicasa.API.Controllers
         {
             context = new UnicasaContext();
             repositoryImportacao = new RepositoryImportacao(context);
+            repositoryTickets = new RepositoryTickets(context);
             repositoryCargas = new RepositoryCargas(context);
             uow = new UnitOfWork(context);
             Notification = new List<string>();
@@ -167,11 +169,17 @@ namespace Unicasa.API.Controllers
 
                 var carga = repositoryCargas.ObterPorId(id);
                 var importacoes = repositoryImportacao.ListarPor(x => x.CargaId == id).ToList();
+                var tickets = repositoryTickets.Listar().ToList();
 
                 if (importacoes != null)
                 {
                     importacoes.ForEach(x =>
                     {
+                        var ticket = tickets.Where(w => w.ImportacaoId == x.Id).Select(s => s).FirstOrDefault();
+
+                        if (ticket != null)
+                            repositoryTickets.Remover(ticket);
+
                         repositoryImportacao.Remover(x);
                     });
 

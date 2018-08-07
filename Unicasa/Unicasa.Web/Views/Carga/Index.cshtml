@@ -68,7 +68,10 @@
                                         <td> @carga.DataProcessamento.ToShortDateString() </td>
                                         <td> @carga.Observacao </td>
                                         <td>
-                                            @*<a href="@Url.Action("Sincronizar", "Carga", new { carga.Id })" class="btn btn-success">Sincronizar Tickets</a>*@
+                                            @if (Session["PerfilEnum"].ToString() == "Administrador")
+                                            {
+                                                <a href="@Url.Action("Sincronizar", "Carga", new { carga.Id })" class="btn btn-success">Sincronizar</a>
+                                            }
                                             <a href="@Url.Action("Excluir", "Carga", new { carga.Id })" class="btn btn-danger">Deletar</a>
                                         </td>
                                     </tr>

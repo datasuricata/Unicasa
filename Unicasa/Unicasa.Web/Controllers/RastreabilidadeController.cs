@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using Unicasa.Dashboard.Requests.Endpoints;
@@ -20,15 +21,21 @@ namespace Unicasa.Web.Controllers
         {
             var vm = new TicketsModel();
             var login = Session["user_email"].ToString();
+            var perfil = Session["PerfilEnum"].ToString();
             var request = await Post<FiltroResponse>(_Gerenciador.Filtrar, new FiltroRequest());
+
+            var filtro = new List<Ticket>();
+
+            if (perfil == "Administrador" || perfil == "Gerente")
+                filtro = request.Tickets;
+            else
+                filtro = request.Tickets.Where(x => x.Operador == login || x.Operador == "").Select(s => s).ToList();
 
             if (request != null)
             {
-                vm.Tickets = request.Tickets;
+                vm.Tickets = filtro;
                 vm.DropdownEnums = Components.GetDrowdown<TicketState>();
             }
-
-
             return View(vm);
         }
 

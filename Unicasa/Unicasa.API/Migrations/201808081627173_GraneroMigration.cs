@@ -3,7 +3,7 @@ namespace Unicasa.API.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class Granero_FirstMigration : DbMigration
+    public partial class GraneroMigration : DbMigration
     {
         public override void Up()
         {
@@ -87,6 +87,7 @@ namespace Unicasa.API.Migrations
                         Descricao = c.String(maxLength: 100, unicode: false),
                         Detalhe = c.String(maxLength: 100, unicode: false),
                         Operador = c.String(maxLength: 100, unicode: false),
+                        Observacao = c.String(maxLength: 100, unicode: false),
                         DataAgendamento = c.DateTime(),
                         DataEntrega = c.DateTime(),
                         DataColeta = c.DateTime(),

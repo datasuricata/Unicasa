@@ -140,6 +140,7 @@ namespace Unicasa.Web.Controllers
                     Entrega = vm.Entrega,
                     Ticket = vm.Ticket,
                     Tickets = vm.Tickets,
+                    Observacao = vm.Observacao
                 };
 
                 var response = await Put<BaseResponse>(_Gerenciador.Editar, command);

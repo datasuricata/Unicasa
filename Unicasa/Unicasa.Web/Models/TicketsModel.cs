@@ -25,5 +25,6 @@ namespace Unicasa.Web.Models
         public DateTime? Agendamento { get; set; }
         public DateTime? Entrega { get; set; }
         public DateTime? Coleta { get; set; }
+        public string Observacao { get; set; }
     }
 }

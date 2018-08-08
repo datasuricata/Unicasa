@@ -28,15 +28,11 @@
                     @Html.HiddenFor(m => m.Chave)
                     <p>
                         <h6>Data do Agendamento:</h6>
-                        @Html.TextBoxFor(m => m.Agendamento, new { @class= "form-control", type = "date" })
+                        @Html.TextBoxFor(m => m.Agendamento, new { @class = "form-control", type = "date" })
                     </p>
                     <p>
-                        <h6>Data de Coleta:</h6>
-                        @Html.DisplayFor(m => m.Coleta, new { @class = "form-control", type = "date" })
-                    </p>
-                    <p>
-                        <h6>Data de Entrega:</h6>
-                        @Html.DisplayFor(m => m.Entrega, new { @class= "form-control", type = "date" })
+                        <h6>Observação:</h6>
+                        @Html.TextBoxFor(m => m.Observacao, new { @class = "form-control" })
                     </p>
                     <p>
                         <h6>Status do Ticket:</h6>

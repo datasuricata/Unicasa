@@ -73,22 +73,22 @@ namespace Unicasa.API.Controllers
             var filtrado = new List<Ticket>();
 
             if (request.TicketState == TicketState.Agendado)
-                filtrado = query.Select(s => s).Where(e => e.TicketState == request.TicketState).ToList();
+                filtrado = query.Select(s => s).Where(e => e.TicketState == TicketState.Agendado).ToList();
 
             if (request.TicketState == TicketState.Selecione)
                 filtrado = query.Select(s => s).Where(e => e.DataColeta != null).ToList();
 
             if (request.DataInicial != null && request.DataFinal != null)
-                filtrado = query.Select(s => s).Where(x => x.DataAgendamento >= request.DataInicial && x.DataAgendamento <= request.DataFinal).ToList();
+                filtrado = query.Select(s => s).Where(x => x.DataAgendamento >= request.DataInicial.Value && x.DataAgendamento <= request.DataFinal.Value).ToList();
 
             if (request.Periodo == DatePeriod.Semanal)
-                filtrado = query.Select(s => s).Where(x => x.DataAgendamento == DateTime.Now && x.DataAgendamento == (DateTime.Now.AddDays(-7))).ToList();
+                filtrado = query.Select(s => s).Where(x => x.DataAgendamento >= DateTime.Now && x.DataAgendamento <= (DateTime.Now.AddDays(-7))).ToList();
 
             if (request.Periodo == DatePeriod.Quinzenal)
-                filtrado = query.Select(s => s).Where(x => x.DataAgendamento == DateTime.Now && x.DataAgendamento == (DateTime.Now.AddDays(-15))).ToList();
+                filtrado = query.Select(s => s).Where(x => x.DataAgendamento >= DateTime.Now && x.DataAgendamento <= (DateTime.Now.AddDays(-15))).ToList();
 
             if (request.Periodo == DatePeriod.Mensal)
-                filtrado = query.Select(s => s).Where(x => x.DataAgendamento == DateTime.Now && x.DataAgendamento == (DateTime.Now.AddDays(-30))).ToList();
+                filtrado = query.Select(s => s).Where(x => x.DataAgendamento >= DateTime.Now && x.DataAgendamento <= (DateTime.Now.AddDays(-30))).ToList();
 
             return filtrado;
         }

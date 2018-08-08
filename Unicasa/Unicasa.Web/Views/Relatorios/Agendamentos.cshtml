@@ -79,6 +79,7 @@
                             <tr>
                                 <th> Pedido </th>
                                 <th> Cliente </th>
+                                <th> Data de Agendamento </th>
                                 <th> Data de Coleta </th>
                                 <th> Data de Entrega </th>
                             </tr>
@@ -88,12 +89,13 @@
                             {
                                 foreach (var user in Model.Tickets)
                                 {
-                                    <tr>
-                                        <td> @user.Chave </td>
-                                        <td> @user.Cliente </td>
-                                        <td> @user.DataColeta </td>
-                                        <td> @user.DataEntrega </td>
-                                    </tr>
+                            <tr>
+                                <td> @user.Chave </td>
+                                <td> @user.Cliente </td>
+                                <td> @user.DataAgendamento </td>
+                                <td> @user.DataColeta </td>
+                                <td> @user.DataEntrega </td>
+                            </tr>
                                 }
                             }
                         </tbody>

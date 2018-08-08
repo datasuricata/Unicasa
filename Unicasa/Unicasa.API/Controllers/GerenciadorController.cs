@@ -156,6 +156,7 @@ namespace Unicasa.API.Controllers
                     foreach (var x in query)
                     {
                         x.DataAgendamento = entrada;
+                        x.Observacao = request.Observacao;
                         x.TicketState = TicketState.Agendado;
 
                         var ticket = repositoryTickets.Editar(x);
@@ -228,7 +229,8 @@ namespace Unicasa.API.Controllers
                             Detalhe = importacao.OrdCompra,
                             Titulo = importacao.Lote,
                             Cliente = importacao.Cliente,
-                            Operador = importacao.CpfCnpj.Trim()
+                            Operador = importacao.CpfCnpj.Trim(),
+                            Observacao = "",
                         });
                     }
                 });

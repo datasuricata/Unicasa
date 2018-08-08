@@ -22,6 +22,7 @@ namespace Unicasa.Domain.Arguments
         public DateTime? Agendamento { get; set; }
         public DateTime? Coleta { get; set; }
         public DateTime? Entrega { get; set; }
+        public string Observacao { get; set; }
 
     }
 }

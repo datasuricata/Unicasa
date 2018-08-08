@@ -502,7 +502,6 @@ namespace Unicasa.API.Controllers
         {
             var metricas = repositoryMetricas.Listar().FirstOrDefault();
 
-
             var feriados = repositoriyFeriado.Listar().Where(x => x.Ativo == true).ToList();
 
             if (metricas == null) { Notification.Add("Sem metricas registradas na base"); return null; }

@@ -32,15 +32,15 @@
                     </p>
                     <p>
                         <h6>Data de Coleta:</h6>
-                        @Html.DisplayFor(m => m.Agendamento, new { @class = "form-control", type = "date" })
+                        @Html.DisplayFor(m => m.Coleta, new { @class = "form-control", type = "date" })
                     </p>
                     <p>
                         <h6>Data de Entrega:</h6>
-                        @Html.DisplayFor(m => m.Agendamento, new { @class= "form-control", type = "date" })
+                        @Html.DisplayFor(m => m.Entrega, new { @class= "form-control", type = "date" })
                     </p>
                     <p>
                         <h6>Status do Ticket:</h6>
-                        @Html.DropDownListFor(m => m.TicketState, new SelectList(Enum.GetValues(typeof(TicketState))), new { @class = "form-control" })
+                        @Html.DisplayFor(m => m.TicketState, new { @class = "form-control" })
                     </p>
                 </div>
             </div>

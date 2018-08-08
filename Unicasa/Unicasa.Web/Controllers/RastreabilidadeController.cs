@@ -111,7 +111,8 @@ namespace Unicasa.Web.Controllers
                     Chave = request.Tickets.FirstOrDefault().Chave,
                     Agendamento = request.Tickets.FirstOrDefault().DataAgendamento,
                     Entrega = request.Tickets.FirstOrDefault().DataEntrega,
-                    Coleta = request.Tickets.FirstOrDefault().DataColeta
+                    Coleta = request.Tickets.FirstOrDefault().DataColeta,
+                    TicketState = request.Tickets.FirstOrDefault().TicketState.ToString()
                 };
 
                 return View(vm);
@@ -139,7 +140,6 @@ namespace Unicasa.Web.Controllers
                     Entrega = vm.Entrega,
                     Ticket = vm.Ticket,
                     Tickets = vm.Tickets,
-                    TicketState = vm.TicketState
                 };
 
                 var response = await Put<BaseResponse>(_Gerenciador.Editar, command);

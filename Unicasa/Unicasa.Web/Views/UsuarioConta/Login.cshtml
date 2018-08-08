@@ -12,7 +12,7 @@
 <!-- BEGIN HEAD -->
 <head>
     <meta charset="utf-8" />
-    <title>Granero | Usuario Login </title>
+    <title> Granero | Usuario Login </title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta content="width=device-width, initial-scale=1" name="viewport" />
     <meta content="Granero | Conta" name="description" />
@@ -51,7 +51,7 @@
             </div>
             <div class="col-md-6 login-container bs-reset mt-login-5-bsfix">
                 <div class="login-content">
-                    <h1>Granero</h1>
+                    <h1><b>Granero</b></h1>
                     @using (Html.BeginForm("Login", "UsuarioConta", FormMethod.Post, new { @class = "login-form", role = "form" }))
                     {
                         if (TempData["Message"] != null)

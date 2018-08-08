@@ -21,7 +21,7 @@ namespace Unicasa.Web.Models
         public List<GenericDropdown> DropdownEnums { get; set; }
 
         public string Chave { get; set; }
-        public TicketState TicketState { get; set; }
+        public string TicketState { get; set; }
         public DateTime? Agendamento { get; set; }
         public DateTime? Entrega { get; set; }
         public DateTime? Coleta { get; set; }

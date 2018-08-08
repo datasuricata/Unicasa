@@ -15,23 +15,15 @@ namespace Unicasa.Web.Controllers
     {
         #region [ GET ]
 
-        public async Task<ActionResult> Agendamentos()
+        public ActionResult Agendamentos()
         {
             var viewModel = new RelatorioModel();
-            var request = new RelatorioRequest() { DataFinal = null, DataInicial = null, Periodo = DatePeriod.Selecione, TicketState = TicketState.Agendado };
-            var response = await Post<RelatorioResponse>(_Relatorios.Agendamentos, request);
-            viewModel.Tickets = response.Tickets;
-
             return View(viewModel);
         }
 
-        public async Task<ActionResult> Leituras()
+        public ActionResult Leituras()
         {
             var viewModel = new RelatorioModel();
-            var request = new RelatorioRequest() { DataFinal = null, DataInicial = null, Periodo = DatePeriod.Selecione, TicketState = TicketState.Selecione };
-            var response = await Post<RelatorioResponse>(_Relatorios.Agendamentos, request);
-            viewModel.Tickets = response.Tickets;
-
             return View(viewModel);
         }
 

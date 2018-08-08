@@ -39,7 +39,7 @@ namespace Unicasa.API.Controllers
                 var lista = Filtro(request);
                 if (lista == null){Notification.Add("Tickets não encontrados."); return null;}
                 var response = new RelatorioResponse(){Tickets = lista};
-                return Request.CreateResponse(HttpStatusCode.OK, response);
+                return await ResponseAsync(response);
             }
             catch (Exception ex)
             {
@@ -56,7 +56,7 @@ namespace Unicasa.API.Controllers
                 var lista = Filtro(request);
                 if (lista == null){Notification.Add("Tickets não encontrados.");return null;}
                 var response = new RelatorioResponse(){Tickets = lista};
-                return Request.CreateResponse(HttpStatusCode.OK, response);
+                return await ResponseAsync(response);
             }
             catch (Exception ex)
             {
@@ -68,27 +68,29 @@ namespace Unicasa.API.Controllers
 
         private List<Ticket> Filtro(RelatorioRequest request)
         {
-            var query = repositoryTickets.Listar();
+            var query = repositoryTickets.Listar().OrderBy(x => x.Chave).ToList();
+
+            var filtrado = new List<Ticket>();
 
             if (request.TicketState == TicketState.Agendado)
-                query.Where(e => e.TicketState == request.TicketState);
+                filtrado = query.Select(s => s).Where(e => e.TicketState == request.TicketState).ToList();
 
             if (request.TicketState == TicketState.Selecione)
-                query.Where(e => e.DataColeta != null);
+                filtrado = query.Select(s => s).Where(e => e.DataColeta != null).ToList();
 
             if (request.DataInicial != null && request.DataFinal != null)
-                query.Where(x => x.DataAgendamento >= request.DataInicial && x.DataAgendamento <= request.DataFinal);
+                filtrado = query.Select(s => s).Where(x => x.DataAgendamento >= request.DataInicial && x.DataAgendamento <= request.DataFinal).ToList();
 
             if (request.Periodo == DatePeriod.Semanal)
-                query.Where(x => x.DataAgendamento == DateTime.Now && x.DataAgendamento == (DateTime.Now.AddDays(-7)));
+                filtrado = query.Select(s => s).Where(x => x.DataAgendamento == DateTime.Now && x.DataAgendamento == (DateTime.Now.AddDays(-7))).ToList();
 
             if (request.Periodo == DatePeriod.Quinzenal)
-                query.Where(x => x.DataAgendamento == DateTime.Now && x.DataAgendamento == (DateTime.Now.AddDays(-15)));
+                filtrado = query.Select(s => s).Where(x => x.DataAgendamento == DateTime.Now && x.DataAgendamento == (DateTime.Now.AddDays(-15))).ToList();
 
             if (request.Periodo == DatePeriod.Mensal)
-                query.Where(x => x.DataAgendamento == DateTime.Now && x.DataAgendamento == (DateTime.Now.AddDays(-30)));
+                filtrado = query.Select(s => s).Where(x => x.DataAgendamento == DateTime.Now && x.DataAgendamento == (DateTime.Now.AddDays(-30))).ToList();
 
-            return query.OrderBy(x => x.Chave).ToList();
+            return filtrado;
         }
 
         #endregion

@@ -40,7 +40,7 @@ namespace Unicasa.Domain.Helper
                 valida = AjustarData(datas, feriados, arg);
             }
 
-            return datas.Select(x => x.Data).LastOrDefault();
+            return datas.Select(x => x.Data).FirstOrDefault();
         }
 
         public static List<ComponenteData> ValidarData(this List<ComponenteData> datas, List<DateTime> feriados)

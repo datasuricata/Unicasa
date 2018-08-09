@@ -31,13 +31,13 @@ namespace Unicasa.Domain.Helper
 
             while (valida)
             {
+                valida = AjustarData(datas, feriados, arg);
+
                 if (valida)
                     foreach (var data in datas)
                         data.Data = data.Data.AddDays(1);
                 else
                     break;
-
-                valida = AjustarData(datas, feriados, arg);
             }
 
             return datas.Select(x => x.Data).FirstOrDefault();

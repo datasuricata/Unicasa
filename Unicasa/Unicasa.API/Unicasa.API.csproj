@@ -192,9 +192,9 @@
     <Compile Include="Controllers\UsuarioController.cs" />
     <Compile Include="DI\DependencyResolver.cs" />
     <Compile Include="DI\UnityResolver.cs" />
-    <Compile Include="Migrations\201808081627173_GraneroMigration.cs" />
-    <Compile Include="Migrations\201808081627173_GraneroMigration.Designer.cs">
-      <DependentUpon>201808081627173_GraneroMigration.cs</DependentUpon>
+    <Compile Include="Migrations\201808091409079_GraneroMigration.cs" />
+    <Compile Include="Migrations\201808091409079_GraneroMigration.Designer.cs">
+      <DependentUpon>201808091409079_GraneroMigration.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Persistence\Map\MapAgendamentos.cs" />
@@ -240,8 +240,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201808081627173_GraneroMigration.resx">
-      <DependentUpon>201808081627173_GraneroMigration.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201808091409079_GraneroMigration.resx">
+      <DependentUpon>201808091409079_GraneroMigration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

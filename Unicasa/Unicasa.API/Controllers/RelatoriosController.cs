@@ -90,7 +90,7 @@ namespace Unicasa.API.Controllers
             if (request.Periodo == DatePeriod.Mensal)
                 filtrado = query.Select(s => s).Where(x => x.DataAgendamento >= DateTime.Now && x.DataAgendamento <= (DateTime.Now.AddDays(-30))).ToList();
 
-            if(request.LeituraPendete)
+            if(request.LeituraPendente)
                 filtrado = query.Select(s => s).Where(x => x.DataEntrega == null && x.DataColeta != null).ToList();
 
 

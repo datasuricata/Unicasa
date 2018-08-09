@@ -88,7 +88,7 @@ namespace Unicasa.Web.Controllers
 
             if (vm != null)
             {
-                var request = new RelatorioRequest() { DataFinal = vm.DataFinal, DataInicial = vm.DataInicial, Periodo = vm.Periodo, TicketState = TicketState.Selecione, LeituraPendete = false };
+                var request = new RelatorioRequest() { DataFinal = vm.DataFinal, DataInicial = vm.DataInicial, Periodo = vm.Periodo, TicketState = TicketState.Selecione, LeituraPendente = false };
                 response = await Post<RelatorioResponse>(_Relatorios.Agendamentos, request);
                 viewModel.Tickets = response.Tickets;
             }
@@ -111,7 +111,7 @@ namespace Unicasa.Web.Controllers
 
             if (vm != null)
             {
-                var request = new RelatorioRequest() { DataFinal = vm.DataFinal, DataInicial = vm.DataInicial, Periodo = vm.Periodo, TicketState = TicketState.Selecione, LeituraPendete = true };
+                var request = new RelatorioRequest() { DataFinal = vm.DataFinal, DataInicial = vm.DataInicial, Periodo = vm.Periodo, TicketState = TicketState.Selecione, LeituraPendente = true };
                 response = await Post<RelatorioResponse>(_Relatorios.Agendamentos, request);
                 viewModel.Tickets = response.Tickets;
             }

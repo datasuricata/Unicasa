@@ -10,6 +10,6 @@ namespace Unicasa.Domain.Arguments
         public DatePeriod Periodo { get; set; }
         public TicketState TicketState { get; set; }
 
-        public bool LeituraPendete { get; set; }
+        public bool LeituraPendente { get; set; }
     }
 }

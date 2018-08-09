@@ -148,7 +148,7 @@ namespace Unicasa.Web.Controllers
                 if (response != null)
                 {
                     if (string.IsNullOrEmpty(response.Message))
-                        SetSuccess(response.Message);
+                        SetSuccess("Agendamento efetuado.");
                     else
                         SetError(response.Message);
                 }

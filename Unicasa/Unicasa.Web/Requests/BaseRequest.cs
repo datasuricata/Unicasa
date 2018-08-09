@@ -14,20 +14,26 @@ namespace Unicasa.Web.Requests
         public BaseRequest()
         {
             baseAddressUrl = "http://localhost:51365/";
-            
+
+            // baseAddressUrl = "http://api.granero.unicasa.scarattisolucoesemti.com.br";
         }
 
         #region [ Atributos ]
+
         protected string baseAddressUrl;
         private MediaTypeWithQualityHeaderValue teste = new MediaTypeWithQualityHeaderValue("application/json");
         private HttpClient _client = new HttpClient();
-        #endregion
+
+        #endregion [ Atributos ]
 
         #region [ Propriedades ]
+
         public string ErrosRequest { get; set; }
-        #endregion
+
+        #endregion [ Propriedades ]
 
         #region [ SendAsync ]
+
         protected async Task<HttpResponseMessage> SendAsync(RequestMethod metodoRequisicao, string requestUri, object parametros = null, string token = "")
         {
             _client.BaseAddress = new Uri(baseAddressUrl);
@@ -57,9 +63,10 @@ namespace Unicasa.Web.Requests
             return null;
         }
 
-        #endregion
+        #endregion [ SendAsync ]
 
         #region [ GET ]
+
         private async Task<HttpResponseMessage> Get(string requestUri, string token = "")
         {
             if (!string.IsNullOrEmpty(token))
@@ -70,9 +77,11 @@ namespace Unicasa.Web.Requests
 
             return await _client.GetAsync(requestUri);
         }
-        #endregion
+
+        #endregion [ GET ]
 
         #region [ POST ]
+
         private async Task<HttpResponseMessage> Post(string requestUri, object parametros, string token = "")
         {
             _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
@@ -84,9 +93,11 @@ namespace Unicasa.Web.Requests
             var content = new StringContent(json, Encoding.UTF8, "application/json");
             return await _client.PostAsync(requestUri, content);
         }
-        #endregion
+
+        #endregion [ POST ]
 
         #region [ PUT ]
+
         private async Task<HttpResponseMessage> Put(string requestUri, object parametros, string token = "")
         {
             if (!string.IsNullOrEmpty(token))
@@ -97,18 +108,22 @@ namespace Unicasa.Web.Requests
 
             return await _client.PutAsync(requestUri, content);
         }
-        #endregion
+
+        #endregion [ PUT ]
 
         #region [ Login with Token ]
+
         public async Task<OAuthCommand> LoginWithToken(string login, string password)
         {
             if (string.IsNullOrEmpty(login) || string.IsNullOrEmpty(password))
                 return null;
             return await GetUserToken(login, password);
         }
-        #endregion
+
+        #endregion [ Login with Token ]
 
         #region [ OAuth ]
+
         public async Task<OAuthCommand> GetUserToken(string login, string password)
         {
             try
@@ -138,7 +153,8 @@ namespace Unicasa.Web.Requests
                 };
             }
         }
-        #endregion
+
+        #endregion [ OAuth ]
     }
 
     #region [ OAuth Command ]
@@ -151,7 +167,5 @@ namespace Unicasa.Web.Requests
         public string Message { get; set; }
     }
 
-    #endregion
+    #endregion [ OAuth Command ]
 }
-
-

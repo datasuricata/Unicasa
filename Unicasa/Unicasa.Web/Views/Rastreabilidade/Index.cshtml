@@ -43,12 +43,12 @@
                                 <th class="desktop">Cliente</th>
                                 <th class="none">Descrição</th>
                                 <th class="none">Ord. Compra</th>
-                                <th class="desktop">Data de Agendamento</th>
+                                <th class="desktop">Data de Agend.</th>
                                 <th class="none">Data de Coleta</th>
                                 <th class="none">Data de Entrega</th>
                                 <th class="desktop">Status</th>
-                                <th class="none">Observação</th>
-                                <th style="width:320px;" class="desktop">Ação</th>
+                                <th class="desktop">Observação</th>
+                                <th style="width:150px;" class="desktop">Ação</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -59,7 +59,14 @@
                                 {
                                     using (Html.BeginForm("Update", "Rastreabilidade", FormMethod.Post, new { id = pedidos.Key }))
                                     {
-                            <tr>
+
+                                        var _dataAgendamento = pedidos.Select(x => x).FirstOrDefault().DataAgendamento.HasValue ? pedidos.Select(x => x).FirstOrDefault().DataAgendamento.Value.ToString("dd/MM/yyyy") : "";
+
+                                        var _dataColeta = pedidos.Select(x => x).FirstOrDefault().DataColeta.HasValue ? pedidos.Select(x => x).FirstOrDefault().DataColeta.Value.ToString("dd/MM/yyyy") : "";
+
+                                       var _dataEntrega = pedidos.Select(x => x).FirstOrDefault().DataEntrega.HasValue ? pedidos.Select(x => x).FirstOrDefault().DataEntrega.Value.ToString("dd/MM/yyyy") : "";
+
+                                 <tr>
                                 <td>@pedidos.Key</td>
                                 <td>@pedidos.Count()</td>
                                 <td>@pedidos.Select(x => x).FirstOrDefault().Titulo</td>
@@ -67,17 +74,17 @@
                                 <td>@pedidos.Select(x => x).FirstOrDefault().Cliente</td>
                                 <td>@pedidos.Select(x => x).FirstOrDefault().Descricao</td>
                                 <td>@pedidos.Select(x => x).FirstOrDefault().Detalhe</td>
-                                <td>@pedidos.Select(x => x).FirstOrDefault().DataAgendamento</td>
-                                <td>@pedidos.Select(x => x).FirstOrDefault().DataColeta</td>
-                                <td>@pedidos.Select(x => x).FirstOrDefault().DataEntrega</td>
+                                <td>@_dataAgendamento </td>
+                                <td>@_dataColeta</td>
+                                <td>@_dataEntrega</td>
                                 <td>@pedidos.Select(x => x).FirstOrDefault().TicketState.ToString()</td>
                                 <td>@pedidos.Select(x => x).FirstOrDefault().Observacao</td>
                                 <td>
                                     <div class="btn-group">
                                         <div class="row">
                                             <div class="col-md-12">
-                                                <a class="btn btn-xs btn-outline dark" style="width:150px;" data-toggle="modal" data-target="#detalhes" href="@Url.Action("DetalhesChave", "Rastreabilidade", new { id = pedidos.Key })">Detalhes</a>
-                                                <a class="btn red btn-xs btn-outline" style="width:150px;" data-toggle="modal" data-target="#editar" href="@Url.Action("Update", "Rastreabilidade", new { id = pedidos.Key })">Agendar</a>
+                                                <a class="btn btn-xs btn-outline dark" style="width:70px;" data-toggle="modal" data-target="#detalhes" href="@Url.Action("DetalhesChave", "Rastreabilidade", new { id = pedidos.Key })">Detalhes</a>
+                                                <a class="btn red btn-xs btn-outline" style="width:70px;" data-toggle="modal" data-target="#editar" href="@Url.Action("Update", "Rastreabilidade", new { id = pedidos.Key })">Agendar</a>
                                             </div>
                                         </div>
                                     </div>

@@ -38,25 +38,29 @@
                     <div class="row">
                         @using (Html.BeginForm("Agendamentos", "Relatorios", FormMethod.Post))
                         {
-                            <div class="col-md-12 text-center">
-                                <div class="col-md-3">
-                                    <p>Data Inicial</p>
-                                    @Html.TextBoxFor(m => m.DataInicial, new { @class = "form-control", type = "date" })
-                                </div>
-                                <div class="col-md-3">
-                                    <p>Data Final</p>
-                                    @Html.TextBoxFor(m => m.DataFinal, new { @class = "form-control", type = "date" })
-                                </div>
-                                <div class="col-md-3">
-                                    <p>Periodo</p>
-                                    @Html.DropDownListFor(m => m.Periodo, new SelectList(Enum.GetValues(typeof(DatePeriod))), new { @class = "form-control" })
-                                </div>
-                                <div class="col-md-3">
-                                    <br />
-                                    <br />
-                                    <button type="submit" class="btn green">Pesquisar</button>
-                                </div>
+                        <div class="col-md-12 text-center">
+                            <div class="col-md-3">
+                                <p>Data Inicial</p>
+                                @Html.TextBoxFor(m => m.DataInicial, new { @class = "form-control", type = "date" })
                             </div>
+                            <div class="col-md-3">
+                                <p>Data Final</p>
+                                @Html.TextBoxFor(m => m.DataFinal, new { @class = "form-control", type = "date" })
+                            </div>
+                            @*<div class="col-md-3">
+                                <p>Periodo</p>
+                                @Html.DropDownListFor(m => m.Periodo, new SelectList(Enum.GetValues(typeof(DatePeriod))), new { @class = "form-control" })
+                            </div>*@
+                            <div class="col-md-3">
+                               
+                              
+                            </div>
+                            <div class="col-md-3">
+                                <br />
+                                <br />
+                                <button type="submit" class="btn green">Pesquisar</button>
+                            </div>
+                        </div>
                         }
                     </div>
                 </div>
@@ -89,12 +93,21 @@
                             {
                                 foreach (var user in Model.Tickets)
                                 {
+
+
+
+                                    var _dataAgendamento = user.DataAgendamento.HasValue ? user.DataAgendamento.Value.ToString("dd/MM/yyyy") : "";
+
+                                    var _dataColeta = user.DataColeta.HasValue ? user.DataColeta.Value.ToString("dd/MM/yyyy") : "";
+
+                                    var _dataEntrega = user.DataEntrega.HasValue ? user.DataEntrega.Value.ToString("dd/MM/yyyy") : "";
+
                             <tr>
                                 <td> @user.Chave </td>
                                 <td> @user.Cliente </td>
-                                <td> @user.DataAgendamento </td>
-                                <td> @user.DataColeta </td>
-                                <td> @user.DataEntrega </td>
+                                <td> @_dataAgendamento </td>
+                                <td> @_dataColeta </td>
+                                <td> @_dataEntrega </td>
                             </tr>
                                 }
                             }

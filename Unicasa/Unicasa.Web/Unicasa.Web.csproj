@@ -5500,6 +5500,7 @@
     <Content Include="Content\assets\global\plugins\wysihtml\minified\wysihtml.toolbar.min.map" />
     <Content Include="Content\assets\pages\media\blog\Thumbs.db" />
     <Content Include="Content\assets\pages\media\pages\Thumbs.db" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -5538,6 +5539,7 @@
     <Content Include="Views\Rastreabilidade\DetalhesChave.cshtml" />
     <Content Include="Views\Relatorios\Agendamentos.cshtml" />
     <Content Include="Views\Relatorios\Leituras.cshtml" />
+    <Content Include="Views\Relatorios\LeiturasPendentes.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

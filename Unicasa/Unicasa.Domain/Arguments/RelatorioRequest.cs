@@ -9,5 +9,7 @@ namespace Unicasa.Domain.Arguments
         public DateTime? DataFinal { get; set; }
         public DatePeriod Periodo { get; set; }
         public TicketState TicketState { get; set; }
+
+        public bool LeituraPendete { get; set; }
     }
 }

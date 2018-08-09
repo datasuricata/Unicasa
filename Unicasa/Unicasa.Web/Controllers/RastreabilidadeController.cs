@@ -147,10 +147,10 @@ namespace Unicasa.Web.Controllers
 
                 if (response != null)
                 {
-                    if (response.Message != null)
+                    if (string.IsNullOrEmpty(response.Message))
                         SetSuccess(response.Message);
                     else
-                        SetError("Não atualziados");
+                        SetError(response.Message);
                 }
 
                 return RedirectToAction("Index");

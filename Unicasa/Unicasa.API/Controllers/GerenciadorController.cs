@@ -141,10 +141,17 @@ namespace Unicasa.API.Controllers
                 }
 
                 var entrada = ValidaEntrada(request.Agendamento);
+
                 var response = new BaseResponse();
 
                 if (entrada != null)
                 {
+                    if (entrada != request.Agendamento)
+                    {
+                        response.Message = "Data inválida, por favor selecione outra ou ajuste os parametros de agendamento.";
+                        return await ResponseAsync(response);
+                    }
+
                     var query = repositoryTickets.ListarPor(x => x.Chave == request.Chave).ToList();
 
                     if (query == null)
@@ -177,8 +184,6 @@ namespace Unicasa.API.Controllers
                         var agend = new Agendamentos() { DataAgendamento = entrada, Agendados = 1 };
                         repositoryAgendamentos.Adicionar(agend);
                     }
-
-                    response.Message = "Pedido atualizado.";
                 }
 
                 return await ResponseAsync(response);
@@ -196,6 +201,8 @@ namespace Unicasa.API.Controllers
             try
             {
                 if (id == null) { Notification.Add("Verifique as informações e tente novamente"); return null; }
+
+                var response = new BaseResponse();
 
                 bool sincronizado = false;
                 bool existe = false;
@@ -253,7 +260,6 @@ namespace Unicasa.API.Controllers
                 if (sincronizar != null)
                     sincronizado = true;
 
-                var response = new BaseResponse();
 
                 if (sincronizado)
                     response.Message = "Ordens de serviço sincronizada.";
@@ -518,7 +524,7 @@ namespace Unicasa.API.Controllers
 
             if (entradas != null)
                 if (entradas.Agendados >= metricas.AgendamentosPorDia) { Notification.Add("Limite de agendamentos por dia: " + entradas + " de " + metricas.AgendamentosPorDia); return null; }
-            
+
             return data;
         }
 

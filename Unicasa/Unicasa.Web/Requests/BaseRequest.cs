@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 using Unicasa.Domain.Helper;
 
 namespace Unicasa.Web.Requests
@@ -13,9 +14,14 @@ namespace Unicasa.Web.Requests
     {
         public BaseRequest()
         {
-            baseAddressUrl = "http://localhost:51365/";
-
-            // baseAddressUrl = "http://api.granero.unicasa.scarattisolucoesemti.com.br";
+            if (HttpContext.Current.Request.Url.Host.ToLower().Contains("localhost"))
+            {
+                baseAddressUrl = "http://localhost:51365/";
+            }
+            else
+            {
+                baseAddressUrl = "http://api.granero.unicasa.scarattisolucoesemti.com.br";
+            }
         }
 
         #region [ Atributos ]
